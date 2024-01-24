@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+import './globals.css';
+import { inter } from '@/app/ui/fonts';
+import Providers from '@/app/providers';
 
 export const metadata: Metadata = {
   title: {
@@ -18,7 +18,9 @@ type RootLayoutProps = { children: ReactNode };
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+      <body className={`${inter.className} antialiased`}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
