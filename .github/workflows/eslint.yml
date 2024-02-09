@@ -1,6 +1,6 @@
 name: ESLint Check
 
-on: 
+on:
   pull_request:
   push:
     branches:
@@ -10,16 +10,15 @@ jobs:
   eslint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 20
-    - name: Install dependencies
-      run: npm ci
-    - name: Run ESLint Check
-      run: npx eslint . --ext .js,.jsx,.ts,.tsx --fix-all --max-warnings 0
-        if [ $? -ne 0 ]; then
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm ci
+      - name: Run ESLint Check
+        run: npx eslint . --ext .js,.jsx,.ts,.tsx --fix-all --max-warnings 0
+          if [ $? -ne 0 ]; then
           echo "ESLint errors found. Please fix before merging."
           exit 1
-        fi
-
+          fi
