@@ -18,7 +18,7 @@ jobs:
         run: npm ci
       - name: Run ESLint Checks
         run: |
-          npx eslint . --ext .js,.jsx,.ts,.tsx --fix-all --max-warnings 0
+          npx eslint . --ext .js,.jsx,.ts,.tsx --fix --max-warnings 0
           if [ $? -ne 0 ]; then
             echo "ESLint errors found. Please fix before merging."
             exit 1
