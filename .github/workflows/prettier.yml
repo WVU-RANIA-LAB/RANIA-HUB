@@ -16,5 +16,7 @@ jobs:
           node-version: 20
       - name: Install dependencies
         run: npm ci
-      - name: Check style
-        run: npx prettier . --check
+      - name: Check and fix style
+        run: npx prettier --write . || (echo "Prettier failed to fix style issues. Check logs for details." && exit 1)
+      - name: Check for remaining issues
+        run: npx prettier --check . || (echo "Prettier check failed. Check logs for details." && exit 1)
