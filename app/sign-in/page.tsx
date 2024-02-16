@@ -1,5 +1,10 @@
+import { Metadata } from 'next';
 import { UserIcon } from '@heroicons/react/24/outline';
 import { lusitana } from '@/app/ui/fonts';
+
+export const metadata: Metadata = {
+  title: 'Sign In',
+};
 
 export default function Page() {
   return (
