@@ -35,7 +35,7 @@ export default function Page() {
             <input
               type="text"
               placeholder="name@gmail.com"
-              className="bg-white text-gray-800 placeholder:text-gray-500"
+              className="grow bg-white text-gray-800 placeholder:text-gray-500"
             />
           </label>
           <button className="btn rounded-md border-none bg-wvu-blue text-lg font-semibold text-white hover:bg-wvu-primary-blue">
