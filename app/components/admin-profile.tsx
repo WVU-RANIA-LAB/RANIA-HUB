@@ -64,6 +64,7 @@ const UserInfoField = ({
   value,
   onChange,
   pattern,
+  customMessage,
 }: {
   label: string;
   id: string;
@@ -72,11 +73,12 @@ const UserInfoField = ({
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   pattern?: string;
+  customMessage?: string;
 }) => {
   const [valid, setValid] = useState(true);
 
   const handleValidation = (input: string, pattern: string | undefined) => {
-    if (!pattern) return true; // If no pattern is provided, consider it valid
+    if (!pattern) return true;
     const regex = new RegExp(pattern);
     return regex.test(input);
   };
@@ -104,6 +106,9 @@ const UserInfoField = ({
         onChange={handleChange}
       />
       {!valid && <p className="mt-1 text-xs text-red-500">Invalid format</p>}
+      {customMessage && (
+        <p className="mt-1 text-xs text-green-500">{customMessage}</p>
+      )}
     </div>
   );
 };
@@ -122,23 +127,29 @@ const UserInfoDisplay = () => {
     speciality: '',
   });
 
-  const [dataSaved, setDataSaved] = useState(false);
+  const [emailChanged, setEmailChanged] = useState(false);
+  const [showVerificationMessage, setShowVerificationMessage] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { id, value } = e.target;
+    if (id === 'email' && value !== formData.email) {
+      setEmailChanged(true);
+      setShowVerificationMessage(false);
+    }
     setFormData((prevState) => ({ ...prevState, [id]: value }));
-    setDataSaved(false);
   };
 
   const handleSave = () => {
     const allFieldsValid = Object.values(formData).every(
-      (value) => value.trim() !== '', // Ensure no field is empty
+      (value) => value.trim() !== '',
     );
     if (allFieldsValid) {
-      // Save form data if all fields are valid
-      setDataSaved(true);
+      if (emailChanged) {
+        setShowVerificationMessage(true);
+        setEmailChanged(false);
+      }
       alert('Data saved successfully!');
     } else {
       alert('Please fill in all fields.');
@@ -171,6 +182,11 @@ const UserInfoDisplay = () => {
             value={formData.email || ''}
             onChange={handleChange}
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            customMessage={
+              showVerificationMessage
+                ? 'Verification email sent. Verify to change your email.'
+                : ''
+            }
           />
           <UserInfoField
             label="Phone Number"
