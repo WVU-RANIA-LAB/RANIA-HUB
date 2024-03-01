@@ -257,7 +257,13 @@ const UserInfoDisplay = () => {
 export default function Profile() {
   return (
     <div className="flex h-screen flex-col bg-wvu-off-white">
-      <NavBar />
+      <NavBar
+        links={[
+          { href: '#', label: 'Residents' },
+          { href: '#', label: 'Doctors' },
+          { href: '#', label: 'Admins' },
+        ]}
+      />
       <div className="flex flex-1 overflow-hidden">
         <div className="flex w-64 flex-col bg-wvu-primary-blue">
           {/* Sidebar buttons */}
