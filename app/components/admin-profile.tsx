@@ -145,13 +145,6 @@ const UserInfoDisplay = () => {
     }
   };
 
-  // Prompt user if they try to navigate away without saving
-  window.onbeforeunload = function () {
-    if (!dataSaved) {
-      return 'Changes you made may not be saved.';
-    }
-  };
-
   return (
     <div className="flex flex-col items-center py-14">
       <div className="w-full max-w-screen-md">
