@@ -13,8 +13,7 @@
     "@prisma/client": "^5.8.1",
     "next": "14.0.4",
     "react": "^18",
-    "react-dom": "^18",
-    "react-router-dom": "^6.22.2"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@types/node": "^20",
