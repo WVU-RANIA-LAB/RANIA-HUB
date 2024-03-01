@@ -14,19 +14,19 @@ export function NavBar() {
       </div>
       <div className="navbar-center">
         <Link
-          href="#"
+          href="dashboard/residents"
           className="mx-4 text-xl text-black hover:text-wvu-blue active:underline"
         >
           Residents
         </Link>
         <Link
-          href="#"
+          href="dashboard/doctors"
           className="mx-4 text-xl text-black hover:text-wvu-blue active:underline"
         >
           Doctors
         </Link>
         <Link
-          href="#"
+          href="dashboard/admins"
           className="mx-4 text-xl text-black hover:text-wvu-blue active:underline"
         >
           Admins
@@ -53,13 +53,17 @@ export function NavBar() {
             className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-wvu-off-white p-2 text-black "
           >
             <li>
-              <a className="hover:bg-wvu-blue-light">Profile</a>
+              <Link
+                href="dashboard/profile"
+                className="hover:bg-wvu-blue-light"
+              >
+                Profile
+              </Link>
             </li>
             <li>
-              <a className="hover:bg-wvu-blue-light">Settings</a>
-            </li>
-            <li>
-              <a className="hover:bg-wvu-blue-light">Logout</a>
+              <Link href="#" className=" text-red-700 hover:bg-wvu-blue-light">
+                Logout
+              </Link>
             </li>
           </ul>
         </div>
