@@ -2,7 +2,21 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { lusitana } from '@/app/ui/fonts';
 
-export function NavBar() {
+<NavBar
+  links={
+    [
+      // Add more links as needed. The example is given below
+      // { href: '/dashboard/home', label: 'Home' },
+    ]
+  }
+/>;
+
+// Prop `links` is an array of link objects passed to the NavBar
+export function NavBar({
+  links,
+}: {
+  links: Array<{ href: string; label: string }>;
+}) {
   return (
     <div className="navbar bg-wvu-warm-gray-light">
       <div className="navbar-start">
@@ -13,24 +27,15 @@ export function NavBar() {
         </h1>
       </div>
       <div className="navbar-center">
-        <Link
-          href="dashboard/residents"
-          className="mx-4 text-xl text-black hover:text-wvu-blue active:underline"
-        >
-          Residents
-        </Link>
-        <Link
-          href="dashboard/doctors"
-          className="mx-4 text-xl text-black hover:text-wvu-blue active:underline"
-        >
-          Doctors
-        </Link>
-        <Link
-          href="dashboard/admins"
-          className="mx-4 text-xl text-black hover:text-wvu-blue active:underline"
-        >
-          Admins
-        </Link>
+        {links.map((link, index) => (
+          <Link
+            key={index}
+            href={link.href}
+            className="mx-4 text-xl text-black hover:text-wvu-blue active:underline"
+          >
+            {link.label}
+          </Link>
+        ))}
       </div>
       <div className="navbar-end">
         <div className="dropdown dropdown-end">
@@ -48,24 +53,7 @@ export function NavBar() {
               />
             </div>
           </div>
-          <ul
-            tabIndex={0}
-            className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-wvu-off-white p-2 text-black "
-          >
-            <li>
-              <Link
-                href="dashboard/profile"
-                className="hover:bg-wvu-blue-light"
-              >
-                Profile
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className=" text-red-700 hover:bg-wvu-blue-light">
-                Logout
-              </Link>
-            </li>
-          </ul>
+          {/* Dropdown or other elements can remain static or also be made dynamic in a similar fashion */}
         </div>
       </div>
     </div>
