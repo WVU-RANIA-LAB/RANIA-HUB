@@ -265,19 +265,6 @@ export default function Profile() {
         ]}
       />
       <div className="flex flex-1 overflow-hidden">
-        <div className="flex w-64 flex-col bg-wvu-primary-blue">
-          {/* Sidebar buttons */}
-          <button className="btn btn-ghost mx-3 my-2 border-2 border-white text-white hover:border-white hover:bg-wvu-primary-gold hover:text-white">
-            Personal Info
-          </button>
-          <button className="btn btn-ghost mx-3 my-2 border-2 border-white text-white hover:border-white hover:bg-wvu-primary-gold hover:text-white">
-            Email
-          </button>
-          <div className="flex-grow"></div>
-          <button className="btn btn-ghost mx-3 my-4 border-2 border-white text-white hover:border-white hover:bg-wvu-primary-gold hover:text-white">
-            Log Out
-          </button>
-        </div>
         <div className="flex flex-1 justify-center overflow-auto">
           <UserInfoDisplay />
         </div>
