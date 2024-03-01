@@ -11,7 +11,6 @@ import { lusitana } from '@/app/ui/fonts';
   }
 />;
 
-// Prop `links` is an array of link objects passed to the NavBar
 export function NavBar({
   links,
 }: {
@@ -53,7 +52,24 @@ export function NavBar({
               />
             </div>
           </div>
-          {/* Dropdown or other elements can remain static or also be made dynamic in a similar fashion */}
+          <ul
+            tabIndex={0}
+            className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-gray-200 p-2 text-black "
+          >
+            <li>
+              <Link
+                href="dashboard/profile"
+                className="hover:bg-wvu-blue-light"
+              >
+                Profile
+              </Link>
+            </li>
+            <li>
+              <Link href="#" className=" text-red-700 hover:bg-wvu-blue-light">
+                Logout
+              </Link>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
