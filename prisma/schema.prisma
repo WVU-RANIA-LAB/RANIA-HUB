@@ -11,7 +11,7 @@ model Resident {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   firstName   String  @map("first_name")
   lastName    String  @map("last_name")
-  email       String
+  email       String  @unique
   phoneNumber String  @map("phone_number")
   address     Address
 
@@ -31,7 +31,7 @@ model Doctor {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   firstName   String  @map("first_name")
   lastName    String  @map("last_name")
-  email       String
+  email       String  @unique
   phoneNumber String  @map("phone_number")
   address     Address
   specialty   String
@@ -50,7 +50,7 @@ model Admin {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   firstName   String  @map("first_name")
   lastName    String  @map("last_name")
-  email       String
+  email       String  @unique
   phoneNumber String  @map("phone_number")
   address     Address
 
