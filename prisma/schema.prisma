@@ -1,15 +1,135 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
-model users {
-  id         String @id @default(auto()) @map("_id") @db.ObjectId
-  first_name String
-  last_name  String
-  role       String
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Resident {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  firstName   String  @map("first_name")
+  lastName    String  @map("last_name")
+  email       String  @unique
+  phoneNumber String  @map("phone_number")
+  address     Address
+
+  doctorIds String[] @map("doctor_ids") @db.ObjectId
+  doctors   Doctor[] @relation(fields: [doctorIds], references: [id])
+
+  contacts              Contact[]
+  medications           Medication[]
+  medicalHistoryEntries MedicalHistoryEntry[]
+  appointments          Appointment[]
+  devices               Device[]
+
+  @@map("residents")
+}
+
+model Doctor {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  firstName   String  @map("first_name")
+  lastName    String  @map("last_name")
+  email       String  @unique
+  phoneNumber String  @map("phone_number")
+  address     Address
+  specialty   String
+
+  residentIds String[]   @map("resident_ids") @db.ObjectId
+  residents   Resident[] @relation(fields: [residentIds], references: [id])
+
+  medications           Medication[]
+  medicalHistoryEntries MedicalHistoryEntry[]
+  appointments          Appointment[]
+
+  @@map("doctors")
+}
+
+model Admin {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  firstName   String  @map("first_name")
+  lastName    String  @map("last_name")
+  email       String  @unique
+  phoneNumber String  @map("phone_number")
+  address     Address
+
+  @@map("admins")
+}
+
+model Contact {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  firstName    String  @map("first_name")
+  lastName     String  @map("last_name")
+  email        String
+  phoneNumber  String  @map("phone_number")
+  address      Address
+  relationship String
+  isEmergency  Boolean @default(false) @map("is_emergency")
+  belongsToId  String  @map("belongs_to_id") @db.ObjectId
+
+  belongsTo Resident @relation(fields: [belongsToId], references: [id])
+
+  @@map("contacts")
+}
+
+model Medication {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  resident       Resident @relation(fields: [residentId], references: [id])
+  residentId     String   @map("resident_id") @db.ObjectId
+  prescribedBy   Doctor   @relation(fields: [doctorId], references: [id])
+  prescribedDate DateTime @default(now()) @map("prescribed_date")
+  name           String
+  instructions   String
+  refills        Int
+  doctorId       String   @db.ObjectId
+
+  @@map("medications")
+}
+
+model MedicalHistoryEntry {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  residentId  String   @map("resident_id") @db.ObjectId
+  editorId    String   @map("editor_id") @db.ObjectId
+  date        DateTime
+  description String
+
+  editor   Doctor   @relation(fields: [editorId], references: [id]) // how to support Doctor | Resident?
+  resident Resident @relation(fields: [residentId], references: [id])
+
+  @@map("medical_history_entries")
+}
+
+model Appointment {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  doctorId    String   @map("doctor_id") @db.ObjectId
+  residentId  String   @map("resident_id") @db.ObjectId
+  location    Address
+  description String
+  date        DateTime
+
+  doctor   Doctor   @relation(fields: [doctorId], references: [id])
+  resident Resident @relation(fields: [residentId], references: [id])
+
+  @@map("appointments")
+}
+
+model Device {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  status      String
+  belongsToId String @map("belongs_to_id") @db.ObjectId
+
+  belongsTo Resident @relation(fields: [belongsToId], references: [id])
+
+  @@map("devices")
+}
+
+type Address {
+  addressLine1 String @map("address_line_1")
+  addressLine2 String @map("address_line_2")
+  city         String
+  state        String
+  zipCode      String @map("zip_code")
 }
