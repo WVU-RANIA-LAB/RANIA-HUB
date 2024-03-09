@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import NavBar from './admin-navbar';
+import Navbar from '@/app/ui/navbar';
 
 const states = [
   'Select State',
@@ -273,13 +273,7 @@ const UserInfoDisplay = () => {
 export default function Profile() {
   return (
     <div className="flex h-screen flex-col bg-wvu-off-white">
-      <NavBar
-        links={[
-          { href: '#', label: 'Residents' },
-          { href: '#', label: 'Doctors' },
-          { href: '#', label: 'Admins' },
-        ]}
-      />
+      <Navbar role="admin" />
       <div className="flex flex-1 overflow-hidden">
         <div className="flex flex-1 justify-center overflow-auto">
           <UserInfoDisplay />

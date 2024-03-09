@@ -1,16 +1,5 @@
-import NavBar from '@/app/components/admin-navbar';
+import Navbar from '@/app/ui/navbar';
 
-NavBar;
 export default function AdminDashboard() {
-  return (
-    <NavBar
-      links={[
-        // Add more links as needed. The example is given below
-        // { href: '/dashboard/home', label: 'Home' },
-        { href: '#', label: 'Residents' },
-        { href: '#', label: 'Doctors' },
-        { href: '#', label: 'Admins' },
-      ]}
-    />
-  );
+  return <Navbar role="admin" />;
 }
