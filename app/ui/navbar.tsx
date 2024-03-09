@@ -2,20 +2,31 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { lusitana } from '@/app/ui/fonts';
 
-<NavBar
-  links={
-    [
-      // Add more links as needed. The example is given below
-      // { href: '/dashboard/home', label: 'Home' },
-    ]
-  }
-/>;
+type Role = 'resident' | 'doctor' | 'admin';
 
-export function NavBar({
-  links,
-}: {
-  links: Array<{ href: string; label: string }>;
-}) {
+const navbarLinks: { [key in Role]: { label: string; href: string }[] } = {
+  resident: [
+    { label: 'Calendar', href: '/resident-dashboard/calendar' },
+    { label: 'Devices', href: '/resident-dashboard/devices' },
+    { label: 'Medical History', href: '/resident-dashboard/medical-history' },
+    { label: 'Contacts', href: '/resident-dashboard/contacts' },
+  ],
+  doctor: [
+    { label: 'Residents', href: '/doctor-dashboard/residents' },
+    { label: 'Calendar', href: '/doctor-dashboard/calendar' },
+  ],
+  admin: [
+    { label: 'Residents', href: '/admin-dashboard/residents' },
+    { label: 'Doctors', href: '/admin-dashboard/doctors' },
+    { label: 'Admins', href: '/admin-dashboard/admins' },
+  ],
+};
+
+type NavbarProps = {
+  role: Role;
+};
+
+export default function NavBar({ role }: NavbarProps) {
   return (
     <div className="navbar bg-wvu-warm-gray-light">
       <div className="navbar-start">
@@ -26,13 +37,13 @@ export function NavBar({
         </h1>
       </div>
       <div className="navbar-center">
-        {links.map((link, index) => (
+        {navbarLinks[role].map(({ label, href }) => (
           <Link
-            key={index}
-            href={link.href}
+            key={label}
+            href={href}
             className="mx-4 text-xl text-black hover:text-wvu-blue active:underline"
           >
-            {link.label}
+            {label}
           </Link>
         ))}
       </div>
@@ -58,7 +69,7 @@ export function NavBar({
           >
             <li>
               <Link
-                href="dashboard/profile"
+                href={`${role}-dashboard/profile`}
                 className="hover:bg-wvu-blue-light"
               >
                 Profile
@@ -75,5 +86,3 @@ export function NavBar({
     </div>
   );
 }
-
-export default NavBar;
