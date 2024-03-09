@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import Image from 'next/image';
+import { UserIcon } from '@heroicons/react/24/solid';
+
 import { lusitana } from '@/app/ui/fonts';
 
 type Role = 'resident' | 'doctor' | 'admin';
@@ -55,12 +56,7 @@ export default function NavBar({ role }: NavbarProps) {
             className="avatar btn btn-circle btn-ghost"
           >
             <div className="w-10 rounded-full">
-              <Image
-                alt="Tailwind CSS Navbar component"
-                src="/images/profile_icon.svg"
-                width="40"
-                height="40"
-              />
+              <UserIcon className="text-black" />
             </div>
           </div>
           <ul
