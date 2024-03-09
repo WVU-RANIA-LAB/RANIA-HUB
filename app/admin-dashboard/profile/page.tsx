@@ -1,4 +1,4 @@
-import Profile from '@/app/components/admin-profile';
+import Profile from '@/app/ui/admin-profile';
 
 export default function Page() {
   return (
