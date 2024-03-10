@@ -2,6 +2,9 @@ import type { NextAuthConfig } from 'next-auth';
 import Email from 'next-auth/providers/nodemailer';
 
 export default {
+  pages: {
+    signIn: '/sign-in',
+  },
   providers: [
     Email({
       id: 'email',
