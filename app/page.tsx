@@ -1,3 +1,3 @@
 export default function Page() {
-  return <main>Root page</main>;
+  return <main>Welcome to RANIA Hub!</main>;
 }

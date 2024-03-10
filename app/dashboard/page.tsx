@@ -1,4 +1,17 @@
+'use client';
+
+import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
+
 export default function Page() {
-  // Need to render the appropriate dashboard based on user's role
-  return <main>Dashboard</main>;
+  const { data: session } = useSession();
+  if (session && session.user) {
+    return (
+      <div>
+        Dashboard
+        <p>{session.user.name}</p>
+      </div>
+    );
+  }
+  return redirect('/sign-in');
 }

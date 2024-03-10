@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { HomeIcon } from '@heroicons/react/24/solid';
 import {
@@ -5,6 +7,7 @@ import {
   Squares2X2Icon,
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
+import { signOut } from 'next-auth/react';
 
 export default function SideNav() {
   return (
@@ -38,8 +41,10 @@ export default function SideNav() {
           </Link>
         </div>
 
-        {/* Sign out button does nothing right now. Need to implement auth first. */}
-        <button className="flex items-center gap-2 rounded-md p-2 hover:bg-red-100 hover:text-red-800">
+        <button
+          onClick={() => signOut()}
+          className="flex items-center gap-2 rounded-md p-2 hover:bg-red-100 hover:text-red-800"
+        >
           <ArrowLeftStartOnRectangleIcon className="w-6" />
           <p>Sign Out</p>
         </button>
