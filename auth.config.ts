@@ -4,6 +4,7 @@ import Email from 'next-auth/providers/nodemailer';
 export default {
   pages: {
     signIn: '/sign-in',
+    verifyRequest: '/verify-request',
   },
   providers: [
     Email({
