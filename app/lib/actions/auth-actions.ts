@@ -1,6 +1,6 @@
 'use server';
 
-import { signIn } from '@/auth';
+import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 import { z } from 'zod';
 
@@ -43,6 +43,22 @@ export async function signInWithGoogle() {
     await signIn('google', {
       redirectTo: '/redirect',
     });
+  } catch (e) {
+    if (e instanceof AuthError) {
+      switch (e.type) {
+        case 'CredentialsSignin':
+          return 'Invalid credentials';
+        default:
+          return 'Something went wrong';
+      }
+    }
+    throw e;
+  }
+}
+
+export async function signOutWithGoogle() {
+  try {
+    await signOut({ redirectTo: '/redirect' });
   } catch (e) {
     if (e instanceof AuthError) {
       switch (e.type) {

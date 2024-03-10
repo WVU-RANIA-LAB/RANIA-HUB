@@ -7,7 +7,7 @@ import {
   Squares2X2Icon,
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
-import { signOut } from 'next-auth/react';
+import { signOutWithGoogle } from '../lib/actions/auth-actions';
 
 export default function SideNav() {
   return (
@@ -42,7 +42,7 @@ export default function SideNav() {
         </div>
 
         <button
-          onClick={() => signOut()}
+          onClick={() => signOutWithGoogle()}
           className="flex items-center gap-2 rounded-md p-2 hover:bg-red-100 hover:text-red-800"
         >
           <ArrowLeftStartOnRectangleIcon className="w-6" />
