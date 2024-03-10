@@ -1,12 +1,22 @@
-import { Metadata } from 'next';
+'use client';
+
 import { UserIcon } from '@heroicons/react/24/outline';
 import { lusitana } from '@/app/ui/fonts';
-
-export const metadata: Metadata = {
-  title: 'Sign In',
-};
+import { signIn, useSession } from 'next-auth/react';
 
 export default function Page() {
+  const { data: session } = useSession();
+
+  if (session && session.user) {
+    return (
+      <h1
+        className={`${lusitana.className} text-5xl font-bold text-wvu-primary-blue antialiased`}
+      >
+        Redirect me plz
+      </h1>
+    );
+  }
+
   return (
     <main className="flex min-h-screen items-center bg-wvu-off-white">
       <div className="mx-auto flex max-w-lg flex-col text-center">
@@ -19,7 +29,10 @@ export default function Page() {
           Sign in to RANIA Hub
         </p>
 
-        <button className="btn rounded-md border-2 border-gray-400 bg-white text-lg font-semibold text-gray-800 hover:bg-gray-100">
+        <button
+          onClick={() => signIn()}
+          className="btn rounded-md border-2 border-gray-400 bg-white text-lg font-semibold text-gray-800 hover:bg-gray-100"
+        >
           Sign In With Google
         </button>
 

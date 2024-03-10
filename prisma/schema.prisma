@@ -17,19 +17,19 @@ model User {
   address     Address
   specialty?   String
 
-  doctorIds? String[] @map("doctor_ids") @db.ObjectId
-  doctors?   Doctor[] @relation(fields: [doctorIds], references: [id])
+  doctorIds String[] @map("doctor_ids") @db.ObjectId
+  doctors   Doctor[] @relation(fields: [doctorIds], references: [id])
 
-  residentIds? String[]   @map("resident_ids") @db.ObjectId
-  residents?   Resident[] @relation(fields: [residentIds], references: [id])
+  residentIds String[]   @map("resident_ids") @db.ObjectId
+  residents   Resident[] @relation(fields: [residentIds], references: [id])
 
-  contacts?              Contact[]
-  medications?           Medication[]
-  medicalHistoryEntries? MedicalHistoryEntry[]
-  appointments?          Appointment[]
-  devices?               Device[]
+  contacts?             Contact[]
+  medications           Medication[]
+  medicalHistoryEntries MedicalHistoryEntry[]
+  appointments?         Appointment[]
+  devices               Device[]
 
-  @@map("residents")
+  @@map("users")
 }
 
 model Contact {
