@@ -7,54 +7,79 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Resident {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  firstName   String  @map("first_name")
-  lastName    String  @map("last_name")
-  email       String  @unique
-  phoneNumber String  @map("phone_number")
-  address     Address
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @map("user_id") @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
 
-  doctorIds String[] @map("doctor_ids") @db.ObjectId
-  doctors   Doctor[] @relation(fields: [doctorIds], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  contacts              Contact[]
-  medications           Medication[]
-  medicalHistoryEntries MedicalHistoryEntry[]
-  appointments          Appointment[]
-  devices               Device[]
-
-  @@map("residents")
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
 }
 
-model Doctor {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  firstName   String  @map("first_name")
-  lastName    String  @map("last_name")
-  email       String  @unique
-  phoneNumber String  @map("phone_number")
-  address     Address
-  specialty   String
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique @map("session_token")
+  userId       String   @db.ObjectId
+  expires      DateTime
 
-  residentIds String[]   @map("resident_ids") @db.ObjectId
-  residents   Resident[] @relation(fields: [residentIds], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  medications           Medication[]
-  medicalHistoryEntries MedicalHistoryEntry[]
-  appointments          Appointment[]
-
-  @@map("doctors")
+  @@map("sessions")
 }
 
-model Admin {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  firstName   String  @map("first_name")
-  lastName    String  @map("last_name")
-  email       String  @unique
-  phoneNumber String  @map("phone_number")
-  address     Address
+model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-  @@map("admins")
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model User {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  firstName     String?   @map("first_name")
+  lastName      String?   @map("last_name")
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
+  phoneNumber   String?   @map("phone_number")
+  specialty     String?
+  address       Address?
+  role          Role      @default(RESIDENT)
+
+  residents   User[]   @relation("DoctorsResidents", fields: [residentIds], references: [id])
+  residentIds String[] @map("resident_ids") @db.ObjectId
+  doctors     User[]   @relation("DoctorsResidents", fields: [doctorIds], references: [id])
+  doctorIds   String[] @db.ObjectId
+
+  receivedPrescriptions   Medication[] @relation("ReceivedPrescription")
+  prescribedPrescriptions Medication[] @relation("PrescribedPrescription")
+
+  receivedMedicalHistoryEntries MedicalHistoryEntry[] @relation("ReceivedMedicalHistoryEntry")
+  authoredMedicalHistoryEntries MedicalHistoryEntry[] @relation("AuthoredMedicalHistoryEntry")
+
+  residentAppointments Appointment[] @relation("ResidentAppointment")
+  doctorAppointments   Appointment[] @relation("DoctorAppointment")
+
+  contacts Contact[]
+  devices  Device[]
+
+  accounts Account[]
+  sessions Session[]
+
+  @@map("users")
 }
 
 model Contact {
@@ -66,50 +91,54 @@ model Contact {
   address      Address
   relationship String
   isEmergency  Boolean @default(false) @map("is_emergency")
-  belongsToId  String  @map("belongs_to_id") @db.ObjectId
 
-  belongsTo Resident @relation(fields: [belongsToId], references: [id])
+  belongsTo   User   @relation(fields: [belongsToId], references: [id])
+  belongsToId String @map("belongs_to_id") @db.ObjectId
 
   @@map("contacts")
 }
 
 model Medication {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  resident       Resident @relation(fields: [residentId], references: [id])
-  residentId     String   @map("resident_id") @db.ObjectId
-  prescribedBy   Doctor   @relation(fields: [doctorId], references: [id])
-  prescribedDate DateTime @default(now()) @map("prescribed_date")
   name           String
+  prescribedDate DateTime @default(now()) @map("prescribed_date")
   instructions   String
   refills        Int
-  doctorId       String   @db.ObjectId
+
+  resident   User   @relation("ReceivedPrescription", fields: [residentId], references: [id])
+  residentId String @map("resident_id") @db.ObjectId
+
+  doctor   User   @relation("PrescribedPrescription", fields: [doctorId], references: [id])
+  doctorId String @map("doctor_id") @db.ObjectId
 
   @@map("medications")
 }
 
 model MedicalHistoryEntry {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  residentId  String   @map("resident_id") @db.ObjectId
-  editorId    String   @map("editor_id") @db.ObjectId
   date        DateTime
   description String
 
-  editor   Doctor   @relation(fields: [editorId], references: [id]) // how to support Doctor | Resident?
-  resident Resident @relation(fields: [residentId], references: [id])
+  resident   User   @relation("ReceivedMedicalHistoryEntry", fields: [residentId], references: [id])
+  residentId String @map("resident_id") @db.ObjectId
+
+  editor   User   @relation("AuthoredMedicalHistoryEntry", fields: [editorId], references: [id])
+  editorId String @map("editor_id") @db.ObjectId
 
   @@map("medical_history_entries")
 }
 
 model Appointment {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  doctorId    String   @map("doctor_id") @db.ObjectId
-  residentId  String   @map("resident_id") @db.ObjectId
   location    Address
   description String
   date        DateTime
 
-  doctor   Doctor   @relation(fields: [doctorId], references: [id])
-  resident Resident @relation(fields: [residentId], references: [id])
+  resident   User   @relation("ResidentAppointment", fields: [residentId], references: [id])
+  residentId String @map("resident_id") @db.ObjectId
+
+  doctor   User   @relation("DoctorAppointment", fields: [doctorId], references: [id])
+  doctorId String @map("doctor_id") @db.ObjectId
 
   @@map("appointments")
 }
@@ -119,9 +148,9 @@ model Device {
   name        String
   description String
   status      String
-  belongsToId String @map("belongs_to_id") @db.ObjectId
 
-  belongsTo Resident @relation(fields: [belongsToId], references: [id])
+  belongsTo   User   @relation(fields: [belongsToId], references: [id])
+  belongsToId String @map("belongs_to_id") @db.ObjectId
 
   @@map("devices")
 }
@@ -132,4 +161,10 @@ type Address {
   city         String
   state        String
   zipCode      String @map("zip_code")
+}
+
+enum Role {
+  RESIDENT
+  DOCTOR
+  ADMIN
 }
