@@ -1,6 +1,6 @@
 'use client';
 
-import { ExclamationCircleIcon, UserIcon } from '@heroicons/react/24/outline';
+import { UserIcon } from '@heroicons/react/24/outline';
 import { useFormState, useFormStatus } from 'react-dom';
 
 import { signInWithEmail } from '@/app/lib/actions/auth-actions';
