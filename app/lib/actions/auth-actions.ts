@@ -21,7 +21,10 @@ export async function signInWithEmail(
       return 'Please enter a valid email address';
     }
 
-    await signIn('email', { email: result.data.email });
+    await signIn('email', {
+      email: result.data.email,
+      redirectTo: '/redirect',
+    });
   } catch (e) {
     if (e instanceof AuthError) {
       switch (e.type) {
