@@ -1,9 +1,7 @@
 'use server';
 
 import { signIn } from '@/auth';
-import { profile } from 'console';
 import { AuthError } from 'next-auth';
-import email from 'next-auth/providers/email';
 import { z } from 'zod';
 
 const SignInFormSchema = z.object({
