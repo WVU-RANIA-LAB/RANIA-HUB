@@ -1,15 +1,169 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
-model users {
-  id         String @id @default(auto()) @map("_id") @db.ObjectId
-  first_name String
-  last_name  String
-  role       String
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @map("user_id") @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique @map("session_token")
+  userId       String   @db.ObjectId
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model User {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
+  phoneNumber   String?   @map("phone_number")
+  specialty     String?
+  address       Address?
+  role          Role      @default(RESIDENT)
+
+  residents   User[]   @relation("DoctorsResidents", fields: [residentIds], references: [id])
+  residentIds String[] @map("resident_ids") @db.ObjectId
+  doctors     User[]   @relation("DoctorsResidents", fields: [doctorIds], references: [id])
+  doctorIds   String[] @db.ObjectId
+
+  receivedPrescriptions   Medication[] @relation("ReceivedPrescription")
+  prescribedPrescriptions Medication[] @relation("PrescribedPrescription")
+
+  receivedMedicalHistoryEntries MedicalHistoryEntry[] @relation("ReceivedMedicalHistoryEntry")
+  authoredMedicalHistoryEntries MedicalHistoryEntry[] @relation("AuthoredMedicalHistoryEntry")
+
+  residentAppointments Appointment[] @relation("ResidentAppointment")
+  doctorAppointments   Appointment[] @relation("DoctorAppointment")
+
+  contacts Contact[]
+  devices  Device[]
+
+  accounts Account[]
+  sessions Session[]
+
+  @@map("users")
+}
+
+model Contact {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  firstName    String  @map("first_name")
+  lastName     String  @map("last_name")
+  email        String
+  phoneNumber  String  @map("phone_number")
+  address      Address
+  relationship String
+  isEmergency  Boolean @default(false) @map("is_emergency")
+
+  belongsTo   User   @relation(fields: [belongsToId], references: [id])
+  belongsToId String @map("belongs_to_id") @db.ObjectId
+
+  @@map("contacts")
+}
+
+model Medication {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  prescribedDate DateTime @default(now()) @map("prescribed_date")
+  instructions   String
+  refills        Int
+
+  resident   User   @relation("ReceivedPrescription", fields: [residentId], references: [id])
+  residentId String @map("resident_id") @db.ObjectId
+
+  doctor   User   @relation("PrescribedPrescription", fields: [doctorId], references: [id])
+  doctorId String @map("doctor_id") @db.ObjectId
+
+  @@map("medications")
+}
+
+model MedicalHistoryEntry {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  date        DateTime
+  description String
+
+  resident   User   @relation("ReceivedMedicalHistoryEntry", fields: [residentId], references: [id])
+  residentId String @map("resident_id") @db.ObjectId
+
+  editor   User   @relation("AuthoredMedicalHistoryEntry", fields: [editorId], references: [id])
+  editorId String @map("editor_id") @db.ObjectId
+
+  @@map("medical_history_entries")
+}
+
+model Appointment {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  location    Address
+  description String
+  date        DateTime
+
+  resident   User   @relation("ResidentAppointment", fields: [residentId], references: [id])
+  residentId String @map("resident_id") @db.ObjectId
+
+  doctor   User   @relation("DoctorAppointment", fields: [doctorId], references: [id])
+  doctorId String @map("doctor_id") @db.ObjectId
+
+  @@map("appointments")
+}
+
+model Device {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  status      String
+
+  belongsTo   User   @relation(fields: [belongsToId], references: [id])
+  belongsToId String @map("belongs_to_id") @db.ObjectId
+
+  @@map("devices")
+}
+
+type Address {
+  addressLine1 String @map("address_line_1")
+  addressLine2 String @map("address_line_2")
+  city         String
+  state        String
+  zipCode      String @map("zip_code")
+}
+
+enum Role {
+  RESIDENT
+  DOCTOR
+  ADMIN
 }
