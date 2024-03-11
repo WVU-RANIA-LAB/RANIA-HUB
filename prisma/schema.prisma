@@ -49,12 +49,11 @@ model VerificationToken {
 }
 
 model User {
-  name          String
-  image         String
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
   email         String?   @unique
   emailVerified DateTime? @map("email_verified")
+  image         String?
   phoneNumber   String?   @map("phone_number")
   specialty     String?
   address       Address?
