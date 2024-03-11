@@ -41,8 +41,8 @@ export async function signInWithGoogle() {
   } catch (e) {
     if (e instanceof AuthError) {
       switch (e.type) {
-        case 'CredentialsSignin':
-          return 'Invalid credentials';
+        case 'OAuthCallbackError':
+          return 'Problem signing in with Google';
         default:
           return 'Something went wrong';
       }
@@ -57,8 +57,8 @@ export async function signOutWithGoogle() {
   } catch (e) {
     if (e instanceof AuthError) {
       switch (e.type) {
-        case 'CredentialsSignin':
-          return 'Invalid credentials';
+        case 'SignOutError':
+          return 'Failed to terminate session';
         default:
           return 'Something went wrong';
       }
