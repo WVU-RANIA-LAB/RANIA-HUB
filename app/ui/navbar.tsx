@@ -1,22 +1,21 @@
 import Link from 'next/link';
 import { UserIcon } from '@heroicons/react/24/solid';
+import { Role } from '@prisma/client';
 
 import { lusitana } from '@/app/ui/fonts';
 
-type Role = 'resident' | 'doctor' | 'admin';
-
-const navbarLinks: { [key in Role]: { label: string; href: string }[] } = {
-  resident: [
+const navbarLinks: Record<Role, Array<{ label: string; href: string }>> = {
+  RESIDENT: [
     { label: 'Calendar', href: '/resident-dashboard/calendar' },
     { label: 'Devices', href: '/resident-dashboard/devices' },
     { label: 'Medical History', href: '/resident-dashboard/medical-history' },
     { label: 'Contacts', href: '/resident-dashboard/contacts' },
   ],
-  doctor: [
+  DOCTOR: [
     { label: 'Residents', href: '/doctor-dashboard/residents' },
     { label: 'Calendar', href: '/doctor-dashboard/calendar' },
   ],
-  admin: [
+  ADMIN: [
     { label: 'Residents', href: '/admin-dashboard/residents' },
     { label: 'Doctors', href: '/admin-dashboard/doctors' },
     { label: 'Admins', href: '/admin-dashboard/admins' },
@@ -65,7 +64,7 @@ export default function NavBar({ role }: NavbarProps) {
           >
             <li>
               <Link
-                href={`${role}-dashboard/profile`}
+                href={`${role.toLowerCase()}-dashboard/profile`}
                 className="hover:bg-wvu-blue-light"
               >
                 Profile
