@@ -1,3 +1,5 @@
+import Navbar from '@/app/ui/navbar';
+
 export default function ResidentDashboard() {
-  return <div>Resident dashboard</div>;
+  return <Navbar role="resident" />;
 }
