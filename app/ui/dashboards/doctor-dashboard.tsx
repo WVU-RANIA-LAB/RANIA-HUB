@@ -1,3 +1,5 @@
+import Navbar from '@/app/ui/navbar';
+
 export default function DoctorDashboard() {
-  return <div>Doctor dashboard</div>;
+  return <Navbar role="doctor" />;
 }
