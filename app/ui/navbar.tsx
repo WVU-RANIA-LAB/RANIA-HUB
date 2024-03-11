@@ -26,7 +26,7 @@ type NavbarProps = {
   role: Role;
 };
 
-export default function NavBar({ role }: NavbarProps) {
+export default function Navbar({ role }: NavbarProps) {
   return (
     <div className="navbar bg-wvu-warm-gray-light">
       <div className="navbar-start">
