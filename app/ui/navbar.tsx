@@ -64,7 +64,7 @@ export default function Navbar({ role }: NavbarProps) {
           >
             <li>
               <Link
-                href={`${role.toLowerCase()}-dashboard/profile`}
+                href={`/${role.toLowerCase()}-dashboard/profile`}
                 className="hover:bg-wvu-blue-light"
               >
                 Profile
