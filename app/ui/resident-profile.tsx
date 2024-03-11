@@ -124,7 +124,7 @@ const UserInfoDisplay = () => {
     city: '',
     state: 'Select State',
     zipCode: '',
-    speciality: '',
+    emergency_contact: '',
   });
 
   const [emailChanged, setEmailChanged] = useState(false);
@@ -249,10 +249,10 @@ const UserInfoDisplay = () => {
             type="text"
           />
           <UserInfoField
-            label="Speciality"
-            id="speciality"
+            label="Emergency Contact"
+            id="emergency_contact"
             placeholder="Type here"
-            value={formData.speciality || ''}
+            value={formData.emergency_contact || ''}
             onChange={handleChange}
             type="text"
           />
@@ -273,7 +273,7 @@ const UserInfoDisplay = () => {
 export default function Profile() {
   return (
     <div className="flex h-screen flex-col bg-wvu-off-white">
-      <Navbar role="admin" />
+      <Navbar role="resident" />
       <div className="flex flex-1 overflow-hidden">
         <div className="flex flex-1 justify-center overflow-auto">
           <UserInfoDisplay />
