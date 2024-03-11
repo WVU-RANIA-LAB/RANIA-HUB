@@ -52,8 +52,7 @@ model User {
   name          String
   image         String
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  firstName     String?   @map("first_name")
-  lastName      String?   @map("last_name")
+  name          String?
   email         String?   @unique
   emailVerified DateTime? @map("email_verified")
   phoneNumber   String?   @map("phone_number")
