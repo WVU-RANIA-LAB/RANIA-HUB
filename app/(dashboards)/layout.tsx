@@ -16,9 +16,9 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div>
+    <div className="flex min-h-screen flex-col">
       <Navbar role={session.user.role} />
-      <div>{children}</div>
+      {children}
     </div>
   );
 }
