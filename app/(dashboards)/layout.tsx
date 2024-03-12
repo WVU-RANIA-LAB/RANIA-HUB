@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { redirect } from 'next/navigation';
 
 import { auth } from '@/auth';
 import Navbar from '@/app/ui/navbar';
@@ -11,13 +10,9 @@ export default async function DashboardLayout({
 }: DashboardLayoutProps) {
   const session = await auth();
 
-  if (!session?.user) {
-    redirect('/redirect');
-  }
-
   return (
     <div className="flex min-h-screen flex-col">
-      <Navbar role={session.user.role} />
+      <Navbar role={session!.user!.role} />
       {children}
     </div>
   );
