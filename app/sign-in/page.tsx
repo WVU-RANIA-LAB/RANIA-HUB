@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
-import { UserIcon } from '@heroicons/react/24/outline';
+
 import { lusitana } from '@/app/ui/fonts';
+import SignInForm from '@/app/ui/signin-form';
 
 export const metadata: Metadata = {
   title: 'Sign In',
@@ -29,22 +30,7 @@ export default function Page() {
           <hr className="flex-grow border border-gray-300" />
         </div>
 
-        <div className="flex flex-col gap-y-6">
-          <label className="input flex items-center gap-2 border-gray-400 bg-white">
-            <UserIcon className="h-4 text-gray-500" />
-            <input
-              type="text"
-              placeholder="name@gmail.com"
-              className="grow bg-white text-gray-800 placeholder:text-gray-500"
-            />
-          </label>
-          <button className="btn rounded-md border-none bg-wvu-blue text-lg font-semibold text-white hover:bg-wvu-primary-blue">
-            Sign In With Email
-          </button>
-          <p className="text-sm text-gray-500">
-            We&apos;ll email you a magic link for a password-free sign in.
-          </p>
-        </div>
+        <SignInForm />
       </div>
     </main>
   );
