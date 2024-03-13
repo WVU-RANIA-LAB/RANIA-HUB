@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import Email from 'next-auth/providers/nodemailer';
+import GoogleProvider from 'next-auth/providers/google';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { Role } from '@prisma/client';
 import {} from 'next-auth/jwt';
@@ -41,6 +42,10 @@ export const {
         },
       },
       from: process.env.EMAIL_FROM,
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
 });

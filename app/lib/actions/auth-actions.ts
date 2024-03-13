@@ -32,3 +32,21 @@ export async function signInWithEmail(
     throw e;
   }
 }
+
+export async function signInWithGoogle() {
+  try {
+    await signIn('google', {
+      redirectTo: '/redirect',
+    });
+  } catch (e) {
+    if (e instanceof AuthError) {
+      switch (e.type) {
+        case 'OAuthCallbackError':
+          return 'Problem signing in with Google';
+        default:
+          return 'Something went wrong';
+      }
+    }
+    throw e;
+  }
+}
