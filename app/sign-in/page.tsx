@@ -2,7 +2,7 @@
 
 import { lusitana } from '@/app/ui/fonts';
 import SignInForm from '@/app/ui/signin-form';
-import { signInWithGoogle } from '../lib/actions/auth-actions';
+import { signInWithGoogle } from '@/app/lib/actions/auth-actions';
 
 export default function Page() {
   return (
