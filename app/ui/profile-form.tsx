@@ -108,7 +108,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
         </div>
         <div className="flex flex-col">
           <label htmlFor="state" className="mb-1 text-gray-800">
-            State
+            State/Territory
           </label>
           <select
             id="state"
