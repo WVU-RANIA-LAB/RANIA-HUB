@@ -59,6 +59,8 @@ export default function ProfileForm({ user }: ProfileFormProps) {
             id="phone-number"
             name="phoneNumber"
             type="tel"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            placeholder="XXX-XXX-XXXX"
             defaultValue={user.phoneNumber ?? ''}
             required
             className="input bg-gray-200 text-gray-800"
