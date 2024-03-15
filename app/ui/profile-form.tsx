@@ -157,6 +157,10 @@ export default function ProfileForm({ user }: ProfileFormProps) {
       </div>
 
       <Submit />
+
+      {state.message && (
+        <p className="my-4 text-sm text-gray-600">{state.message}</p>
+      )}
     </form>
   );
 }
