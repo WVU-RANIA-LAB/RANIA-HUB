@@ -3,6 +3,7 @@ import { UserIcon } from '@heroicons/react/24/solid';
 import { Role } from '@prisma/client';
 
 import { lusitana } from '@/app/ui/fonts';
+import SignOutButton from './sign-out-btn';
 
 const navbarLinks: Record<Role, Array<{ label: string; href: string }>> = {
   RESIDENT: [
@@ -71,9 +72,7 @@ export default function Navbar({ role }: NavbarProps) {
               </Link>
             </li>
             <li>
-              <Link href="#" className=" text-red-700 hover:bg-wvu-blue-light">
-                Logout
-              </Link>
+              <SignOutButton />
             </li>
           </ul>
         </div>
