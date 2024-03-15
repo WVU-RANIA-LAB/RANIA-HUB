@@ -1,6 +1,12 @@
+import { Metadata } from 'next';
+
 import { auth } from '@/auth';
 import { fetchUserByEmail } from '@/app/lib/data';
 import ProfileForm from '@/app/ui/profile-form';
+
+export const metadata: Metadata = {
+  title: 'Profile',
+};
 
 export default async function Page() {
   const session = await auth();
