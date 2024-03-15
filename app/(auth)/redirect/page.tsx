@@ -10,7 +10,7 @@ export default async function Page() {
 
   switch (session.user.role) {
     case 'RESIDENT':
-      redirect('/dashboard');
+      redirect('/resident-dashboard');
     case 'DOCTOR':
       redirect('/doctor-dashboard/residents');
     case 'ADMIN':
