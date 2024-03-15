@@ -1,8 +1,12 @@
-'use client';
+import { Metadata } from 'next';
 
 import { lusitana } from '@/app/ui/fonts';
+import SignInWithGoogleButton from '@/app/ui/google-sign-in-btn';
 import SignInForm from '@/app/ui/signin-form';
-import { signInWithGoogle } from '@/app/lib/actions/auth-actions';
+
+export const metadata: Metadata = {
+  title: 'Sign In',
+};
 
 export default function Page() {
   return (
@@ -17,12 +21,7 @@ export default function Page() {
           Sign in to RANIA Hub
         </p>
 
-        <button
-          onClick={() => signInWithGoogle()}
-          className="btn rounded-md border-2 border-gray-400 bg-white text-lg font-semibold text-gray-800 hover:bg-gray-100"
-        >
-          Sign In With Google
-        </button>
+        <SignInWithGoogleButton />
 
         <div className="my-8 flex items-center justify-between">
           <hr className="flex-grow border border-gray-300" />
