@@ -28,20 +28,20 @@ type NavbarProps = {
 
 export default function Navbar({ role }: NavbarProps) {
   return (
-    <div className="navbar bg-wvu-warm-gray-light">
+    <nav className="navbar bg-gray-200">
       <div className="navbar-start">
         <h1
-          className={`${lusitana.className} text-5xl font-bold text-wvu-primary-blue antialiased`}
+          className={`${lusitana.className} text-4xl font-bold text-wvu-primary-blue antialiased`}
         >
           RANIA
         </h1>
       </div>
-      <div className="navbar-center">
+      <div className="navbar-center gap-x-8">
         {navbarLinks[role].map(({ label, href }) => (
           <Link
             key={label}
             href={href}
-            className="mx-4 text-xl text-black hover:text-wvu-blue active:underline"
+            className={`text-2xl text-wvu-primary-blue hover:text-wvu-blue active:underline ${lusitana.className}`}
           >
             {label}
           </Link>
@@ -54,7 +54,7 @@ export default function Navbar({ role }: NavbarProps) {
             role="button"
             className="avatar btn btn-circle btn-ghost"
           >
-            <div className="w-10 rounded-full">
+            <div className="w-8 rounded-full">
               <UserIcon className="text-black" />
             </div>
           </div>
@@ -78,6 +78,6 @@ export default function Navbar({ role }: NavbarProps) {
           </ul>
         </div>
       </div>
-    </div>
+    </nav>
   );
 }
