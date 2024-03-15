@@ -81,7 +81,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
         </div>
         <div className="flex flex-col">
           <label htmlFor="address-line-2" className="mb-1 text-gray-800">
-            Address Line 2
+            Address Line 2 (Optional)
           </label>
           <input
             id="address-line-2"
