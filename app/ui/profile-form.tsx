@@ -45,9 +45,9 @@ export default function ProfileForm({ user }: ProfileFormProps) {
             name="email"
             type="email"
             defaultValue={user.email ?? ''}
-            disabled
+            readOnly
             required
-            className="input border-none bg-gray-200 text-gray-800 disabled:bg-gray-200 disabled:text-gray-400"
+            className="input border-none bg-gray-200 text-gray-400"
           />
           <ErrorsList errors={state.errors.email} />
         </div>
