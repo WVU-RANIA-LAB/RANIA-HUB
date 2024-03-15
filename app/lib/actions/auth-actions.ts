@@ -1,6 +1,6 @@
 'use server';
 
-import { signIn } from '@/auth';
+import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 import { z } from 'zod';
 
@@ -43,6 +43,22 @@ export async function signInWithGoogle() {
       switch (e.type) {
         case 'OAuthCallbackError':
           return 'Problem signing in with Google';
+        default:
+          return 'Something went wrong';
+      }
+    }
+    throw e;
+  }
+}
+
+export async function signOutWithGoogle() {
+  try {
+    await signOut({ redirectTo: '/redirect' });
+  } catch (e) {
+    if (e instanceof AuthError) {
+      switch (e.type) {
+        case 'SignOutError':
+          return 'Failed to terminate session';
         default:
           return 'Something went wrong';
       }
