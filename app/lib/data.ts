@@ -13,3 +13,23 @@ export async function fetchUserByEmail(email: string) {
     throw new Error('Failed to fetch user');
   }
 }
+
+export async function fetchMedicationsByUser(userId: string){
+  noStore();
+
+  try{
+    const medications = await prisma.medication.findMany({
+      where: {
+        OR: [
+          { residentId: { equals: userId } },
+          { doctorId: { equals: userId } }
+        ]
+      }
+    });
+
+    return medications;
+
+  } catch (e) {
+    throw new Error('Failed to fetch medications');
+  }
+}

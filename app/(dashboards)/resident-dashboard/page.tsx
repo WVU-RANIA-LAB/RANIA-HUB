@@ -1,3 +1,3 @@
 export default function Page() {
-  return <main>Resident Dashboard Placeholder</main>;
+  return <main>Resident View Medications Placeholder</main>;
 }
