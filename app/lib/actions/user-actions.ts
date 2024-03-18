@@ -82,7 +82,7 @@ export async function updateProfile(
       },
     });
   } catch (e) {
-    return { message: 'Database Error: Failed to Update Invoice.', errors: {} };
+    return { message: 'Database Error: Failed to update user.', errors: {} };
   }
 
   revalidatePath(`/${role.toLowerCase()}-dashboard/profile`);
