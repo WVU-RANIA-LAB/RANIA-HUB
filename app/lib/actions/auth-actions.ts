@@ -51,7 +51,7 @@ export async function signInWithGoogle() {
   }
 }
 
-export async function signOutWithGoogle() {
+export async function signOutUser() {
   try {
     await signOut({ redirectTo: '/redirect' });
   } catch (e) {
