@@ -31,7 +31,30 @@ export async function fetchFilteredResidents(
     });
     return residents;
   } catch (e) {
-    console.error(e);
+    console.error('Database Error:', e);
     throw new Error('Failed to fetch residents');
+  }
+}
+
+export async function fetchResidentsPages(
+  residentIds: string[],
+  query: string,
+) {
+  noStore();
+
+  try {
+    const count = await prisma.user.count({
+      where: {
+        AND: [
+          { id: { in: residentIds } },
+          { name: { contains: query, mode: 'insensitive' } },
+        ],
+      },
+    });
+    const totalPages = Math.ceil(count / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('Failed to fetch total number of residents');
   }
 }
