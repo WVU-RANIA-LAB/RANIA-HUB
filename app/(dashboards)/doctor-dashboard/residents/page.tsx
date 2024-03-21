@@ -2,8 +2,10 @@ import { Metadata } from 'next';
 
 import { auth } from '@/auth';
 import { fetchUserByEmail } from '@/app/lib/data/data';
+import { fetchResidentsPages } from '@/app/lib/data/doctor-data';
 import Search from '@/app/ui/search';
 import ResidentsTable from '@/app/ui/doctor-dashboard/residents-table';
+import Pagination from '@/app/ui/pagination';
 
 export const metadata: Metadata = {
   title: 'Residents',
@@ -22,6 +24,7 @@ export default async function Page({ searchParams }: PageProps) {
 
   const session = await auth();
   const doctor = await fetchUserByEmail(session!.user!.email!);
+  const totalPages = await fetchResidentsPages(doctor.residentIds, query);
 
   return (
     <main className="grow bg-white">
@@ -31,6 +34,7 @@ export default async function Page({ searchParams }: PageProps) {
         query={query}
         currentPage={currentPage}
       />
+      <Pagination totalPages={totalPages} />
     </main>
   );
 }
