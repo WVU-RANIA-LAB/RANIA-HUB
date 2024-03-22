@@ -1,4 +1,5 @@
 import { fetchFilteredResidents } from '@/app/lib/data/doctor-data';
+import { lusitana } from '../fonts';
 
 type ResidentsTableProps = {
   residentIds: string[];
@@ -19,7 +20,19 @@ export default async function ResidentsTable({
 
   return (
     <div className="overflow-x-auto">
-      <table className="table">
+      <div className="flex flex-col gap-y-2 md:hidden">
+        {residents.map((resident) => (
+          <div key={resident.id} className="card bg-gray-100">
+            <div className="card-body">
+              <h2 className={`text-lg ${lusitana.className}`}>
+                {resident.name}
+              </h2>
+              <p className="text-sm text-gray-700">{resident.email}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <table className="table hidden md:table">
         <thead>
           <tr>
             <th scope="col">Name</th>
