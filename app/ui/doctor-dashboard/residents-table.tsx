@@ -1,5 +1,5 @@
 import { fetchFilteredResidents } from '@/app/lib/data/doctor-data';
-import { lusitana } from '../fonts';
+import { lusitana } from '@/app/ui/fonts';
 
 type ResidentsTableProps = {
   residentIds: string[];
