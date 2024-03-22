@@ -18,7 +18,13 @@ export async function fetchFilteredResidents(
       where: {
         AND: [
           { id: { in: residentIds } },
-          { name: { contains: query, mode: 'insensitive' } },
+          {
+            OR: [
+              { name: { contains: query, mode: 'insensitive' } },
+              { email: { contains: query, mode: 'insensitive' } },
+              { phoneNumber: { contains: query, mode: 'insensitive' } },
+            ],
+          },
         ],
       },
       select: {
@@ -47,7 +53,13 @@ export async function fetchResidentsPages(
       where: {
         AND: [
           { id: { in: residentIds } },
-          { name: { contains: query, mode: 'insensitive' } },
+          {
+            OR: [
+              { name: { contains: query, mode: 'insensitive' } },
+              { email: { contains: query, mode: 'insensitive' } },
+              { phoneNumber: { contains: query, mode: 'insensitive' } },
+            ],
+          },
         ],
       },
     });
