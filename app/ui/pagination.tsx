@@ -20,18 +20,21 @@ export default function Pagination({ totalPages }: PaginationProps) {
     return `${pathname}?${params.toString()}`;
   }
 
-  const allPages = generatePagination(currentPage, totalPages);
+  const allPages = generatePagination(currentPage, totalPages).map((page) => ({
+    key: crypto.randomUUID(),
+    page,
+  }));
 
   return (
-    <div>
+    <div className="join">
       <PaginationArrow
         href={createPageURL(currentPage - 1)}
         direction="left"
         isDisabled={currentPage <= 1}
       />
-      {allPages.map((page) => (
+      {allPages.map(({ key, page }) => (
         <PaginationNumber
-          key={page}
+          key={key}
           page={page}
           href={createPageURL(page)}
           isActive={currentPage === page}
@@ -53,7 +56,9 @@ type PaginationNumberProps = {
 };
 
 function PaginationNumber({ page, href, isActive }: PaginationNumberProps) {
-  const className = clsx('btn join-item');
+  const className = clsx('btn join-item', {
+    'btn-active': isActive,
+  });
 
   return isActive || page === '...' ? (
     <div className={className}>{page}</div>
@@ -77,7 +82,12 @@ function PaginationArrow({
 }: PaginationArrowProps) {
   const className = clsx('btn join-item', { 'btn-disabled': isDisabled });
 
-  const icon = direction === 'left' ? <ArrowLeftIcon /> : <ArrowRightIcon />;
+  const icon =
+    direction === 'left' ? (
+      <ArrowLeftIcon className="w-3" />
+    ) : (
+      <ArrowRightIcon className="w-3" />
+    );
 
   return isDisabled ? (
     <div className={className}>{icon}</div>
