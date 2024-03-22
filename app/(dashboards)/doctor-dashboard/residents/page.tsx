@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 
+import { lusitana } from '@/app/ui/fonts';
 import { auth } from '@/auth';
 import { fetchUserByEmail } from '@/app/lib/data/data';
 import { fetchResidentsPages } from '@/app/lib/data/doctor-data';
@@ -27,14 +28,19 @@ export default async function Page({ searchParams }: PageProps) {
   const totalPages = await fetchResidentsPages(doctor.residentIds, query);
 
   return (
-    <main className="grow bg-white">
+    <main className="flex grow flex-col bg-white px-10 py-20">
+      <h1 className={`${lusitana.className} mb-4 text-3xl antialiased`}>
+        Residents
+      </h1>
       <Search placeholder="Search residents..." />
       <ResidentsTable
         residentIds={doctor.residentIds}
         query={query}
         currentPage={currentPage}
       />
-      <Pagination totalPages={totalPages} />
+      <div className="mt-8 self-center">
+        <Pagination totalPages={totalPages} />
+      </div>
     </main>
   );
 }
