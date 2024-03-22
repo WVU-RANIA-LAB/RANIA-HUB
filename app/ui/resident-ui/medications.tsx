@@ -1,4 +1,39 @@
-export default function Medications() {
+import React, { useState, useEffect } from 'react';
+import { fetchMedicationsByUser } from '@/app/lib/data';
+import prisma from '@/app/lib/prisma';
+import { Medication } from '@prisma/client';
+import { User } from '@prisma/client';
+
+import { fetchUserByEmail } from '@/app/lib/data';
+
+
+interface Props {
+    email: string;
+}
+
+export default function Medications({ email }: Props) {
+    const [medications, setMedications] = useState<any[]>([]);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                // Fetch user data using email
+                const user: User | null = await fetchUserByEmail(email);
+                if (user) {
+                    // If user exists, fetch medications using user ID
+                    const fetchedMedications = await fetchMedicationsByUser(user.id);
+                    setMedications(fetchedMedications);
+                } else {
+                    console.error('User not found');
+                }
+            } catch (error) {
+                console.error('Error fetching user or medications:', error);
+            }
+        };
+
+        fetchUserData();
+    }, [email]);
+
     return (
         <main>
             <div className="mt-4 mb-4 mr-4 ml-4 min-h-screen flex flex-col">
