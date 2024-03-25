@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
 import prisma from '@/app/lib/prisma';
-import { User } from '@prisma/client';
+import { Device, User } from '@prisma/client';
 
 const DeviceFormSchema = z.object({
   name: z.string().trim().min(1, { message: 'Name required' }),
@@ -55,7 +55,7 @@ export async function addDevice(
 }
 
 export async function editDevice(
-  id: string,
+  device: Device,
   _prevState: DeviceFormState,
   formData: FormData,
 ): Promise<DeviceFormState> {
@@ -71,6 +71,7 @@ export async function editDevice(
   }
 
   const { data } = validatedFields;
+  const id = device.id;
 
   try {
     await prisma.device.update({
@@ -88,10 +89,8 @@ export async function editDevice(
   return { message: 'Successfully updated device.', errors: {} };
 }
 
-export async function deleteDevice(
-  id: string,
-  _prevState: DeviceFormState,
-): Promise<DeviceFormState> {
+export async function deleteDevice(device: Device): Promise<DeviceFormState> {
+  const id = device.id;
   try {
     await prisma.device.delete({
       where: { id },
