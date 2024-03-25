@@ -3,22 +3,20 @@ import { fetchMedicationsByUser } from '@/app/lib/data';
 import prisma from '@/app/lib/prisma';
 import { Medication } from '@prisma/client';
 import { User } from '@prisma/client';
+import { auth } from '@/auth';
 
 import { fetchUserByEmail } from '@/app/lib/data';
 
 
-interface Props {
-    email: string;
-}
-
-export default function Medications({ email }: Props) {
+export default function Medications() {
     const [medications, setMedications] = useState<any[]>([]);
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
                 // Fetch user data using email
-                const user: User | null = await fetchUserByEmail(email);
+                const session = await auth();
+                const user: User | null = await fetchUserByEmail(session!.user!.email!);
                 if (user) {
                     // If user exists, fetch medications using user ID
                     const fetchedMedications = await fetchMedicationsByUser(user.id);
@@ -32,7 +30,7 @@ export default function Medications({ email }: Props) {
         };
 
         fetchUserData();
-    }, [email]);
+    });
 
     return (
         <main>
@@ -58,6 +56,18 @@ export default function Medications({ email }: Props) {
                 </div>
 
                 <div className="border border-black mx-4"></div>
+                
+                <div className="pl-5 mt-2">
+                        {medications.map(medication => (
+                            <div key={medication.id} className="flex">
+                                <span className="text-base mr-32">{medication.prescribedBy}</span>
+                                <span className="text-base mr-32">{medication.prescribedDate}</span>
+                                <span className="text-base mr-60">{medication.name}</span>
+                                <span className="text-base mr-72">{medication.instructions}</span>
+                                <span className="text-base">{medication.refills}</span>
+                            </div>
+                        ))}
+                    </div>
 
                 </div>
             </div>
