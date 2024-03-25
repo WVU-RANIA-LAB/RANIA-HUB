@@ -6,8 +6,7 @@ import { Device } from '@prisma/client';
 
 type DeleteDeviceFormProps = { device: Device };
 
-export default function deleteDeviceForm({ device }: Device) {
-  const deleteDeviceModal = deleteDevice.bind(device);
+export default function deleteDeviceForm({ device }: DeleteDeviceFormProps) {
   return (
     <button
       onClick={() => deleteDevice(device)}
