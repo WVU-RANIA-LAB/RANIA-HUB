@@ -1,16 +1,34 @@
+import React, { useState, useEffect } from 'react';
+import { fetchContactsByUser } from '@/app/lib/data';
+import { fetchUserByEmail } from '@/app/lib/data';
+import prisma from '@/app/lib/prisma';
+import { Contact } from '@prisma/client';
+import { User } from '@prisma/client';
+import { auth } from '@/auth';
+
+
+
 export default function Contacts() {
+    const [contacts, setContacts] = useState<Contact[]>([]); 
 
-
-
-
-
-
-
-
-
-
-
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const session = await auth();
+                const user = await fetchUserByEmail(session?.user?.email || '');
+                if (user) {
+                    const fetchedContacts = await fetchContactsByUser(user.id);
+                    setContacts(fetchedContacts); 
+                } else {
+                    console.error('User not found');
+                }
+            } catch (error) {
+                console.error('Error fetching user or contacts:', error);
+            }
+        };
     
+        fetchUserData();
+    }, []);
     return (
         <main>
             <div className="mt-4 mb-4 mr-4 ml-4 min-h-screen flex flex-col">
@@ -35,6 +53,16 @@ export default function Contacts() {
                 </div>
 
                 <div className="border border-black mx-4"></div>
+
+                {contacts.map(Contact => (
+                <div key={Contact.id} className="flex items-center pl-5 pr-5 pt-2 pb-2">
+                    <span className="text-blue-900 text-base mr-32">{Contact.firstName} {Contact.lastName}</span>
+                    <span className="text-blue-900 text-base mr-32">{Contact.address.addressLine1}</span>
+                    <span className="text-blue-900 text-base mr-60">{Contact.phoneNumber}</span>
+                    <span className="text-blue-900 text-base mr-80">{Contact.email}</span>
+                    <span className="text-blue-900 text-base">Actions</span>
+                </div>
+                ))}
 
                 </div>
             </div>
