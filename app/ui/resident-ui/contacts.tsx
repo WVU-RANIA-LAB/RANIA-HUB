@@ -1,34 +1,15 @@
+'use client';
 import React, { useState, useEffect } from 'react';
 import { fetchContactsByUser } from '@/app/lib/data';
 import { fetchUserByEmail } from '@/app/lib/data';
-import prisma from '@/app/lib/prisma';
 import { Contact } from '@prisma/client';
-import { User } from '@prisma/client';
 import { auth } from '@/auth';
+import { User } from '@prisma/client';
 
+type ContactsProps = { user: User };
 
-
-export default function Contacts() {
-    const [contacts, setContacts] = useState<Contact[]>([]); 
-
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const session = await auth();
-                const user = await fetchUserByEmail(session?.user?.email || '');
-                if (user) {
-                    const fetchedContacts = await fetchContactsByUser(user.id);
-                    setContacts(fetchedContacts); 
-                } else {
-                    console.error('User not found');
-                }
-            } catch (error) {
-                console.error('Error fetching user or contacts:', error);
-            }
-        };
-    
-        fetchUserData();
-    }, []);
+export default function Contacts({ user }: ContactsProps) {
+ 
     return (
         <main>
             <div className="mt-4 mb-4 mr-4 ml-4 min-h-screen flex flex-col">
