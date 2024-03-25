@@ -7,8 +7,8 @@ import { useFormState, useFormStatus } from 'react-dom';
 
 type EditDeviceFormProps = { device: Device };
 
-export default function editDeviceForm({ device }: EditDeviceFormProps) {
-  const editDeviceModal = editDevice.bind(device);
+export default function EditDeviceForm({ device }: EditDeviceFormProps) {
+  const editDeviceModal = editDevice.bind(null, device);
   const [state, dispatch] = useFormState(editDeviceModal, {
     message: null,
     errors: {},
