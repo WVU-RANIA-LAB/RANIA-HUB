@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 import { auth } from '@/auth';
-import { fetchUserByEmail } from '@/app/lib/data';
+import { fetchUserByEmail } from '@/app/lib/data/data';
 import ProfileForm from '@/app/ui/profile-form';
 
 export const metadata: Metadata = {
