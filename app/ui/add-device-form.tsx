@@ -6,52 +6,79 @@ import { addDevice } from '@/app/lib/actions/device-actions';
 
 type AddDeviceFormProps = { user: User };
 
-export default function addDeviceForm({ user }: AddDeviceFormProps) {
-  const addDeviceModal = addDevice.bind(null, user);
-  const [state, dispatch] = useFormState(addDeviceModal, {
+export default function AddDeviceForm({ user }: AddDeviceFormProps) {
+  const addDeviceForm = addDevice.bind(null, user);
+  const [state, dispatch] = useFormState(addDeviceForm, {
     message: null,
     errors: {},
   });
 
   return (
-    <form action={dispatch} className="mx-auto max-w-3xl">
-      <div className="mb-6 grid grid-cols-1 gap-x-6 gap-y-6">
-        <div className="flex flex-col">
-          <label htmlFor="name" className="mb-1 text-gray-800">
-            Name
-          </label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            placeholder="Device Name"
-            required
-            className="input bg-gray-200 text-gray-800"
-          />
-          <ErrorsList errors={state.errors.name} />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="text" className="mb-1 text-gray-800">
-            Description
-          </label>
-          <input
-            id="description"
-            name="description"
-            type="description"
-            placeholder="Description"
-            required
-            className="input border-none bg-gray-200 text-gray-800"
-          />
-          <ErrorsList errors={state.errors.description} />
-        </div>
-      </div>
+    <div className="inline">
+      <button
+        className="btn float-right rounded-md border-2 bg-white text-xl font-semibold text-wvu-primary-blue hover:bg-wvu-primary-gold"
+        onClick={() => document.getElementById('addDeviceModal').showModal()}
+      >
+        Add Device
+      </button>
+      <dialog id="addDeviceModal" className="modal">
+        <div className="modal-box bg-white">
+          <form method="dialog">
+            <button className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 text-gray-400">
+              ✕
+            </button>
+          </form>
+          <h3 className="text-xl font-bold text-wvu-primary-blue">
+            Add New Device
+          </h3>
+          <br></br>
+          <form action={dispatch} className="mx-auto max-w-3xl">
+            <div className="mb-6 grid grid-cols-1 gap-x-6 gap-y-6">
+              <div className="flex flex-col">
+                <label
+                  htmlFor="name"
+                  className="mb-1 text-lg font-semibold text-wvu-primary-blue"
+                >
+                  Name
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="Device Name"
+                  required
+                  className="input bg-gray-200 text-gray-800"
+                />
+                <ErrorsList errors={state.errors.name} />
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="text"
+                  className="mb-1 text-lg font-semibold text-wvu-primary-blue"
+                >
+                  Description
+                </label>
+                <input
+                  id="description"
+                  name="description"
+                  type="description"
+                  placeholder="Description"
+                  required
+                  className="input border-none bg-gray-200 text-gray-800"
+                />
+                <ErrorsList errors={state.errors.description} />
+              </div>
+            </div>
 
-      <Submit />
+            <Submit />
 
-      {state.message && (
-        <p className="my-4 text-sm text-gray-600">{state.message}</p>
-      )}
-    </form>
+            {state.message && (
+              <p className="my-4 text-sm text-gray-600">{state.message}</p>
+            )}
+          </form>
+        </div>
+      </dialog>
+    </div>
   );
 }
 

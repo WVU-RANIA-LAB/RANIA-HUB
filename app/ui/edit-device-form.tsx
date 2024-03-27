@@ -8,51 +8,78 @@ import { useFormState, useFormStatus } from 'react-dom';
 type EditDeviceFormProps = { device: Device };
 
 export default function EditDeviceForm({ device }: EditDeviceFormProps) {
-  const editDeviceModal = editDevice.bind(null, device);
-  const [state, dispatch] = useFormState(editDeviceModal, {
+  const editDeviceForm = editDevice.bind(null, device);
+  const [state, dispatch] = useFormState(editDeviceForm, {
     message: null,
     errors: {},
   });
 
   return (
-    <form action={dispatch} className="mx-auto max-w-3xl">
-      <div className="mb-6 grid grid-cols-1 gap-x-6 gap-y-6">
-        <div className="flex flex-col">
-          <label htmlFor="name" className="mb-1 text-gray-800">
-            Name
-          </label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            placeholder="Device Name"
-            required
-            className="input bg-gray-200 text-gray-800"
-          />
-          <ErrorsList errors={state.errors.name} />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="text" className="mb-1 text-gray-800">
-            Description
-          </label>
-          <input
-            id="description"
-            name="description"
-            type="description"
-            placeholder="Description"
-            required
-            className="input border-none bg-gray-200 text-gray-800"
-          />
-          <ErrorsList errors={state.errors.description} />
-        </div>
-      </div>
+    <div>
+      <button
+        className="btn mx-2 bg-white text-wvu-primary-blue hover:bg-wvu-primary-gold"
+        onClick={() => document.getElementById('editDeviceModal').showModal()}
+      >
+        <PencilIcon className="full w-8"></PencilIcon>
+      </button>
+      <dialog id="editDeviceModal" className="modal">
+        <div className="modal-box bg-white">
+          <form method="dialog">
+            <button className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
+          <h3 className="text-xl font-bold text-wvu-primary-blue">
+            Edit {device.name}
+          </h3>
+          <br></br>
+          <form action={dispatch} className="mx-auto max-w-3xl">
+            <div className="mb-6 grid grid-cols-1 gap-x-6 gap-y-6">
+              <div className="flex flex-col">
+                <label
+                  htmlFor="name"
+                  className="mb-1 text-lg font-semibold text-wvu-primary-blue"
+                >
+                  Name
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder={device.name}
+                  required
+                  className="input bg-gray-200 text-gray-800"
+                />
+                <ErrorsList errors={state.errors.name} />
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="text"
+                  className="mb-1 text-lg font-semibold text-wvu-primary-blue"
+                >
+                  Description
+                </label>
+                <input
+                  id="description"
+                  name="description"
+                  type="description"
+                  placeholder={device.description}
+                  required
+                  className="input border-none bg-gray-200 text-gray-800"
+                />
+                <ErrorsList errors={state.errors.description} />
+              </div>
+            </div>
 
-      <Submit />
+            <Submit />
 
-      {state.message && (
-        <p className="my-4 text-sm text-gray-600">{state.message}</p>
-      )}
-    </form>
+            {state.message && (
+              <p className="my-4 text-sm text-gray-600">{state.message}</p>
+            )}
+          </form>
+        </div>
+      </dialog>
+    </div>
   );
 }
 
@@ -65,7 +92,7 @@ function Submit() {
       className="btn rounded-md border-none bg-wvu-blue text-lg font-semibold text-white hover:bg-wvu-primary-blue"
     >
       {pending && <span className="loading loading-spinner" />}
-      Update Device
+      Update Device Information
     </button>
   );
 }

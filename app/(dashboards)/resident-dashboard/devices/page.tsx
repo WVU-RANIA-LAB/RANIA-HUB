@@ -55,7 +55,6 @@ export default async function Page() {
 
   return (
     <main className="grow bg-white py-16">
-      {' '}
       <div className="mx-auto max-w-7xl">
         <div
           className={`${lusitana.className} rounded border-8 border-wvu-primary-blue bg-wvu-primary-blue text-2xl font-bold text-white antialiased`}
@@ -80,8 +79,11 @@ export default async function Page() {
                 <td>{device.name}</td>
                 <td>{device.status}</td>
                 <td>{device.description}</td>
-                <td>
+                <td
+                  className={`${lusitana.className} join join-vertical md:join-horizontal`}
+                >
                   <EditDeviceForm device={device}></EditDeviceForm>
+                  <br></br>
                   <DeleteDeviceForm device={device}></DeleteDeviceForm>
                 </td>
               </tr>
