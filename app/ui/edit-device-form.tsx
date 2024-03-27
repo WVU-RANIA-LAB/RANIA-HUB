@@ -18,7 +18,11 @@ export default function EditDeviceForm({ device }: EditDeviceFormProps) {
     <div>
       <button
         className="btn mx-2 bg-white text-wvu-primary-blue hover:bg-wvu-primary-gold"
-        onClick={() => document.getElementById('editDeviceModal').showModal()}
+        onClick={() =>
+          (
+            document.getElementById('editDeviceModal') as HTMLDialogElement
+          ).showModal()
+        }
       >
         <PencilIcon className="full w-8"></PencilIcon>
       </button>

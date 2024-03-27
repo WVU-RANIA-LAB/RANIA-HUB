@@ -17,7 +17,11 @@ export default function deleteDeviceForm({ device }: DeleteDeviceFormProps) {
     <div>
       <button
         className="btn mx-2 bg-white text-wvu-primary-blue hover:bg-wvu-primary-gold"
-        onClick={() => document.getElementById('deleteDeviceModal').showModal()}
+        onClick={() =>
+          (
+            document.getElementById('deleteDeviceModal') as HTMLDialogElement
+          ).showModal()
+        }
       >
         <TrashIcon className="full w-8"></TrashIcon>
       </button>

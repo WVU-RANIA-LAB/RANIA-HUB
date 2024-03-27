@@ -17,7 +17,11 @@ export default function AddDeviceForm({ user }: AddDeviceFormProps) {
     <div className="inline">
       <button
         className="btn float-right rounded-md border-2 bg-white text-xl font-semibold text-wvu-primary-blue hover:bg-wvu-primary-gold"
-        onClick={() => document.getElementById('addDeviceModal').showModal()}
+        onClick={() =>
+          (
+            document.getElementById('addDeviceModal') as HTMLDialogElement
+          ).showModal()
+        }
       >
         Add Device
       </button>
