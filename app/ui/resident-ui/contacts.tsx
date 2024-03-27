@@ -52,11 +52,9 @@ export default function Contacts({ user }: ContactsProps) {
 
                 {contacts.map(Contact => (
                 <div key={Contact.id} className="flex items-center pl-5 pr-5 pt-2 pb-2">
-                    <span className="text-blue-900 text-base mr-32">{Contact.firstName} {Contact.lastName}</span>
-                    <span className="text-blue-900 text-base mr-32">{Contact.address.addressLine1}</span>
-                    <span className="text-blue-900 text-base mr-60">{Contact.phoneNumber}</span>
-                    <span className="text-blue-900 text-base mr-80">{Contact.email}</span>
-                    <span className="text-blue-900 text-base">Actions</span>
+                    <div className="text-blue-900 text-base mr-32">
+                        {Contact.firstName} {Contact.lastName}
+                        </div>
                 </div>
                 ))}
 
