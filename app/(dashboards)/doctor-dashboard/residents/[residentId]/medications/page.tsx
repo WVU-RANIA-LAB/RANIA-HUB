@@ -5,7 +5,7 @@ import { fetchMedicationsPages } from '@/app/lib/data/doctor-data';
 import Search from '@/app/ui/search';
 import MedicationsTable from '@/app/ui/doctor-dashboard/medications-table';
 import Pagination from '@/app/ui/pagination';
-import CreateMedicationForm from '@/app/ui/doctor-dashboard/create-medication-form';
+import CreateMedicationModal from '@/app/ui/doctor-dashboard/create-medication-modal';
 
 type PageProps = {
   params: { residentId: string };
@@ -26,9 +26,12 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   return (
     <main className="flex grow flex-col bg-white px-10 py-20">
-      <h1 className={`${lusitana.className} mb-4 text-3xl antialiased`}>
-        {resident.name}&apos;s Medications
-      </h1>
+      <div className="mb-4 flex justify-between">
+        <h1 className={`${lusitana.className} text-3xl antialiased`}>
+          {resident.name}&apos;s Medications
+        </h1>
+        <CreateMedicationModal doctorId={doctor.id} residentId={residentId} />
+      </div>
       <Search placeholder="Search medications..." />
       <MedicationsTable
         residentId={residentId}
