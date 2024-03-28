@@ -70,3 +70,66 @@ export async function fetchResidentsPages(
     throw new Error('Failed to fetch total number of residents');
   }
 }
+
+export async function fetchFilteredMedications(
+  residentId: string,
+  query: string,
+  currentPage: number,
+) {
+  noStore();
+
+  try {
+    const medications = await prisma.medication.findMany({
+      skip: (currentPage - 1) * ITEMS_PER_PAGE,
+      take: ITEMS_PER_PAGE,
+      where: {
+        AND: [
+          { residentId },
+          {
+            OR: [
+              { name: { contains: query, mode: 'insensitive' } },
+              { instructions: { contains: query, mode: 'insensitive' } },
+            ],
+          },
+        ],
+      },
+      select: {
+        id: true,
+        name: true,
+        prescribedDate: true,
+        instructions: true,
+        refills: true,
+      },
+      orderBy: { prescribedDate: 'desc' },
+    });
+    return medications;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('Failed to fetch medications');
+  }
+}
+
+export async function fetchMedicationsPages(residentId: string, query: string) {
+  noStore();
+
+  try {
+    const count = await prisma.medication.count({
+      where: {
+        AND: [
+          { residentId },
+          {
+            OR: [
+              { name: { contains: query, mode: 'insensitive' } },
+              { instructions: { contains: query, mode: 'insensitive' } },
+            ],
+          },
+        ],
+      },
+    });
+    const totalPages = Math.ceil(count / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('Failed to fetch total number of medications');
+  }
+}
