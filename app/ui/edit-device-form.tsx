@@ -51,7 +51,6 @@ export default function EditDeviceForm({ device }: EditDeviceFormProps) {
                   name="name"
                   type="text"
                   placeholder={device.name}
-                  required
                   className="input bg-gray-200 text-gray-800"
                 />
                 <ErrorsList errors={state.errors.name} />
@@ -68,7 +67,6 @@ export default function EditDeviceForm({ device }: EditDeviceFormProps) {
                   name="description"
                   type="description"
                   placeholder={device.description}
-                  required
                   className="input border-none bg-gray-200 text-gray-800"
                 />
                 <ErrorsList errors={state.errors.description} />
