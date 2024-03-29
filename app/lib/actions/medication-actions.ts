@@ -58,6 +58,46 @@ export async function createMedication(
   return { message: 'Successfully created medication.' };
 }
 
+export async function updateMedication(
+  medicationId: string,
+  doctorId: string,
+  residentId: string,
+  _previousState: MedicationFormState,
+  formData: FormData,
+): Promise<MedicationFormState> {
+  const validatedFields = MedicationFormSchema.safeParse(
+    Object.fromEntries(formData.entries()),
+  );
+
+  if (!validatedFields.success) {
+    return {
+      message: 'Invalid/Missing fields. Failed to update medication.',
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  const { data } = validatedFields;
+
+  try {
+    await prisma.medication.update({
+      where: { id: medicationId },
+      data: {
+        prescribedDate: new Date(),
+        name: data.name,
+        instructions: data.instructions,
+        refills: data.refills,
+        doctorId,
+      },
+    });
+  } catch (e) {
+    console.error(e);
+    return { message: 'Database Error: Failed to update medication.' };
+  }
+
+  revalidatePath(`/doctor-dashboard/residents/${residentId}/medications`);
+  return { message: 'Successfully updated medication.' };
+}
+
 export async function deleteMedication(
   medicationId: string,
   residentId: string,
