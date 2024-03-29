@@ -3,21 +3,24 @@
 import { forwardRef } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 
-import { createMedication } from '@/app/lib/actions/medication-actions';
+import {
+  createMedication,
+  updateMedication,
+} from '@/app/lib/actions/medication-actions';
+import { fetchFilteredMedications } from '@/app/lib/data/doctor-data';
 
-type MedicationFormProps = { doctorId: string; residentId: string };
+type MedicationFormProps = {
+  doctorId: string;
+  residentId: string;
+  medication?: Awaited<ReturnType<typeof fetchFilteredMedications>>[number];
+};
 
 const MedicationForm = forwardRef<HTMLFormElement, MedicationFormProps>(
-  function MedicationForm({ doctorId, residentId }, ref) {
-    const createMedicationWithDoctorIdAndResidentId = createMedication.bind(
-      null,
-      doctorId,
-      residentId,
-    );
-    const [state, dispatch] = useFormState(
-      createMedicationWithDoctorIdAndResidentId,
-      {},
-    );
+  function MedicationForm({ doctorId, residentId, medication }, ref) {
+    const medicationAction = medication
+      ? updateMedication.bind(null, medication.id, doctorId, residentId)
+      : createMedication.bind(null, doctorId, residentId);
+    const [state, dispatch] = useFormState(medicationAction, {});
 
     return (
       <form ref={ref} action={dispatch} className="flex flex-col gap-y-4">
@@ -29,6 +32,7 @@ const MedicationForm = forwardRef<HTMLFormElement, MedicationFormProps>(
             type="text"
             name="name"
             placeholder="Medication name"
+            defaultValue={medication?.name ?? ''}
             className="input input-bordered"
           />
         </label>
@@ -39,6 +43,7 @@ const MedicationForm = forwardRef<HTMLFormElement, MedicationFormProps>(
           <textarea
             name="instructions"
             placeholder="Instructions"
+            defaultValue={medication?.instructions ?? ''}
             className="textarea textarea-bordered h-32"
           />
         </label>
@@ -51,22 +56,25 @@ const MedicationForm = forwardRef<HTMLFormElement, MedicationFormProps>(
             name="refills"
             placeholder="Refills"
             min={0}
+            defaultValue={medication?.refills ?? ''}
             className="input input-bordered"
           />
         </label>
-        <Submit />
+        <Submit mode={medication ? 'Update' : 'Create'} />
       </form>
     );
   },
 );
 
-function Submit() {
+type SubmitProps = { mode: 'Create' | 'Update' };
+
+function Submit({ mode }: SubmitProps) {
   const { pending } = useFormStatus();
 
   return (
     <button disabled={pending} className="btn mt-4">
       {pending && <span className="loading loading-spinner" />}
-      Create
+      {mode}
     </button>
   );
 }
