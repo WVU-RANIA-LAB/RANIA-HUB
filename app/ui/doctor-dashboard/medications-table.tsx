@@ -1,7 +1,5 @@
-import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
-
 import { fetchFilteredMedications } from '@/app/lib/data/doctor-data';
-import { deleteMedication } from '@/app/lib/actions/medication-actions';
+import { DeleteMedicationButton } from '@/app/ui/doctor-dashboard/medication-btns';
 
 type MedicationsTableProps = {
   residentId: string;
@@ -50,26 +48,5 @@ export default async function MedicationsTable({
         </tbody>
       </table>
     </div>
-  );
-}
-
-type DeleteMedicationButtonProps = { medicationId: string; residentId: string };
-
-function DeleteMedicationButton({
-  medicationId,
-  residentId,
-}: DeleteMedicationButtonProps) {
-  const deleteMedicationWithId = deleteMedication.bind(
-    null,
-    medicationId,
-    residentId,
-  );
-
-  return (
-    <form action={deleteMedicationWithId}>
-      <button className="btn btn-square btn-sm">
-        <TrashIcon className="h-5" />
-      </button>
-    </form>
   );
 }
