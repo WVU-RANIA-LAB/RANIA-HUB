@@ -5,7 +5,7 @@ import { fetchMedicationsPages } from '@/app/lib/data/doctor-data';
 import Search from '@/app/ui/search';
 import MedicationsTable from '@/app/ui/doctor-dashboard/medications-table';
 import Pagination from '@/app/ui/pagination';
-import CreateMedicationButton from '@/app/ui/doctor-dashboard/create-medication-btn';
+import { CreateMedicationButton } from '@/app/ui/doctor-dashboard/medication-btns';
 
 type PageProps = {
   params: { residentId: string };
@@ -34,6 +34,7 @@ export default async function Page({ params, searchParams }: PageProps) {
       </div>
       <Search placeholder="Search medications..." />
       <MedicationsTable
+        doctorId={doctor.id}
         residentId={residentId}
         query={query}
         currentPage={currentPage}
