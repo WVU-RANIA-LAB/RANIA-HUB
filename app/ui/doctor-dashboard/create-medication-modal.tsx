@@ -77,6 +77,7 @@ export default function CreateMedicationModal({
                 type="number"
                 name="refills"
                 placeholder="Refills"
+                min={0}
                 className="input input-bordered"
               />
             </label>
