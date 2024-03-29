@@ -1,12 +1,20 @@
 import { forwardRef, useRef } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
+import { fetchFilteredMedications } from '@/app/lib/data/doctor-data';
 import MedicationForm from '@/app/ui/doctor-dashboard/medication-form';
 
-type MedicationModalProps = { doctorId: string; residentId: string };
+type MedicationModalProps =
+  | { mode: 'Create'; doctorId: string; residentId: string }
+  | {
+      mode: 'Edit';
+      doctorId: string;
+      residentId: string;
+      medication: Awaited<ReturnType<typeof fetchFilteredMedications>>[number];
+    };
 
 const MedicationModal = forwardRef<HTMLDialogElement, MedicationModalProps>(
-  function MedicationModal({ doctorId, residentId }, ref) {
+  function MedicationModal(props, ref) {
     const formRef = useRef<HTMLFormElement>(null);
 
     return (
@@ -20,11 +28,12 @@ const MedicationModal = forwardRef<HTMLDialogElement, MedicationModalProps>(
               <XMarkIcon className="h-6" />
             </button>
           </form>
-          <h2 className="mb-4 text-lg font-bold">Create Medication</h2>
+          <h2 className="mb-4 text-lg font-bold">{props.mode} Medication</h2>
 
           <MedicationForm
-            doctorId={doctorId}
-            residentId={residentId}
+            doctorId={props.doctorId}
+            residentId={props.residentId}
+            medication={props.mode === 'Edit' ? props.medication : undefined}
             ref={formRef}
           />
         </div>
