@@ -98,3 +98,20 @@ export async function updateMedicalHistoryEntry(
   revalidatePath(`/doctor-dashboard/residents/${residentId}/medical-history`);
   return { message: 'Successfully updated medical history entry.' };
 }
+
+export async function deleteMedicalHistoryEntry(
+  medicalHistoryEntryId: string,
+  residentId: string,
+) {
+  try {
+    await prisma.medicalHistoryEntry.delete({
+      where: { id: medicalHistoryEntryId },
+    });
+    revalidatePath(`/doctor-dashboard/residents/${residentId}/medical-history`);
+    return { message: 'Deleted medical history entry.' };
+  } catch (e) {
+    return {
+      message: 'Database Error: Failed to delete medical history entry.',
+    };
+  }
+}
