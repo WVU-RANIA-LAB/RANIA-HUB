@@ -1,13 +1,18 @@
 import { fetchFilteredMedications } from '@/app/lib/data/doctor-data';
-import { DeleteMedicationButton } from '@/app/ui/doctor-dashboard/medication-btns';
+import {
+  EditMedicationButton,
+  DeleteMedicationButton,
+} from '@/app/ui/doctor-dashboard/medication-btns';
 
 type MedicationsTableProps = {
+  doctorId: string;
   residentId: string;
   query: string;
   currentPage: number;
 };
 
 export default async function MedicationsTable({
+  doctorId,
   residentId,
   query,
   currentPage,
@@ -38,6 +43,11 @@ export default async function MedicationsTable({
               <td>{medication.name}</td>
               <td>{medication.instructions}</td>
               <td className="flex gap-2">
+                <EditMedicationButton
+                  doctorId={doctorId}
+                  residentId={residentId}
+                  medication={medication}
+                />
                 <DeleteMedicationButton
                   medicationId={medication.id}
                   residentId={residentId}
