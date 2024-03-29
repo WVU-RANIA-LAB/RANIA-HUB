@@ -13,6 +13,7 @@ export default function CreateMedicationModal({
   residentId,
 }: CreateMedicationModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const createMedicationWithDoctorIdAndResidentId = createMedication.bind(
     null,
@@ -33,13 +34,20 @@ export default function CreateMedicationModal({
       <dialog ref={dialogRef} className="modal">
         <div className="modal-box">
           <form method="dialog">
-            <button className="btn btn-circle btn-ghost btn-sm absolute right-6 top-6">
+            <button
+              className="btn btn-circle btn-ghost btn-sm absolute right-6 top-6"
+              onClick={() => formRef.current?.reset()}
+            >
               <XMarkIcon className="h-6" />
             </button>
           </form>
           <h2 className="mb-4 text-lg font-bold">Create Medication</h2>
 
-          <form action={dispatch} className="flex flex-col gap-y-4">
+          <form
+            ref={formRef}
+            action={dispatch}
+            className="flex flex-col gap-y-4"
+          >
             <label className="form-control">
               <div className="label">
                 <span className="label-text">Medication Name:</span>
@@ -77,7 +85,7 @@ export default function CreateMedicationModal({
         </div>
 
         <form method="dialog" className="modal-backdrop">
-          <button>close</button>
+          <button onClick={() => formRef.current?.reset()} />
         </form>
       </dialog>
     </>
