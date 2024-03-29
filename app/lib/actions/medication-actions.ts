@@ -57,3 +57,16 @@ export async function createMedication(
   revalidatePath(`/doctor-dashboard/residents/${residentId}/medications`);
   return { message: 'Successfully created medication.' };
 }
+
+export async function deleteMedication(
+  medicationId: string,
+  residentId: string,
+) {
+  try {
+    await prisma.medication.delete({ where: { id: medicationId } });
+    revalidatePath(`/doctor-dashboard/residents/${residentId}/medications`);
+    return { message: 'Deleted medication.' };
+  } catch (e) {
+    return { message: 'Database Error: Failed to delete medication.' };
+  }
+}
