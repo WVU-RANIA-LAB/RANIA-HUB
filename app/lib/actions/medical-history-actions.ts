@@ -57,3 +57,44 @@ export async function createMedicalHistoryEntry(
   revalidatePath(`/doctor-dashboard/residents/${residentId}/medical-history`);
   return { message: 'Successfully created medical history entry.' };
 }
+
+export async function updateMedicalHistoryEntry(
+  medicalHistoryEntryId: string,
+  residentId: string,
+  editorId: string,
+  _previousState: MedicalHistoryFormState,
+  formData: FormData,
+): Promise<MedicalHistoryFormState> {
+  const validatedFields = MedicalHistoryFormSchema.safeParse(
+    Object.fromEntries(formData.entries()),
+  );
+
+  if (!validatedFields.success) {
+    return {
+      message:
+        'Invalid/Missing fields. Failed to update medical history entry.',
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  const { data } = validatedFields;
+
+  try {
+    await prisma.medicalHistoryEntry.update({
+      where: { id: medicalHistoryEntryId },
+      data: {
+        date: data.date,
+        description: data.description,
+        editorId,
+      },
+    });
+  } catch (e) {
+    console.error(e);
+    return {
+      message: 'Database Error: Failed to update medical history entry.',
+    };
+  }
+
+  revalidatePath(`/doctor-dashboard/residents/${residentId}/medical-history`);
+  return { message: 'Successfully updated medical history entry.' };
+}
