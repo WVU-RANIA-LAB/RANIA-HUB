@@ -1,10 +1,9 @@
 'use client';
 
 import { useRef } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
-import { createMedication } from '@/app/lib/actions/medication-actions';
+import MedicationForm from '@/app/ui/doctor-dashboard/medication-form';
 
 type CreateMedicationModalProps = { doctorId: string; residentId: string };
 
@@ -14,16 +13,6 @@ export default function CreateMedicationModal({
 }: CreateMedicationModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-
-  const createMedicationWithDoctorIdAndResidentId = createMedication.bind(
-    null,
-    doctorId,
-    residentId,
-  );
-  const [state, dispatch] = useFormState(
-    createMedicationWithDoctorIdAndResidentId,
-    {},
-  );
 
   return (
     <>
@@ -43,46 +32,11 @@ export default function CreateMedicationModal({
           </form>
           <h2 className="mb-4 text-lg font-bold">Create Medication</h2>
 
-          <form
+          <MedicationForm
+            doctorId={doctorId}
+            residentId={residentId}
             ref={formRef}
-            action={dispatch}
-            className="flex flex-col gap-y-4"
-          >
-            <label className="form-control">
-              <div className="label">
-                <span className="label-text">Medication Name:</span>
-              </div>
-              <input
-                type="text"
-                name="name"
-                placeholder="Medication name"
-                className="input input-bordered"
-              />
-            </label>
-            <label className="form-control">
-              <div className="label">
-                <span className="label-text">Instructions:</span>
-              </div>
-              <textarea
-                name="instructions"
-                placeholder="Instructions"
-                className="textarea textarea-bordered h-32"
-              />
-            </label>
-            <label className="form-control">
-              <div className="label">
-                <span className="label-text">Refills</span>
-              </div>
-              <input
-                type="number"
-                name="refills"
-                placeholder="Refills"
-                min={0}
-                className="input input-bordered"
-              />
-            </label>
-            <Submit />
-          </form>
+          />
         </div>
 
         <form method="dialog" className="modal-backdrop">
@@ -90,16 +44,5 @@ export default function CreateMedicationModal({
         </form>
       </dialog>
     </>
-  );
-}
-
-function Submit() {
-  const { pending } = useFormStatus();
-
-  return (
-    <button disabled={pending} className="btn mt-4">
-      {pending && <span className="loading loading-spinner" />}
-      Create
-    </button>
   );
 }
