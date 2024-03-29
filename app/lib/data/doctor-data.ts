@@ -165,3 +165,26 @@ export async function fetchFilteredMedicalHistoryEntries(
     throw new Error('Failed to fetch medical history entries.');
   }
 }
+
+export async function fetchMedicalHistoryPages(
+  residentId: string,
+  query: string,
+) {
+  noStore();
+
+  try {
+    const count = await prisma.medicalHistoryEntry.count({
+      where: {
+        AND: [
+          { residentId },
+          { description: { contains: query, mode: 'insensitive' } },
+        ],
+      },
+    });
+    const totalPages = Math.ceil(count / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('Failed to fetch total number of medical history entries.');
+  }
+}
