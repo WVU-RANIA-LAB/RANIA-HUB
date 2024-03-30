@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 
 import { lusitana } from '@/app/ui/fonts';
 import { auth } from '@/auth';
@@ -33,11 +34,16 @@ export default async function Page({ searchParams }: PageProps) {
         Residents
       </h1>
       <Search placeholder="Search residents..." />
-      <ResidentsTable
-        residentIds={doctor.residentIds}
-        query={query}
-        currentPage={currentPage}
-      />
+      <Suspense
+        key={query + currentPage}
+        fallback={<span className="loading loading-spinner mx-auto my-16" />}
+      >
+        <ResidentsTable
+          residentIds={doctor.residentIds}
+          query={query}
+          currentPage={currentPage}
+        />
+      </Suspense>
       <div className="mt-8 self-center">
         <Pagination totalPages={totalPages} />
       </div>
