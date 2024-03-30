@@ -93,12 +93,8 @@ export async function fetchFilteredMedications(
           },
         ],
       },
-      select: {
-        id: true,
-        name: true,
-        prescribedDate: true,
-        instructions: true,
-        refills: true,
+      include: {
+        doctor: true,
       },
       orderBy: { prescribedDate: 'desc' },
     });

@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { lusitana } from '@/app/ui/fonts';
 import { auth } from '@/auth';
 import { fetchUserById, fetchUserByEmail } from '@/app/lib/data/data';
@@ -33,12 +34,17 @@ export default async function Page({ params, searchParams }: PageProps) {
         <CreateMedicationButton doctorId={doctor.id} residentId={residentId} />
       </div>
       <Search placeholder="Search medications..." />
-      <MedicationsTable
-        doctorId={doctor.id}
-        residentId={residentId}
-        query={query}
-        currentPage={currentPage}
-      />
+      <Suspense
+        key={query + currentPage}
+        fallback={<span className="loading loading-spinner mx-auto my-16" />}
+      >
+        <MedicationsTable
+          doctorId={doctor.id}
+          residentId={residentId}
+          query={query}
+          currentPage={currentPage}
+        />
+      </Suspense>
       <div className="mt-8 self-center">
         <Pagination totalPages={totalPages} />
       </div>
