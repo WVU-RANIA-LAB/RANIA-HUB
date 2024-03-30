@@ -1,4 +1,5 @@
 import { fetchFilteredMedicalHistoryEntries } from '@/app/lib/data/doctor-data';
+import { EditMedicalHistoryButton } from './medical-history-btns';
 
 type MedicalHistoryTableProps = {
   doctorId: string;
@@ -39,12 +40,12 @@ export default async function MedicalHistoryTable({
               <td>{entry.description}</td>
               <td>{entry.editor.name}</td>
               <td className="flex gap-2">
-                {/*
-                <EditMedicationButton
+                <EditMedicalHistoryButton
                   doctorId={doctorId}
                   residentId={residentId}
-                  medication={entry}
+                  medicalHistoryEntry={entry}
                 />
+                {/*
                 <DeleteMedicationButton
                   medicationId={entry.id}
                   residentId={residentId}
