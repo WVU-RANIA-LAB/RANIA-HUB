@@ -70,6 +70,8 @@ export function DeleteMedicationButton({
   medicationId,
   residentId,
 }: DeleteMedicationButtonProps) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
   const deleteMedicationWithId = deleteMedication.bind(
     null,
     medicationId,
@@ -77,10 +79,29 @@ export function DeleteMedicationButton({
   );
 
   return (
-    <form action={deleteMedicationWithId}>
-      <button className="btn btn-square btn-sm">
+    <>
+      <button
+        className="btn btn-square btn-sm"
+        onClick={() => dialogRef.current?.showModal()}
+      >
         <TrashIcon className="h-5" />
       </button>
-    </form>
+
+      <dialog ref={dialogRef} className="modal">
+        <div className="modal-box">
+          <h2 className="text-lg font-bold">
+            Are you sure you want to delete this medication?
+          </h2>
+          <div className="modal-action">
+            <form method="dialog">
+              <button className="btn">Cancel</button>
+            </form>
+            <form action={deleteMedicationWithId}>
+              <button className="btn btn-error">Delete</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+    </>
   );
 }
