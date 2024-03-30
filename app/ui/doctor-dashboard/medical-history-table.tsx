@@ -1,5 +1,8 @@
 import { fetchFilteredMedicalHistoryEntries } from '@/app/lib/data/doctor-data';
-import { EditMedicalHistoryButton } from './medical-history-btns';
+import {
+  EditMedicalHistoryButton,
+  DeleteMedicalHistoryButton,
+} from '@/app/ui/doctor-dashboard/medical-history-btns';
 
 type MedicalHistoryTableProps = {
   doctorId: string;
@@ -45,12 +48,10 @@ export default async function MedicalHistoryTable({
                   residentId={residentId}
                   medicalHistoryEntry={entry}
                 />
-                {/*
-                <DeleteMedicationButton
-                  medicationId={entry.id}
+                <DeleteMedicalHistoryButton
+                  medicalHistoryId={entry.id}
                   residentId={residentId}
                 />
-                */}
               </td>
             </tr>
           ))}
