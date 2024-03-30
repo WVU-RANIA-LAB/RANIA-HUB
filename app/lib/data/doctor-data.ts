@@ -151,10 +151,7 @@ export async function fetchFilteredMedicalHistoryEntries(
           { description: { contains: query, mode: 'insensitive' } },
         ],
       },
-      select: {
-        id: true,
-        date: true,
-        description: true,
+      include: {
         editor: true,
       },
       orderBy: { date: 'asc' },
