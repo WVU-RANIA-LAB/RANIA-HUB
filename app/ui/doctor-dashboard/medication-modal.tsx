@@ -1,3 +1,5 @@
+'use client';
+
 import { forwardRef, useRef } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
