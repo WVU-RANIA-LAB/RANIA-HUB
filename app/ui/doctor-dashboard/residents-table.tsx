@@ -1,3 +1,6 @@
+import Link from 'next/link';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
+
 import { fetchFilteredResidents } from '@/app/lib/data/doctor-data';
 import { lusitana } from '@/app/ui/fonts';
 
@@ -39,6 +42,7 @@ export default async function ResidentsTable({
             <th scope="col">Email</th>
             <th scope="col">Phone Number</th>
             <th scope="col">Upcoming Appointment</th>
+            <th scope="col">View</th>
           </tr>
         </thead>
         <tbody>
@@ -48,6 +52,14 @@ export default async function ResidentsTable({
               <td>{resident.email}</td>
               <td>{resident.phoneNumber}</td>
               <td>PLACEHOLDER</td>
+              <td>
+                <Link
+                  href={`/doctor-dashboard/residents/${resident.id}`}
+                  className="btn btn-square btn-sm"
+                >
+                  <ArrowRightIcon className="h-4" />
+                </Link>
+              </td>
             </tr>
           ))}
         </tbody>
