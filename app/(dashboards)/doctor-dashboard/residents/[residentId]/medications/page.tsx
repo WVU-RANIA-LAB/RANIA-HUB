@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+
 import { lusitana } from '@/app/ui/fonts';
 import { auth } from '@/auth';
 import { fetchUserById, fetchUserByEmail } from '@/app/lib/data/data';
