@@ -1,10 +1,11 @@
 'use client';
 
 import { useRef } from 'react';
-import { PencilIcon } from '@heroicons/react/24/outline';
+import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { MedicalHistoryEntry } from '@prisma/client';
 
 import MedicalHistoryModal from '@/app/ui/doctor-dashboard/medical-history-modal';
+import { deleteMedicalHistoryEntry } from '@/app/lib/actions/medical-history-actions';
 
 type CreateMedicalHistoryButtonProps = { doctorId: string; residentId: string };
 
@@ -60,5 +61,29 @@ export function EditMedicalHistoryButton({
         ref={dialogRef}
       />
     </>
+  );
+}
+
+type DeleteMedicalHistoryButtonProps = {
+  medicalHistoryId: string;
+  residentId: string;
+};
+
+export function DeleteMedicalHistoryButton({
+  medicalHistoryId,
+  residentId,
+}: DeleteMedicalHistoryButtonProps) {
+  const deleteMedicationWithId = deleteMedicalHistoryEntry.bind(
+    null,
+    medicalHistoryId,
+    residentId,
+  );
+
+  return (
+    <form action={deleteMedicationWithId}>
+      <button className="btn btn-square btn-sm">
+        <TrashIcon className="h-5" />
+      </button>
+    </form>
   );
 }
