@@ -1,0 +1,189 @@
+'use client';
+
+import { PencilIcon } from '@heroicons/react/24/solid';
+import { editContact } from '../lib/actions/contacts-actions';
+import { Contact } from '@prisma/client';
+import { useFormState, useFormStatus } from 'react-dom';
+
+type EditContactFormProps = { contact: Contact };
+
+export default function EditContactForm({ contact }: EditContactFormProps) {
+  const editContactForm = editContact.bind(null, contact);
+  const [state, dispatch] = useFormState(editContactForm, {
+    message: null,
+    errors: {},
+  });
+
+  return (
+    <div>
+      <button
+        className="btn mx-2 bg-white text-wvu-primary-blue hover:bg-wvu-primary-gold"
+        onClick={() =>
+          (
+            document.getElementById('editContactModal') as HTMLDialogElement
+          ).showModal()
+        }
+      >
+        <PencilIcon className="full w-8"></PencilIcon>
+      </button>
+      <dialog id="editContactModal" className="modal">
+        <div className="modal-box bg-white">
+          <form method="dialog">
+            <button className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
+          <h3 className="text-xl font-bold text-wvu-primary-blue">
+            Edit Contact
+          </h3>
+          <br></br>
+          <form action={dispatch} className="mx-auto max-w-3xl">
+            <div className="mb-6 grid grid-cols-1 gap-x-6 gap-y-6">
+            <div className="flex flex-col">
+                <label
+                  htmlFor="firstName"
+                  className="mb-1 text-lg font-semibold text-wvu-primary-blue"
+                >
+                  First Name
+                </label>
+                <input
+                  id="firstName"
+                  name="firstName"
+                  type="firstName"
+                  placeholder="Contact First Name"
+                  required
+                  className="input bg-gray-200 text-gray-800"
+                />
+                <ErrorsList errors={state.errors.firstName} />
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="lastName"
+                  className="mb-1 text-lg font-semibold text-wvu-primary-blue"
+                >
+                  Last Name
+                </label>
+                <input
+                  id="lastName"
+                  name="lastName"
+                  type="lastName"
+                  placeholder="Contact Last Name"
+                  required
+                  className="input border-none bg-gray-200 text-gray-800"
+                />
+                <ErrorsList errors={state.errors.lastName} />
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="email"
+                  className="mb-1 text-lg font-semibold text-wvu-primary-blue"
+                >
+                  Email
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="Contact Email"
+                  required
+                  className="input border-none bg-gray-200 text-gray-800"
+                />
+                <ErrorsList errors={state.errors.email} />
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="phoneNumber"
+                  className="mb-1 text-lg font-semibold text-wvu-primary-blue"
+                >
+                  Phone Number
+                </label>
+                <input
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  type="phoneNumber"
+                  placeholder="Contact Phone Number"
+                  required
+                  className="input border-none bg-gray-200 text-gray-800"
+                />
+                <ErrorsList errors={state.errors.phoneNumber} />
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="address"
+                  className="mb-1 text-lg font-semibold text-wvu-primary-blue"
+                >
+                  Address
+                </label>
+                <input
+                  id="address"
+                  name="address"
+                  type="address"
+                  placeholder="Contact Address"
+                  required
+                  className="input border-none bg-gray-200 text-gray-800"
+                />
+                <ErrorsList errors={state.errors.address} />
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="relationship"
+                  className="mb-1 text-lg font-semibold text-wvu-primary-blue"
+                >
+                  Relationship
+                </label>
+                <input
+                  id="relationship"
+                  name="relationship"
+                  type="relationship"
+                  placeholder="Contact Relation"
+                  required
+                  className="input border-none bg-gray-200 text-gray-800"
+                />
+                <ErrorsList errors={state.errors.relationship} />
+              </div>
+            </div>
+
+            <Submit />
+
+            {state.message && (
+              <p className="my-4 text-sm text-gray-600">{state.message}</p>
+            )}
+          </form>
+        </div>
+      </dialog>
+    </div>
+  );
+}
+
+function Submit() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      disabled={pending}
+      className="btn rounded-md border-none bg-wvu-blue text-lg font-semibold text-white hover:bg-wvu-primary-blue"
+    >
+      {pending && <span className="loading loading-spinner" />}
+      Update Contact Information
+    </button>
+  );
+}
+
+type ErrorsListProps = { errors?: string[] };
+
+function ErrorsList({ errors }: ErrorsListProps) {
+  if (!errors) {
+    return null;
+  }
+
+  return (
+    <div className="mt-2">
+      {errors.map((error) => (
+        /* If it's possible to have duplicate errors, we need to pick a different key */
+        <p key={error} className="text-sm text-red-600">
+          {error}
+        </p>
+      ))}
+    </div>
+  );
+}
