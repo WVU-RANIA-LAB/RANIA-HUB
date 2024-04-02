@@ -1,19 +1,24 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { z } from 'zod';
+import { any, z } from 'zod';
 
 import prisma from '@/app/lib/prisma';
-import { Contact, User } from '@prisma/client';
+import { Address, Contact, User } from '@prisma/client';
+import { states } from '@/app/lib/constants/us-states';
 
 const ContactFormSchema = z.object({
   firstName: z.string().trim().min(1, { message: 'First Name required' }),
   lastName: z.string().trim().min(1, { message: 'Last Name required' }),
-  email: z.string().trim().min(1, { message: 'Email required' }),
-  phoneNumber: z.string().trim().min(1, { message: 'Phone Number required' }),
-  address: z.string().trim().min(1, { message: 'Address required' }),
   relationship: z.string().trim().min(1, { message: 'Relationship required' }),
-  isEmergency: z.string().trim().min(1, { message: 'Emergency Contact?' }),
+  email: z.string().trim().min(1, { message: 'Email required' }),
+  phoneNumber: z.string().trim().regex(/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/, {message: 'Invalid phone number',}),  
+  addressLine1: z.string().trim().min(1, { message: 'Address Line 1 required' }),
+  addressLine2: z.string().trim(),
+  city: z.string().trim().min(1, { message: 'City required' }),
+  state: z.enum(states),
+  zipCode: z.string().trim().regex(/^\d{5}(-\d{4})?$/, { message: 'Invalid zip code' }),
+  isEmergency: z.boolean(),
 
 });
 
@@ -24,7 +29,11 @@ export type ContactFormState = {
     lastName?: string[];
     email?: string[];
     phoneNumber?: string[];
-    address?: string[];
+    addressLine1?: string[];
+    addressLine2?: string[];
+    city?: string[];
+    state?: string[];
+    zipCode?: string[];
     relationship?: string[];
     isEmergency?: string[];
   };
@@ -50,16 +59,22 @@ export async function addContact(
 
   try {
     await prisma.contact.create({
-      data: {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        phoneNumber: data.phoneNumber,
-        address: true,
-        relationship: data.relationship,
-        isEmergency: true,
-        belongsToId: user.id,
-      },
+        data: {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            phoneNumber: data.phoneNumber,
+            address: {
+                addressLine1: data.addressLine1,
+                addressLine2: data.addressLine2,
+                city: data.city,
+                state: data.state,
+                zipCode: data.zipCode,
+              },
+            relationship: data.relationship,
+            isEmergency: data.isEmergency,
+            belongsToId: user.id,
+          },
     });
   } catch (e) {
     return { message: 'Database Error: Failed to add contact.', errors: {} };
@@ -96,9 +111,15 @@ export async function editContact(
         lastName: data.lastName,
         email: data.email,
         phoneNumber: data.phoneNumber,
-        address: true,
+        address: {
+            addressLine1: data.addressLine1,
+            addressLine2: data.addressLine2,
+            city: data.city,
+            state: data.state,
+            zipCode: data.zipCode, 
+          },
         relationship: data.relationship,
-        isEmergency: true,
+        isEmergency: data.isEmergency,
       },
     });
   } catch (e) {

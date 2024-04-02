@@ -42,7 +42,7 @@ export default async function Page() {
             </thead>
             <tbody>
               <tr className="text-lg text-black">
-                <td>No Contacts to Display</td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
