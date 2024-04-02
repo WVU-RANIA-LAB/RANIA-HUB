@@ -25,3 +25,21 @@ export async function fetchContactsByUser(belongsToId: string) {
     throw new Error('Failed to fetch contact');
   }
 }
+
+export async function fetchMedicationsByUser(userId: string) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: { receivedPrescriptions: true },
+    });
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    return user.receivedPrescriptions;
+
+  } catch (e) {
+    throw new Error('Failed to fetch medications');
+  }
+}
