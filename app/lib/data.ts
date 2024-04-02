@@ -43,3 +43,19 @@ export async function fetchMedicationsByUser(userId: string) {
     throw new Error('Failed to fetch medications');
   }
 }
+export async function fetchDoctorById(doctorId: string) {
+  try {
+    const doctor = await prisma.user.findUnique({
+      where: { id: doctorId },
+    });
+
+    if (!doctor) {
+      throw new Error('Doctor not found');
+    }
+
+    return doctor;
+
+  } catch (e) {
+    throw new Error('Failed to fetch doctor');
+  }
+}
