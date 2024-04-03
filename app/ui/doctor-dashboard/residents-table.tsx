@@ -21,6 +21,14 @@ export default async function ResidentsTable({
     currentPage,
   );
 
+  if (!residents.length) {
+    return (
+      <p className="my-16 text-center text-gray-600">
+        You don&apos;t have any residents.
+      </p>
+    );
+  }
+
   return (
     <div className="overflow-x-auto">
       <div className="flex flex-col gap-y-2 md:hidden">
