@@ -2,7 +2,7 @@ import { unstable_noStore as noStore } from 'next/cache';
 
 import prisma from '@/app/lib/prisma';
 
-const ITEMS_PER_PAGE = 2; /* Intentionally low for testing */
+const ITEMS_PER_PAGE = 20;
 
 export async function fetchFilteredResidents(
   residentIds: string[],
@@ -26,12 +26,6 @@ export async function fetchFilteredResidents(
             ],
           },
         ],
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        phoneNumber: true,
       },
       orderBy: { name: 'asc' },
     });
