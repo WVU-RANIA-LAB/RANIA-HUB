@@ -181,3 +181,19 @@ export async function fetchMedicalHistoryPages(
     throw new Error('Failed to fetch total number of medical history entries.');
   }
 }
+
+export async function fetchRecentMedicalHistory(residentId: string) {
+  noStore();
+
+  try {
+    const medicalHistoryEntries = await prisma.medicalHistoryEntry.findMany({
+      take: 10,
+      where: { residentId },
+      orderBy: { date: 'desc' },
+    });
+    return medicalHistoryEntries;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('Failed to fetch medical history entries.');
+  }
+}
