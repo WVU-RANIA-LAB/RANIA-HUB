@@ -197,3 +197,19 @@ export async function fetchRecentMedicalHistory(residentId: string) {
     throw new Error('Failed to fetch medical history entries.');
   }
 }
+
+export async function fetchRecentMedications(residentId: string) {
+  noStore();
+
+  try {
+    const medications = await prisma.medication.findMany({
+      take: 5,
+      where: { residentId },
+      orderBy: { prescribedDate: 'desc' },
+    });
+    return medications;
+  } catch (e) {
+    console.error('Database Error:', e);
+    throw new Error('Failed to fetch medications.');
+  }
+}
