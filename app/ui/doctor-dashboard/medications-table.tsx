@@ -38,7 +38,7 @@ export default async function MedicationsTable({
     <div className="overflow-x-auto">
       <div className="flex flex-col gap-y-2 md:hidden">
         {medications.map((medication) => (
-          <div key={medication.id} className="card bg-gray-100">
+          <div key={medication.id} className="card card-compact bg-gray-50">
             <div className="card-body">
               <div className="flex justify-between">
                 <h2 className={`text-lg ${lusitana.className}`}>
