@@ -26,6 +26,14 @@ export default async function MedicationsTable({
 
   const formatter = new Intl.DateTimeFormat('en-US');
 
+  if (!medications.length) {
+    return (
+      <p className="my-16 text-center text-gray-600">
+        This resident doesn&apos;t have any medications.
+      </p>
+    );
+  }
+
   return (
     <div className="overflow-x-auto">
       <div className="flex flex-col gap-y-2 md:hidden">
