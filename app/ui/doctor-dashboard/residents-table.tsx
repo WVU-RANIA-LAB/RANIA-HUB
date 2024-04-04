@@ -33,12 +33,21 @@ export default async function ResidentsTable({
     <div className="overflow-x-auto">
       <div className="flex flex-col gap-y-2 md:hidden">
         {residents.map((resident) => (
-          <div key={resident.id} className="card bg-gray-100">
+          <div key={resident.id} className="card card-compact bg-gray-50">
             <div className="card-body">
-              <h2 className={`text-lg ${lusitana.className}`}>
-                {resident.name}
-              </h2>
+              <div className="flex justify-between">
+                <h2 className={`text-lg ${lusitana.className}`}>
+                  {resident.name}
+                </h2>
+                <Link
+                  href={`/doctor-dashboard/residents/${resident.id}`}
+                  className="btn btn-square btn-sm"
+                >
+                  <ArrowRightIcon className="h-4" />
+                </Link>
+              </div>
               <p className="text-sm text-gray-700">{resident.email}</p>
+              <p className="text-sm text-gray-700">{resident.phoneNumber}</p>
             </div>
           </div>
         ))}
