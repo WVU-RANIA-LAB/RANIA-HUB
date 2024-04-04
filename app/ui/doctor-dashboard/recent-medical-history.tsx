@@ -23,22 +23,26 @@ export async function RecentMedicalHistory({
             <ArrowRightIcon className="h-5" />
           </Link>
         </div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">Date</th>
-              <th scope="col">Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {recentMedicalHistory.map((entry) => (
-              <tr key={entry.id}>
-                <td>{formatter.format(entry.date)}</td>
-                <td>{entry.description}</td>
+        {recentMedicalHistory.length ? (
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Description</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {recentMedicalHistory.map((entry) => (
+                <tr key={entry.id}>
+                  <td>{formatter.format(entry.date)}</td>
+                  <td>{entry.description}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p className="text-gray-600">No medical history</p>
+        )}
       </div>
     </div>
   );
