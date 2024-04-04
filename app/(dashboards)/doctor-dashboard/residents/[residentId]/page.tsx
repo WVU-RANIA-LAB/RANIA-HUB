@@ -12,10 +12,10 @@ export default function Page({ params }: PageProps) {
       <div className="col-start-2 col-end-3 row-start-1 row-end-2">
         <ResidentInformation residentId={residentId} />
       </div>
-      <div className="col-start-1 col-end-2 row-start-1 row-end-3 grow">
+      <div className="col-start-1 col-end-2 row-start-1 row-end-3">
         <RecentMedicalHistory residentId={residentId} />
       </div>
-      <div className="col-start-2 col-end-3 row-start-2 row-end-3 grow">
+      <div className="col-start-2 col-end-3 row-start-2 row-end-3">
         <RecentMedications residentId={residentId} />
       </div>
     </main>
