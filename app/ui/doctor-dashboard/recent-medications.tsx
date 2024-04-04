@@ -23,22 +23,26 @@ export async function RecentMedications({
             <ArrowRightIcon className="h-5" />
           </Link>
         </div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">Date</th>
-              <th scope="col">Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            {recentMedications.map((medication) => (
-              <tr key={medication.id}>
-                <td>{formatter.format(medication.prescribedDate)}</td>
-                <td>{medication.name}</td>
+        {recentMedications.length ? (
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Name</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {recentMedications.map((medication) => (
+                <tr key={medication.id}>
+                  <td>{formatter.format(medication.prescribedDate)}</td>
+                  <td>{medication.name}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p className="text-gray-600">No medications</p>
+        )}
       </div>
     </div>
   );
