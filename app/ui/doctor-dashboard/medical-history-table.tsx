@@ -25,6 +25,14 @@ export default async function MedicalHistoryTable({
 
   const formatter = new Intl.DateTimeFormat('en-US');
 
+  if (!medicalHistoryEntries.length) {
+    return (
+      <p className="my-16 text-center text-gray-600">
+        This resident doesn&apos;t have any medical history.
+      </p>
+    );
+  }
+
   return (
     <div className="overflow-x-auto">
       <table className="table hidden md:table">
