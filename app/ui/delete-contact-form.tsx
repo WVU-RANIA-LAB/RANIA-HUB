@@ -33,7 +33,7 @@ export default function deleteContactForm({ contact }: DeleteContactFormProps) {
             </button>
           </form>
           <h3 className="text-xl font-bold text-wvu-primary-blue">
-            Are you sure you want to delete {contact.firstName}?
+            Are you sure you want to delete {contact.firstName && contact.lastName}?
           </h3>
           <div className="inline-block">
             <br></br>

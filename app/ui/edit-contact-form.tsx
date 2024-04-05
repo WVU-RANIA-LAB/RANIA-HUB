@@ -75,6 +75,23 @@ export default function EditContactForm({ contact }: EditContactFormProps) {
               </div>
               <div className="flex flex-col">
                 <label
+                  htmlFor="relationship"
+                  className="mb-1 text-lg font-semibold text-wvu-primary-blue"
+                >
+                  Relation
+                </label>
+                <input
+                  id="relationship"
+                  name="relationship"
+                  type="relationship"
+                  placeholder="Relation"
+                  required
+                  className="input border-none bg-gray-200 text-gray-800"
+                />
+                <ErrorsList errors={state.errors.relationship} />
+              </div>
+              <div className="flex flex-col">
+                <label
                   htmlFor="email"
                   className="mb-1 text-lg font-semibold text-wvu-primary-blue"
                 >
@@ -109,37 +126,105 @@ export default function EditContactForm({ contact }: EditContactFormProps) {
               </div>
               <div className="flex flex-col">
                 <label
-                  htmlFor="address"
+                  htmlFor="addressLine1"
                   className="mb-1 text-lg font-semibold text-wvu-primary-blue"
                 >
-                  Address
+                  Address Line 1
                 </label>
                 <input
-                  id="address"
-                  name="address"
-                  type="address"
-                  placeholder="Contact Address"
+                  id="addressLine1"
+                  name="addressLine1"
+                  type="text"
+                  placeholder="Address Line 1"
                   required
                   className="input border-none bg-gray-200 text-gray-800"
                 />
-                <ErrorsList errors={state.errors.address} />
+                <ErrorsList errors={state.errors.addressLine1} />
               </div>
               <div className="flex flex-col">
                 <label
-                  htmlFor="relationship"
+                  htmlFor="addressLine2"
                   className="mb-1 text-lg font-semibold text-wvu-primary-blue"
                 >
-                  Relationship
+                  Address Line 2
                 </label>
                 <input
-                  id="relationship"
-                  name="relationship"
-                  type="relationship"
-                  placeholder="Contact Relation"
+                  id="addressLine2"
+                  name="addressLine2"
+                  type="text"
+                  placeholder="Address Line 2"
+                  className="input border-none bg-gray-200 text-gray-800"
+                />
+                <ErrorsList errors={state.errors.addressLine2} />
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="city"
+                  className="mb-1 text-lg font-semibold text-wvu-primary-blue"
+                >
+                  City
+                </label>
+                <input
+                  id="city"
+                  name="city"
+                  type="text"
+                  placeholder="City"
                   required
                   className="input border-none bg-gray-200 text-gray-800"
                 />
-                <ErrorsList errors={state.errors.relationship} />
+                <ErrorsList errors={state.errors.city} />
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="state"
+                  className="mb-1 text-lg font-semibold text-wvu-primary-blue"
+                >
+                  State
+                </label>
+                <input
+                  id="state"
+                  name="state"
+                  type="text"
+                  placeholder="State"
+                  required
+                  className="input border-none bg-gray-200 text-gray-800"
+                />
+                <ErrorsList errors={state.errors.state} />
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="zipCode"
+                  className="mb-1 text-lg font-semibold text-wvu-primary-blue"
+                >
+                  Zip Code
+                </label>
+                <input
+                  id="zipCode"
+                  name="zipCode"
+                  type="text"
+                  placeholder="Zip Code"
+                  required
+                  className="input border-none bg-gray-200 text-gray-800"
+                />
+                <ErrorsList errors={state.errors.zipCode} />
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="isEmergency"
+                  className="mb-1 text-lg font-semibold text-wvu-primary-blue"
+                >
+                  Emergency Contact?
+                </label>
+                <select
+                  id="isEmergency"
+                  name="isEmergency"
+                  className="input border-none bg-gray-200 text-gray-800"
+                >
+                  <option>Not Selected</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </select>
+                <ErrorsList errors={state.errors.isEmergency} />
               </div>
             </div>
 
