@@ -6,6 +6,7 @@ import EditContactForm from '@/app/ui/edit-contact-form';
 import DeleteContactForm from '@/app/ui/delete-contact-form';
 import { auth } from '@/auth';
 import { fetchContactsByUser, fetchUserByEmail } from '@/app/lib/data';
+import { PencilIcon, TrashIcon } from '@heroicons/react/24/solid'
 
 export const metadata: Metadata = {
   title: 'Contacts',
@@ -84,9 +85,16 @@ export default async function Page() {
                 <td
                   className={`${lusitana.className} join join-vertical md:join-horizontal`}
                 >
-                  <EditContactForm contact={contact}></EditContactForm>
-                  <br></br>
-                  <DeleteContactForm contact={contact}></DeleteContactForm>
+                <td>
+                  <button className="w-12 h-8 rounded-full flex justify-center items-center">
+                    <PencilIcon className='w-6' /><EditContactForm contact={contact}></EditContactForm>
+                  </button>
+                </td>
+                <td>
+                  <button className="w-12 h-8 rounded-full flex justify-center items-center">
+                    <TrashIcon className='w-6' /><DeleteContactForm contact={contact}></DeleteContactForm>
+                  </button>
+                </td>
                 </td>
               </tr>
             ))}
