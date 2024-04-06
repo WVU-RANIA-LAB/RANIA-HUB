@@ -5,7 +5,8 @@ import AddDeviceForm from '@/app/ui/add-device-form';
 import EditDeviceForm from '@/app/ui/edit-device-form';
 import DeleteDeviceForm from '@/app/ui/delete-device-form';
 import { auth } from '@/auth';
-import { fetchDevicesByUser, fetchUserByEmail } from '@/app/lib/data';
+import { fetchUserByEmail } from '@/app/lib/data/data';
+import { fetchDevicesByResident } from '@/app/lib/data/resident-data';
 
 export const metadata: Metadata = {
   title: 'Devices',
@@ -15,7 +16,7 @@ export default async function Page() {
   const session = await auth();
 
   const user = await fetchUserByEmail(session!.user!.email!);
-  const devices = await fetchDevicesByUser(user.id);
+  const devices = await fetchDevicesByResident(user.id);
 
   if (devices.length === 0) {
     return (

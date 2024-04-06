@@ -13,15 +13,3 @@ export async function fetchUserByEmail(email: string) {
     throw new Error('Failed to fetch user');
   }
 }
-
-export async function fetchDevicesByUser(belongsToId: string) {
-  noStore();
-
-  try {
-    return prisma.device.findMany({
-      where: { belongsToId },
-    });
-  } catch (e) {
-    throw new Error('Failed to fetch device');
-  }
-}
