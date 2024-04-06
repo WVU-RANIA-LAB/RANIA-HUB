@@ -4,10 +4,12 @@ import { PencilIcon } from '@heroicons/react/24/solid';
 import { editDevice } from '../lib/actions/device-actions';
 import { Device } from '@prisma/client';
 import { useFormState, useFormStatus } from 'react-dom';
+import { useRef } from 'react';
 
 type EditDeviceFormProps = { device: Device };
 
 export default function EditDeviceForm({ device }: EditDeviceFormProps) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const editDeviceForm = editDevice.bind(null, device);
   const [state, dispatch] = useFormState(editDeviceForm, {
     message: null,
@@ -18,15 +20,11 @@ export default function EditDeviceForm({ device }: EditDeviceFormProps) {
     <div>
       <button
         className="btn mx-2 bg-white text-wvu-primary-blue hover:bg-wvu-primary-gold"
-        onClick={() =>
-          (
-            document.getElementById('editDeviceModal') as HTMLDialogElement
-          ).showModal()
-        }
+        onClick={() => dialogRef.current?.showModal()}
       >
         <PencilIcon className="full w-8"></PencilIcon>
       </button>
-      <dialog id="editDeviceModal" className="modal">
+      <dialog ref={dialogRef} id="editDeviceModal" className="modal">
         <div className="modal-box bg-white">
           <form method="dialog">
             <button className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">

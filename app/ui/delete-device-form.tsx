@@ -4,10 +4,12 @@ import { TrashIcon } from '@heroicons/react/24/solid';
 import { deleteDevice } from '../lib/actions/device-actions';
 import { Device } from '@prisma/client';
 import { useFormState, useFormStatus } from 'react-dom';
+import { useRef } from 'react';
 
 type DeleteDeviceFormProps = { device: Device };
 
 export default function deleteDeviceForm({ device }: DeleteDeviceFormProps) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const deleteDeviceForm = deleteDevice.bind(null, device);
   const [state, dispatch] = useFormState(deleteDeviceForm, {
     message: null,
@@ -17,15 +19,11 @@ export default function deleteDeviceForm({ device }: DeleteDeviceFormProps) {
     <div>
       <button
         className="btn mx-2 bg-white text-wvu-primary-blue hover:bg-wvu-primary-gold"
-        onClick={() =>
-          (
-            document.getElementById('deleteDeviceModal') as HTMLDialogElement
-          ).showModal()
-        }
+        onClick={() => dialogRef.current?.showModal()}
       >
         <TrashIcon className="full w-8"></TrashIcon>
       </button>
-      <dialog id="deleteDeviceModal" className="modal">
+      <dialog ref={dialogRef} id="deleteDeviceModal" className="modal">
         <div className="modal-box bg-white">
           <form method="dialog">
             <button className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">
