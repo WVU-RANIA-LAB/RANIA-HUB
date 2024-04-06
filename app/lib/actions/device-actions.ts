@@ -89,7 +89,7 @@ export async function editDevice(
   return { message: 'Successfully updated device.', errors: {} };
 }
 
-export async function deleteDevice(device: Device): Promise<DeviceFormState> {
+export async function deleteDevice(device: Device) {
   const id = device.id;
   try {
     await prisma.device.delete({
@@ -100,5 +100,4 @@ export async function deleteDevice(device: Device): Promise<DeviceFormState> {
   }
 
   revalidatePath(`/resident-dashboard/devices`);
-  return { message: 'Successfully deleted device.', errors: {} };
 }
