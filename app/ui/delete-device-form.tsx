@@ -3,8 +3,6 @@
 import { TrashIcon } from '@heroicons/react/24/solid';
 import { deleteDevice } from '../lib/actions/device-actions';
 import { Device } from '@prisma/client';
-import { useFormState, useFormStatus } from 'react-dom';
-import { useRef } from 'react';
 
 type DeleteDeviceFormProps = { device: Device };
 
