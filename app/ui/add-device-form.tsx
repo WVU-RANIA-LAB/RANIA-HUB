@@ -72,6 +72,40 @@ export default function AddDeviceForm({ user }: AddDeviceFormProps) {
                 />
                 <ErrorsList errors={state.errors.description} />
               </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="text"
+                  className="mb-1 text-lg font-semibold text-wvu-primary-blue"
+                >
+                  IP Address
+                </label>
+                <input
+                  id="ipAddress"
+                  name="ipAddress"
+                  type="ipAddress"
+                  placeholder="0.0.0.0"
+                  required
+                  className="input border-none bg-gray-200 text-gray-800"
+                />
+                <ErrorsList errors={state.errors.ipAddress} />
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="text"
+                  className="mb-1 text-lg font-semibold text-wvu-primary-blue"
+                >
+                  Port
+                </label>
+                <input
+                  id="port"
+                  name="port"
+                  type="port"
+                  placeholder="3000"
+                  required
+                  className="input border-none bg-gray-200 text-gray-800"
+                />
+                <ErrorsList errors={state.errors.port} />
+              </div>
             </div>
 
             <Submit />

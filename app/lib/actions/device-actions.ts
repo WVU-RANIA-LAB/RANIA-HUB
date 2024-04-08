@@ -9,11 +9,15 @@ import { Device, User } from '@prisma/client';
 const DeviceFormSchema = z.object({
   name: z.string().trim().min(1, { message: 'Name required' }),
   description: z.string().trim().min(1, { message: 'Description required' }),
+  ipAddress: z.string().trim().min(1, { message: 'IP Address required' }),
+  port: z.string().trim().min(1, { message: 'Port required' }),
 });
 
 export type DeviceFormState = {
   message: string | null;
   errors: {
+    ipAddress?: string[] | undefined;
+    port?: string[] | undefined;
     name?: string[];
     description?: string[];
   };
@@ -41,6 +45,8 @@ export async function addDevice(
     await prisma.device.create({
       data: {
         name: data.name,
+        ipAddress: data.ipAddress,
+        port: data.port,
         status: 'off',
         description: data.description,
         belongsToId: user.id,
