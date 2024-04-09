@@ -107,3 +107,35 @@ export async function deleteDevice(device: Device) {
 
   revalidatePath(`/resident-dashboard/devices`);
 }
+
+export async function fetchStatus(ipAddress: string, port: string) {
+  const device_url = 'http://' + ipAddress + ':' + port + '/status';
+  return fetch(device_url, { method: 'GET' })
+    .then((response) => response.json())
+    .then((data) => data.device_on)
+    .catch((error) => console.error('Error:', error));
+}
+
+export async function powerOn(device: Device) {
+  const device_on =
+    'http://' + device.ipAddress + ':' + device.port + '/manual_on';
+
+  return await fetch(device_on, {
+    method: 'POST',
+  })
+    .then((response) => response.text())
+    .then((data) => console.log(data))
+    .catch((error) => console.error('Error:', error));
+}
+
+export async function powerOff(device: Device) {
+  const device_off =
+    'http://' + device.ipAddress + ':' + device.port + '/manual_off';
+
+  return await fetch(device_off, {
+    method: 'POST',
+  })
+    .then((response) => response.text())
+    .then((data) => console.log(data))
+    .catch((error) => console.error('Error:', error));
+}

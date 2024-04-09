@@ -7,6 +7,8 @@ import DeleteDeviceForm from '@/app/ui/delete-device-form';
 import { auth } from '@/auth';
 import { fetchUserByEmail } from '@/app/lib/data/data';
 import { fetchDevicesByResident } from '@/app/lib/data/resident-data';
+import ChangeStatusButton from '@/app/ui/device-status-btn';
+import CheckStatus from '@/app/ui/device-status';
 
 export const metadata: Metadata = {
   title: 'Devices',
@@ -78,11 +80,14 @@ export default async function Page() {
             {devices.map((device, index) => (
               <tr key={index}>
                 <td>{device.name}</td>
-                <td>{device.status}</td>
+                <td>
+                  <CheckStatus device={device}></CheckStatus>
+                </td>
                 <td>{device.description}</td>
                 <td
                   className={`${lusitana.className} join join-vertical md:join-horizontal`}
                 >
+                  <ChangeStatusButton device={device}></ChangeStatusButton>
                   <EditDeviceForm device={device}></EditDeviceForm>
                   <br></br>
                   <DeleteDeviceForm device={device}></DeleteDeviceForm>
