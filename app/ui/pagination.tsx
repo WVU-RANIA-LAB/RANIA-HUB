@@ -56,7 +56,7 @@ type PaginationNumberProps = {
 };
 
 function PaginationNumber({ page, href, isActive }: PaginationNumberProps) {
-  const className = clsx('btn join-item', {
+  const className = clsx('join-item btn btn-sm sm:btn-md', {
     'btn-active': isActive,
   });
 
@@ -80,7 +80,9 @@ function PaginationArrow({
   direction,
   isDisabled,
 }: PaginationArrowProps) {
-  const className = clsx('btn join-item', { 'btn-disabled': isDisabled });
+  const className = clsx('join-item btn btn-sm sm:btn-md', {
+    'btn-disabled': isDisabled,
+  });
 
   const icon =
     direction === 'left' ? (
