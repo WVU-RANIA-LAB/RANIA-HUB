@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 
 import { lusitana } from '@/app/ui/fonts';
 import { auth } from '@/auth';
@@ -28,16 +29,21 @@ export default async function Page({ searchParams }: PageProps) {
   const totalPages = await fetchResidentsPages(doctor.residentIds, query);
 
   return (
-    <main className="flex grow flex-col bg-white px-10 py-20">
+    <main className="flex grow flex-col bg-white px-2 py-8 sm:px-10 sm:py-20">
       <h1 className={`${lusitana.className} mb-4 text-3xl antialiased`}>
         Residents
       </h1>
       <Search placeholder="Search residents..." />
-      <ResidentsTable
-        residentIds={doctor.residentIds}
-        query={query}
-        currentPage={currentPage}
-      />
+      <Suspense
+        key={query + currentPage}
+        fallback={<span className="loading loading-spinner mx-auto my-16" />}
+      >
+        <ResidentsTable
+          residentIds={doctor.residentIds}
+          query={query}
+          currentPage={currentPage}
+        />
+      </Suspense>
       <div className="mt-8 self-center">
         <Pagination totalPages={totalPages} />
       </div>
