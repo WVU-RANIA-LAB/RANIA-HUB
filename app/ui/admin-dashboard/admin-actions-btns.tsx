@@ -15,7 +15,7 @@ export function EditUserButton({ user }: EditUserButtonProps) {
   return (
     <>
       <button
-        className="btn btn-square btn-sm"
+        className="btn btn-square btn-sm hover:bg-wvu-primary-blue hover:text-white"
         onClick={() => dialogRef.current?.showModal()}
       >
         <PencilIcon className="h-5" />
@@ -34,7 +34,7 @@ export function DeleteUserButton({ userId }: DeleteUserButtonProps) {
 
   return (
     <form action={deleteUserWithId}>
-      <button className="btn btn-square btn-sm">
+      <button className="btn btn-square btn-sm hover:bg-red-600 hover:text-wvu-off-white">
         <TrashIcon className="h-5" />
       </button>
     </form>
