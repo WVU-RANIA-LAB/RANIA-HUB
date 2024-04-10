@@ -113,7 +113,10 @@ const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
 function Submit() {
   const { pending } = useFormStatus();
   return (
-    <button disabled={pending} className="btn mt-4 w-full">
+    <button
+      disabled={pending}
+      className="btn mt-4 w-full hover:bg-wvu-primary-gold hover:text-white active:bg-wvu-primary-blue active:text-white"
+    >
       {pending && <span className="loading loading-spinner" />}
       Update
     </button>
