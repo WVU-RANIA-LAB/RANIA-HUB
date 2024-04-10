@@ -56,9 +56,12 @@ type PaginationNumberProps = {
 };
 
 function PaginationNumber({ page, href, isActive }: PaginationNumberProps) {
-  const className = clsx('join-item btn btn-sm sm:btn-md', {
-    'btn-active': isActive,
-  });
+  const className = clsx(
+    'join-item btn btn-sm sm:btn-md hover:bg-wvu-primary-gold hover:text-white',
+    {
+      'btn-active bg-wvu-primary-blue text-white': isActive,
+    },
+  );
 
   return isActive || page === '...' ? (
     <div className={className}>{page}</div>
@@ -80,9 +83,12 @@ function PaginationArrow({
   direction,
   isDisabled,
 }: PaginationArrowProps) {
-  const className = clsx('join-item btn btn-sm sm:btn-md', {
-    'btn-disabled': isDisabled,
-  });
+  const className = clsx(
+    'join-item btn btn-sm sm:btn-md hover:bg-wvu-primary-blue hover:text-white',
+    {
+      'btn-disabled': isDisabled,
+    },
+  );
 
   const icon =
     direction === 'left' ? (
