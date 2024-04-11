@@ -18,7 +18,7 @@ const ContactFormSchema = z.object({
   city: z.string().trim().min(1, { message: 'City required' }),
   state: z.enum(states),
   zipCode: z.string().trim().regex(/^\d{5}(-\d{4})?$/, { message: 'Invalid zip code' }),
-  isEmergency: z.boolean(),
+  isEmergency: z.string(),
 
 });
 

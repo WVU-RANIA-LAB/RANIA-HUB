@@ -225,9 +225,9 @@ export default function AddContactForm({ user }: AddContactFormProps) {
                   name="isEmergency"
                   className="input border-none bg-gray-200 text-gray-800"
                 >
-                  <option value="NotSelected">Not Selected</option>
-                  {/* <option value="Yes" selected={isEmergency === true}>Yes</option> */}
-                  {/* <option value="No" selected={isEmergency === false}>No</option> */}
+                  <option>Not Selected</option>
+                  <option selected={true}>Yes</option>
+                  <option selected={false}>No</option>
                 </select>
                 <ErrorsList errors={state.errors.isEmergency} />
               </div>
