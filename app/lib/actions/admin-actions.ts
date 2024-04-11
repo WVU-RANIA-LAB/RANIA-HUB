@@ -20,6 +20,44 @@ type UserFormState = {
   };
 };
 
+export async function createUser(
+  _previousState: UserFormState,
+  formData: FormData,
+): Promise<UserFormState> {
+  const validatedFields = UserFormSchema.safeParse(
+    Object.fromEntries(formData.entries()),
+  );
+
+  if (!validatedFields.success) {
+    return {
+      message: 'Invalid/Missing fields. Failed to create user.',
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  const { data } = validatedFields;
+
+  try {
+    await prisma.user.create({
+      data: {
+        name: data.name,
+        email: data.email,
+        phoneNumber: data.phone,
+        role: data.role,
+      },
+    });
+  } catch (e) {
+    console.error(e);
+    return { message: 'Database Error: Failed to create user.' };
+  }
+
+  revalidatePath(`/admin-dashboard/residents`);
+  revalidatePath(`/admin-dashboard/doctors`);
+  revalidatePath(`/admin-dashboard/admins`);
+
+  return { message: 'Successfully created user.' };
+}
+
 export async function updateUser(
   userId: string,
   _previousState: UserFormState,

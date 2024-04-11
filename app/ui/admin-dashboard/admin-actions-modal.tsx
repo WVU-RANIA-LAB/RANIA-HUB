@@ -3,18 +3,22 @@ import { forwardRef, useRef } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { User } from '@prisma/client';
-import { updateUser } from '@/app/lib/actions/admin-actions';
+import { createUser, updateUser } from '@/app/lib/actions/admin-actions';
 import FieldErrors from '@/app/ui/field-errors';
 
 type AdminActionsModalProps = {
-  user: User;
+  mode: 'Create' | 'Edit';
+  user?: User;
+  roleType?: 'RESIDENT' | 'DOCTOR' | 'ADMIN';
 };
 
 const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
   function AdminActionsModal(props, ref) {
-    const { user } = props;
+    const { mode, user, roleType } = props;
     const formRef = useRef<HTMLFormElement>(null);
-    const [state, dispatch] = useFormState(updateUser.bind(null, user.id), {});
+    const userAction =
+      mode === 'Create' ? createUser : updateUser.bind(null, user!.id);
+    const [state, dispatch] = useFormState(userAction, {});
 
     return (
       <dialog ref={ref} className="modal">
@@ -22,12 +26,16 @@ const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
           <form method="dialog">
             <button
               className="btn btn-circle btn-ghost btn-sm absolute right-6 top-6"
-              onClick={() => formRef.current?.reset()}
+              onClick={() => {
+                formRef.current?.reset();
+              }}
             >
               <XMarkIcon className="h-6" />
             </button>
           </form>
-          <h2 className="mb-4 text-lg font-bold">Edit User</h2>
+          <h2 className="mb-4 text-lg font-bold">
+            {mode === 'Create' ? 'Create' : 'Edit'} User
+          </h2>
           <form
             ref={formRef}
             action={dispatch}
@@ -42,7 +50,7 @@ const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
                   type="text"
                   name="name"
                   className="input input-bordered"
-                  defaultValue={user.name || ''}
+                  defaultValue={user?.name || ''}
                   required
                 />
               </label>
@@ -57,7 +65,7 @@ const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
                   type="email"
                   name="email"
                   className="input input-bordered"
-                  defaultValue={user.email || ''}
+                  defaultValue={user?.email || ''}
                   required
                 />
               </label>
@@ -72,7 +80,7 @@ const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
                   type="tel"
                   name="phone"
                   className="input input-bordered"
-                  defaultValue={user.phoneNumber || ''}
+                  defaultValue={user?.phoneNumber || ''}
                   required
                 />
               </label>
@@ -86,7 +94,7 @@ const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
                 <select
                   name="role"
                   className="select select-bordered"
-                  defaultValue={user.role}
+                  defaultValue={user?.role || roleType}
                   required
                 >
                   <option value="RESIDENT">Resident</option>
@@ -97,7 +105,7 @@ const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
               <FieldErrors errors={state.errors?.role} />
             </div>
             <div>
-              <Submit />
+              <Submit mode={mode} />
               {state.message && <span>{state.message}</span>}
             </div>
           </form>
@@ -110,7 +118,7 @@ const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
   },
 );
 
-function Submit() {
+function Submit({ mode }: { mode: 'Create' | 'Edit' }) {
   const { pending } = useFormStatus();
   return (
     <button
@@ -118,7 +126,7 @@ function Submit() {
       className="btn mt-4 w-full hover:bg-wvu-primary-gold hover:text-white active:bg-wvu-primary-blue active:text-white"
     >
       {pending && <span className="loading loading-spinner" />}
-      Update
+      {mode === 'Create' ? 'Create' : 'Update'}
     </button>
   );
 }
