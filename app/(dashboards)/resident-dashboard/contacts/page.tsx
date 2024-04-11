@@ -79,10 +79,10 @@ export default async function Page() {
           <tbody>
             {contacts.map((contact, index) => (
               <tr key={index}>
-                <td>{contact.firstName && contact.lastName}</td>
+                <td>{contact.firstName}</td>
                 <td>{contact.address.addressLine1}</td>
-                <td>{contact.email}</td>
                 <td>{contact.phoneNumber}</td>
+                <td>{contact.email}</td>
                 <td
                   className={`${lusitana.className} join join-vertical md:join-horizontal`}
                 >

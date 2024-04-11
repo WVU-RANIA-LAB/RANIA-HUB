@@ -1,10 +1,10 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { any, z } from 'zod';
+import { z } from 'zod';
 
 import prisma from '@/app/lib/prisma';
-import { Address, Contact, User } from '@prisma/client';
+import { Contact, User } from '@prisma/client';
 import { states } from '@/app/lib/constants/us-states';
 
 const ContactFormSchema = z.object({
@@ -19,7 +19,6 @@ const ContactFormSchema = z.object({
   state: z.enum(states),
   zipCode: z.string().trim().regex(/^\d{5}(-\d{4})?$/, { message: 'Invalid zip code' }),
   isEmergency: z.string(),
-
 });
 
 export type ContactFormState = {

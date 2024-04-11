@@ -4,6 +4,7 @@ import { PencilIcon } from '@heroicons/react/24/solid';
 import { editContact } from '../lib/actions/contacts-actions';
 import { Contact } from '@prisma/client';
 import { useFormState, useFormStatus } from 'react-dom';
+import { states } from '@/app/lib/constants/us-states';
 
 type EditContactFormProps = { contact: Contact };
 
@@ -181,14 +182,19 @@ export default function EditContactForm({ contact }: EditContactFormProps) {
                 >
                   State
                 </label>
-                <input
+                <select
                   id="state"
                   name="state"
-                  type="text"
-                  placeholder="State"
+                  defaultValue={contact.address?.state ?? ''}
                   required
-                  className="input border-none bg-gray-200 text-gray-800"
-                />
+                  className="select bg-gray-200 text-gray-800"
+                >
+                  {states.map((state) => (
+                    <option key={state} value={state}>
+                      {state}
+                    </option>
+                  ))}
+                </select>
                 <ErrorsList errors={state.errors.state} />
               </div>
               <div className="flex flex-col">
