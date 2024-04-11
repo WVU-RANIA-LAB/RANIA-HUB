@@ -3,6 +3,7 @@
 import { useFormState, useFormStatus } from 'react-dom';
 import { User } from '@prisma/client';
 import { addContact } from '@/app/lib/actions/contacts-actions';
+import { states } from '@/app/lib/constants/us-states';
 
 type AddContactFormProps = { user: User };
 
@@ -180,14 +181,19 @@ export default function AddContactForm({ user }: AddContactFormProps) {
                 >
                   State
                 </label>
-                <input
+                <select
                   id="state"
                   name="state"
-                  type="text"
-                  placeholder="State"
+                  defaultValue={user.address?.state ?? ''}
                   required
-                  className="input border-none bg-gray-200 text-gray-800"
-                />
+                  className="select bg-gray-200 text-gray-800"
+                >
+                  {states.map((state) => (
+                    <option key={state} value={state}>
+                      {state}
+                    </option>
+                  ))}
+                </select>
                 <ErrorsList errors={state.errors.state} />
               </div>
               <div className="flex flex-col">
@@ -219,9 +225,9 @@ export default function AddContactForm({ user }: AddContactFormProps) {
                   name="isEmergency"
                   className="input border-none bg-gray-200 text-gray-800"
                 >
-                  <option>Not Selected</option>
-                  <option value="true">Yes</option>
-                  <option value="false">No</option>
+                  <option value="NotSelected">Not Selected</option>
+                  {/* <option value="Yes" selected={isEmergency === true}>Yes</option> */}
+                  {/* <option value="No" selected={isEmergency === false}>No</option> */}
                 </select>
                 <ErrorsList errors={state.errors.isEmergency} />
               </div>

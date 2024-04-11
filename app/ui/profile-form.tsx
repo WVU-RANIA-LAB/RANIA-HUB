@@ -8,6 +8,7 @@ import { updateProfile } from '@/app/lib/actions/user-actions';
 
 type ProfileFormProps = { user: User };
 
+
 export default function ProfileForm({ user }: ProfileFormProps) {
   const updateProfileWithEmail = updateProfile.bind(
     null,
@@ -119,6 +120,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
             required
             className="select bg-gray-200 text-gray-800"
           >
+            
             {states.map((state) => (
               <option key={state} value={state}>
                 {state}

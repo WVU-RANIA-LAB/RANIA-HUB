@@ -80,6 +80,7 @@ export default async function Page() {
             {contacts.map((contact, index) => (
               <tr key={index}>
                 <td>{contact.firstName && contact.lastName}</td>
+                <td>{contact.address.addressLine1}</td>
                 <td>{contact.email}</td>
                 <td>{contact.phoneNumber}</td>
                 <td
