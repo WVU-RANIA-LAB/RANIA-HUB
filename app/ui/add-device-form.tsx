@@ -65,7 +65,7 @@ export default function AddDeviceForm({ user }: AddDeviceFormProps) {
                 <input
                   id="description"
                   name="description"
-                  type="description"
+                  type="text"
                   placeholder="Description"
                   required
                   className="input border-none bg-gray-200 text-gray-800"
@@ -84,6 +84,7 @@ export default function AddDeviceForm({ user }: AddDeviceFormProps) {
                   name="ipAddress"
                   type="ipAddress"
                   placeholder="0.0.0.0"
+                  pattern="^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\.(?!$)|$)){4}$"
                   required
                   className="input border-none bg-gray-200 text-gray-800"
                 />
@@ -99,7 +100,8 @@ export default function AddDeviceForm({ user }: AddDeviceFormProps) {
                 <input
                   id="port"
                   name="port"
-                  type="port"
+                  type="number"
+                  min="0"
                   placeholder="3000"
                   required
                   className="input border-none bg-gray-200 text-gray-800"

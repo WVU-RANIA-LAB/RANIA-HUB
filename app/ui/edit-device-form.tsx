@@ -63,7 +63,7 @@ export default function EditDeviceForm({ device }: EditDeviceFormProps) {
                 <input
                   id="description"
                   name="description"
-                  type="description"
+                  type="text"
                   placeholder={device.description}
                   className="input border-none bg-gray-200 text-gray-800"
                 />
