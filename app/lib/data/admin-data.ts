@@ -1,11 +1,12 @@
 import { unstable_noStore as noStore } from 'next/cache';
 
 import prisma from '@/app/lib/prisma';
+import { Role } from '@prisma/client';
 
 const ITEMS_PER_PAGE = 20;
 
 export async function fetchFilteredUsers(
-  roleType: 'RESIDENT' | 'DOCTOR' | 'ADMIN',
+  roleType: Role,
   query: string,
   currentPage: number,
 ) {
@@ -36,10 +37,7 @@ export async function fetchFilteredUsers(
   }
 }
 
-export async function fetchUsersPages(
-  roleType: 'RESIDENT' | 'DOCTOR' | 'ADMIN',
-  query: string,
-) {
+export async function fetchUsersPages(roleType: Role, query: string) {
   noStore();
 
   try {

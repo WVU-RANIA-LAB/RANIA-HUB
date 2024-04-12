@@ -2,12 +2,13 @@
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import prisma from '@/app/lib/prisma';
+import { Role } from '@prisma/client';
 
 const UserFormSchema = z.object({
   name: z.string().trim().min(1, { message: 'Name is required' }),
   email: z.string().email({ message: 'Invalid email address' }),
   phone: z.string().trim().min(1, { message: 'Phone number is required' }),
-  role: z.enum(['RESIDENT', 'DOCTOR', 'ADMIN']),
+  role: z.nativeEnum(Role),
 });
 
 type UserFormState = {

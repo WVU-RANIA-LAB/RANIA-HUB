@@ -1,12 +1,12 @@
 'use client';
 import { useRef } from 'react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { User } from '@prisma/client';
+import { Role, User } from '@prisma/client';
 import AdminActionsModal from '@/app/ui/admin-dashboard/admin-actions-modal';
 import { deleteUser } from '@/app/lib/actions/admin-actions';
 
 type CreateUserButtonProps = {
-  roleType: 'RESIDENT' | 'DOCTOR' | 'ADMIN';
+  roleType: Role;
 };
 
 export function CreateUserButton({ roleType }: CreateUserButtonProps) {

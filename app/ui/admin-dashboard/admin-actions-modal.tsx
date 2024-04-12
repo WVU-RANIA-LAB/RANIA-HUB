@@ -2,14 +2,15 @@
 import { forwardRef, useRef } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { User } from '@prisma/client';
+import { Role, User } from '@prisma/client';
 import { createUser, updateUser } from '@/app/lib/actions/admin-actions';
 import FieldErrors from '@/app/ui/field-errors';
+import { updateProfile } from '@/app/lib/actions/user-actions';
 
 type AdminActionsModalProps = {
   mode: 'Create' | 'Edit';
   user?: User;
-  roleType?: 'RESIDENT' | 'DOCTOR' | 'ADMIN';
+  roleType?: Role;
 };
 
 const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
@@ -97,9 +98,9 @@ const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
                   defaultValue={user?.role || roleType}
                   required
                 >
-                  <option value="RESIDENT">Resident</option>
-                  <option value="DOCTOR">Doctor</option>
-                  <option value="ADMIN">Admin</option>
+                  <option value={Role.RESIDENT}>Resident</option>
+                  <option value={Role.DOCTOR}>Doctor</option>
+                  <option value={Role.ADMIN}>Admin</option>
                 </select>
               </label>
               <FieldErrors errors={state.errors?.role} />
