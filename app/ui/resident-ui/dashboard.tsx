@@ -78,15 +78,15 @@ export default async function Dashboard() {
                                     <table className="table-auto">
                                         <thead>
                                             <tr>
-                                                <th className="text-left pr-20 underline text-blue-900 text-base font-bold">Medication</th>
-                                                <th className="text-left pr-20 underline text-blue-900 text-base font-bold">Instructions</th>
+                                                <th className="text-left pr-20 pb-2 pl-10 underline text-blue-900 text-base mr-48 font-bold">Medication</th>
+                                                <th className="text-left pb-2 pl-40 underline text-blue-900 text-base font-bold">Instructions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {medications.map((medication, index) => (
                                                 <tr key={index}>
-                                                    <td>{medication.name}</td>
-                                                    <td>{medication.instructions}</td>
+                                                    <td className="text-left pr-20 pb-2 pl-10">{medication.name}</td>
+                                                    <td className="text-left pb-2 pl-40">{medication.instructions}</td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -112,18 +112,18 @@ export default async function Dashboard() {
                                     <table className="table-auto">
                                         <thead>
                                             <tr>
-                                                <th className="text-left pr-20 underline text-blue-700 text-base font-bold">Name</th>
-                                                <th className="text-left pr-20 underline text-blue-700 text-base font-bold">Phone Number</th>
+                                            <th className="text-left pr-20 pb-2 pl-10 underline text-blue-900 text-base font-bold">Name</th>
+                                            <th className="text-left pb-2 pl-40 underline text-blue-900 text-base font-bold">Phone Number</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>Jon Johnson</td>
-                                                <td>304-111-2222</td>
+                                                <td className="text-left pr-20 pb-2 pl-10">Jon Johnson</td>
+                                                <td className="text-left pb-2 pl-40">304-111-2222</td>
                                             </tr>
                                             <tr>
-                                                <td>Jane Johnson</td>
-                                                <td>304-222-1111</td>
+                                                <td className="text-left pr-20 pb-2 pl-10">Jane Johnson</td>
+                                                <td className="text-left pb-2 pl-40">304-222-1111</td>
                                             </tr>
                                             {/* Add more contacts as needed */}
                                         </tbody>
@@ -132,6 +132,7 @@ export default async function Dashboard() {
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
