@@ -4,7 +4,6 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Role, User } from '@prisma/client';
 import { createUser, updateUser } from '@/app/lib/actions/admin-actions';
-import FieldErrors from '@/app/ui/field-errors';
 import { updateProfile } from '@/app/lib/actions/user-actions';
 
 type AdminActionsModalProps = {
@@ -55,7 +54,6 @@ const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
                   required
                 />
               </label>
-              <FieldErrors errors={state.errors?.name} />
             </div>
             <div>
               <label className="form-control">
@@ -70,7 +68,6 @@ const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
                   required
                 />
               </label>
-              <FieldErrors errors={state.errors?.email} />
             </div>
             <div>
               <label className="form-control">
@@ -85,7 +82,6 @@ const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
                   required
                 />
               </label>
-              <FieldErrors errors={state.errors?.phone} />
             </div>
             <div>
               <label className="form-control">
@@ -103,7 +99,6 @@ const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
                   <option value={Role.ADMIN}>Admin</option>
                 </select>
               </label>
-              <FieldErrors errors={state.errors?.role} />
             </div>
             <div>
               <Submit mode={mode} />
