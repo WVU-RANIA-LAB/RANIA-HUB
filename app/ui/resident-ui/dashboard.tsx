@@ -2,16 +2,21 @@ import navbarLinks from "@/app/ui/navbar"
 import Link from "next/link";
 import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import { Metadata } from 'next';
-import { fetchDoctorById, fetchMedicationsByUser, fetchUserByEmail } from '@/app/lib/data';
+import { fetchDoctorById, fetchMedicationsByUser, fetchUserByEmail, fetchContactsByUser } from '@/app/lib/data';
 import { auth } from '@/auth';
-export const metadata: Metadata = {
+export const Medmetadata: Metadata = {
     title: 'Medications',
   };
+  export const Contmetadata: Metadata = {
+    title: 'Contacts',
+  };
+  
 export default async function Dashboard() {
     const session = await auth();
 
   const user = await fetchUserByEmail(session!.user!.email!);
   const medications = await fetchMedicationsByUser(user.id);
+  const contacts = await fetchContactsByUser(user.id);
     return (
         <main>
 
@@ -113,20 +118,18 @@ export default async function Dashboard() {
                                         <thead>
                                             <tr>
                                             <th className="text-left pr-20 pb-2 pl-10 underline text-blue-900 text-base font-bold">Name</th>
-                                            <th className="text-left pb-2 pl-40 underline text-blue-900 text-base font-bold">Phone Number</th>
+                                            <th className="text-left pb-2 pl-32 underline text-blue-900 text-base font-bold">Phone Number</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td ></td>
-                                                <td ></td>
-                                            </tr>
-                                            <tr>
-                                                <td ></td>
-                                                <td></td>
-                                            </tr>
-                                            {/* Add more contacts as needed */}
+                                            {contacts.map((contact, index) => (
+                                                <tr key={index}>
+                                                    <td className="text-left pr-20 pb-2 pl-10">{contact.firstName}/{contact.relationship}</td>
+                                                    <td className="text-left pb-2 pl-32">{contact.phoneNumber}</td>
+                                                </tr>
+                                                ))}
                                         </tbody>
+                                        
                                     </table>
                                 </div>
                             </div>
