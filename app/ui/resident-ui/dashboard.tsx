@@ -1,8 +1,17 @@
 import navbarLinks from "@/app/ui/navbar"
 import Link from "next/link";
 import { ArrowRightIcon } from '@heroicons/react/24/solid'
+import { Metadata } from 'next';
+import { fetchDoctorById, fetchMedicationsByUser, fetchUserByEmail } from '@/app/lib/data';
+import { auth } from '@/auth';
+export const metadata: Metadata = {
+    title: 'Medications',
+  };
+export default async function Dashboard() {
+    const session = await auth();
 
-export default function Dashboard() {
+  const user = await fetchUserByEmail(session!.user!.email!);
+  const medications = await fetchMedicationsByUser(user.id);
     return (
         <main>
 
@@ -66,8 +75,22 @@ export default function Dashboard() {
                                     </Link>
                                 </div>
                                 <div className="pt-5 pl-5">
-                                    <span className="underline text-blue-900 text-base mr-40 font-bold">Medication:</span>
-                                    <span className="underline text-blue-900 text-base font-bold">Instructions:</span>
+                                    <table className="table-auto">
+                                        <thead>
+                                            <tr>
+                                                <th className="text-left pr-20 pb-2 pl-10 underline text-blue-900 text-base mr-48 font-bold">Medication</th>
+                                                <th className="text-left pb-2 pl-40 underline text-blue-900 text-base font-bold">Instructions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {medications.map((medication, index) => (
+                                                <tr key={index}>
+                                                    <td className="text-left pr-20 pb-2 pl-10">{medication.name}</td>
+                                                    <td className="text-left pb-2 pl-40">{medication.instructions}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -86,12 +109,30 @@ export default function Dashboard() {
                                     </Link>
                                 </div>
                                 <div className="pt-5 pl-5">
-                                    <span className="underline text-blue-900 text-base mr-80 font-bold">Name:</span>
-                                    <span className="underline text-blue-900 text-base font-bold">Phone Number:</span>
+                                    <table className="table-auto">
+                                        <thead>
+                                            <tr>
+                                            <th className="text-left pr-20 pb-2 pl-10 underline text-blue-900 text-base font-bold">Name</th>
+                                            <th className="text-left pb-2 pl-40 underline text-blue-900 text-base font-bold">Phone Number</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td ></td>
+                                                <td ></td>
+                                            </tr>
+                                            <tr>
+                                                <td ></td>
+                                                <td></td>
+                                            </tr>
+                                            {/* Add more contacts as needed */}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
