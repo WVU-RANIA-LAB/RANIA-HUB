@@ -79,7 +79,7 @@ export default async function Page() {
           <tbody>
             {contacts.map((contact, index) => (
               <tr key={index}>
-                <td>{contact.firstName}</td>
+                <td>{contact.firstName}/{contact.relationship}</td>
                 <td>{contact.address.addressLine1}</td>
                 <td>{contact.phoneNumber}</td>
                 <td>{contact.email}</td>

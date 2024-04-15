@@ -4,6 +4,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { User } from '@prisma/client';
 import { addContact } from '@/app/lib/actions/contacts-actions';
 import { states } from '@/app/lib/constants/us-states';
+import React, { useState } from 'react';
 
 type AddContactFormProps = { user: User };
 
@@ -13,6 +14,8 @@ export default function AddContactForm({ user }: AddContactFormProps) {
     message: null,
     errors: {},
   });
+
+  const [isEmergency, setIsEmergency] = useState(false);
 
   return (
     <div className="inline">
@@ -229,6 +232,15 @@ export default function AddContactForm({ user }: AddContactFormProps) {
                   <option selected={true}>Yes</option>
                   <option selected={false}>No</option>
                 </select>
+
+                {/* <input
+                  id="isEmergency"
+                  name="isEmergency"
+                  type="checkbox" 
+                  checked={isEmergency} // Bind checked status to isEmergency state
+                  onChange={(e) => setIsEmergency(e.target.checked)} // Handle change event to update isEmergency state
+                /> */}
+
                 <ErrorsList errors={state.errors.isEmergency} />
               </div>
             </div>
