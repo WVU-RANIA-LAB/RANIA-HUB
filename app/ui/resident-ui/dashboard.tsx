@@ -118,12 +118,12 @@ export default async function Dashboard() {
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td className="text-left pr-20 pb-2 pl-10">Jon Johnson</td>
-                                                <td className="text-left pb-2 pl-40">304-111-2222</td>
+                                                <td ></td>
+                                                <td ></td>
                                             </tr>
                                             <tr>
-                                                <td className="text-left pr-20 pb-2 pl-10">Jane Johnson</td>
-                                                <td className="text-left pb-2 pl-40">304-222-1111</td>
+                                                <td ></td>
+                                                <td></td>
                                             </tr>
                                             {/* Add more contacts as needed */}
                                         </tbody>
