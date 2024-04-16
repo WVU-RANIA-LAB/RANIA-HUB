@@ -56,8 +56,8 @@ export default async function Page() {
   }
 
   return (
-    <main className="grow bg-white py-16">
-      <div className="mx-auto max-w-7xl">
+    <main className="flex grow flex-col bg-white px-2 py-8 sm:px-10 sm:py-20">
+      <div className="mb-4 flex justify-end">
         <div
           className={`${lusitana.className} rounded border-8 border-wvu-primary-blue bg-wvu-primary-blue text-2xl font-bold text-white antialiased`}
         >
