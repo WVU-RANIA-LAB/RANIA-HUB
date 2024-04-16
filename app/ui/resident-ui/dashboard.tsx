@@ -4,6 +4,7 @@ import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import { Metadata } from 'next';
 import { fetchDoctorById, fetchMedicationsByUser, fetchUserByEmail, fetchContactsByUser } from '@/app/lib/data';
 import { auth } from '@/auth';
+import { lusitana } from "../fonts";
 export const Medmetadata: Metadata = {
     title: 'Medications',
   };
@@ -18,8 +19,7 @@ export default async function Dashboard() {
   const medications = await fetchMedicationsByUser(user.id);
   const contacts = await fetchContactsByUser(user.id);
     return (
-        <main>
-
+        <main className="flex-grow flex flex-col bg-white px-2 py-8 sm:px-10 sm:py-20">
         <div className="flex flex-col">
                 {/* First Row */}
                 <div className="flex">
@@ -27,8 +27,8 @@ export default async function Dashboard() {
                     <div className="w-1/2 h-80 p-2">
                         <div className="flex flex-col h-full">
                             <div className="flex-grow bg-white border-2 border-black">
-                                <div className="flex items-center justify-between w-full h-12 bg-blue-900 pl-5 pr-5">
-                                    <h6 className="text-2xl font-bold text-white">Devices</h6>
+                                <div className="flex items-center justify-between w-full h-12 bg-wvu-primary-blue pl-5 pr-5">
+                                    <h6 className={`${lusitana.className} rounded-md bg-wvu-primary-blue p-2 text-lg uppercase text-white antialiased`}>Devices</h6>
                                     <Link href={'/resident-dashboard/devices'} className="text-blue-900 no-underline">
                                         <button className="w-12 h-8 text-sm rounded-full bg-white flex justify-center items-center border-2 border-black font-bold">
                                             <ArrowRightIcon className='w-6' />
@@ -47,8 +47,8 @@ export default async function Dashboard() {
                     <div className="w-1/2 h-80 p-2 ">
                         <div className="flex flex-col h-full">
                             <div className="flex-grow bg-white border-2 border-black">
-                                <div className="flex items-center justify-between w-full h-12 bg-blue-900 pl-5 pr-5">
-                                    <h6 className="text-2xl font-bold text-white">Appointments</h6>
+                                <div className="flex items-center justify-between w-full h-12 bg-wvu-primary-blue pl-5 pr-5">
+                                    <h6 className={`${lusitana.className} rounded-md bg-wvu-primary-blue p-2 text-lg uppercase text-white antialiased`}>Appointments</h6>
                                     <Link href={'/resident-dashboard/calendar'} className="text-blue-900 no-underline">
                                         <button className="w-12 h-8 text-sm rounded-full bg-white flex justify-center items-center border-2 border-black font-bold">
                                             <ArrowRightIcon className='w-6' />
@@ -71,8 +71,8 @@ export default async function Dashboard() {
                     <div className="w-1/2 h-80 p-2">
                         <div className="flex flex-col h-full">
                             <div className="flex-grow bg-white border-2 border-black">
-                                <div className="flex items-center justify-between w-full h-12 bg-blue-900 pl-5 pr-5">
-                                    <h6 className="text-2xl font-bold text-white">Medications</h6>
+                                <div className="flex items-center justify-between w-full h-12 bg-wvu-primary-blue pl-5 pr-5">
+                                    <h6 className={`${lusitana.className} rounded-md bg-wvu-primary-blue p-2 text-lg uppercase text-white antialiased`}>Medications</h6>
                                     <Link href={'/resident-dashboard/medications'} className="text-blue-900 no-underline">
                                         <button className="w-12 h-8 text-sm rounded-full bg-white flex justify-center items-center border-2 border-black font-bold">
                                             <ArrowRightIcon className='w-6' />
@@ -90,8 +90,8 @@ export default async function Dashboard() {
                                         <tbody>
                                             {medications.map((medication, index) => (
                                                 <tr key={index}>
-                                                    <td className="text-left pr-20 pb-2 pl-10">{medication.name}</td>
-                                                    <td className="text-left pb-2 pl-40">{medication.instructions}</td>
+                                                    <td className="text-left text-black pr-20 pb-2 pl-10">{medication.name}</td>
+                                                    <td className="text-left text-black pb-2 pl-40">{medication.instructions}</td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -105,8 +105,8 @@ export default async function Dashboard() {
                     <div className="w-1/2 h-80 p-2">
                         <div className="flex flex-col h-full">
                             <div className="flex-grow bg-white border-2 border-black">
-                                <div className="flex items-center justify-between w-full h-12 bg-blue-900 pl-5 pr-5">
-                                    <h6 className="text-2xl font-bold text-white">Contacts</h6>
+                                <div className="flex items-center justify-between w-full h-12 bg-wvu-primary-blue pl-5 pr-5">
+                                    <h6 className={`${lusitana.className} rounded-md bg-wvu-primary-blue p-2 text-lg uppercase text-white antialiased`}>Contacts</h6>
                                     <Link href={'/resident-dashboard/contacts'} className="text-blue-900 no-underline">
                                         <button className="w-12 h-8 text-sm rounded-full bg-white flex justify-center items-center border-2 border-black font-bold">
                                             <ArrowRightIcon className='w-6' />
@@ -124,8 +124,8 @@ export default async function Dashboard() {
                                         <tbody>
                                             {contacts.map((contact, index) => (
                                                 <tr key={index}>
-                                                    <td className="text-left pr-20 pb-2 pl-10">{contact.firstName}/{contact.relationship}</td>
-                                                    <td className="text-left pb-2 pl-32">{contact.phoneNumber}</td>
+                                                    <td className="text-left text-black pr-20 pb-2 pl-10">{contact.firstName}/{contact.relationship}</td>
+                                                    <td className="text-left text-black pb-2 pl-32">{contact.phoneNumber}</td>
                                                 </tr>
                                                 ))}
                                         </tbody>

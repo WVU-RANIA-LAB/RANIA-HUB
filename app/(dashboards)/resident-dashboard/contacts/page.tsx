@@ -20,15 +20,16 @@ export default async function Page() {
 
   if (contacts.length === 0) {
     return (
-      <main className="grow bg-white py-16">
-        {' '}
-        <div className="mx-auto max-w-7xl">
-          <div
-            className={`${lusitana.className} rounded border-8 border-wvu-primary-blue bg-wvu-primary-blue text-2xl font-bold text-white antialiased`}
-          >
-            Manage Contacts <AddContactForm user={user}></AddContactForm>
-          </div>
-          <br></br>
+      <main className="flex grow flex-col bg-white px-2 py-8 sm:px-10 sm:py-20">
+        <div className="mb-4 flex justify-end">
+            <AddContactForm user={user}></AddContactForm>
+        </div>
+        <div className="rounded-md border border-black">
+        <h1
+          className={`${lusitana.className} mb-4 rounded-md bg-wvu-primary-blue p-2 text-3xl uppercase text-white antialiased`}
+        >
+          Contacts
+        </h1>
           <table className="table table-auto">
             <thead>
               <tr
@@ -43,10 +44,7 @@ export default async function Page() {
             </thead>
             <tbody>
               <tr className="text-lg text-black">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>No Contacts</td>
               </tr>
             </tbody>
           </table>
@@ -57,17 +55,19 @@ export default async function Page() {
 
   return (
     <main className="flex grow flex-col bg-white px-2 py-8 sm:px-10 sm:py-20">
-      <div className="mb-4 flex justify-end">
-        <div
-          className={`${lusitana.className} rounded border-8 border-wvu-primary-blue bg-wvu-primary-blue text-2xl font-bold text-white antialiased`}
-        >
-          Manage Contacts <AddContactForm user={user}></AddContactForm>
+        <div className="mb-4 flex justify-end">
+            <AddContactForm user={user}></AddContactForm>
         </div>
-        <br></br>
+        <div className="rounded-md border border-black">
+        <h1
+          className={`${lusitana.className} mb-4 rounded-md bg-wvu-primary-blue p-2 text-3xl uppercase text-white antialiased`}
+        >
+          Contacts
+        </h1>
         <table className="table table-auto">
           <thead>
             <tr
-              className={`${lusitana.className} text-2xl font-bold text-wvu-primary-blue antialiased`}
+              className={`${lusitana.className} text-lg text-black`}
             >
                 <th>Name</th>
                 <th>Address</th>
@@ -79,10 +79,10 @@ export default async function Page() {
           <tbody>
             {contacts.map((contact, index) => (
               <tr key={index}>
-                <td>{contact.firstName}/{contact.relationship}</td>
-                <td>{contact.address.addressLine1}</td>
-                <td>{contact.phoneNumber}</td>
-                <td>{contact.email}</td>
+                <td className="text-base text-black">{contact.firstName}/{contact.relationship}</td>
+                <td className="text-base text-black">{contact.address.addressLine1}</td>
+                <td className="text-base text-black">{contact.phoneNumber}</td>
+                <td className="text-base text-black">{contact.email}</td>
                 <td
                   className={`${lusitana.className} join join-vertical md:join-horizontal`}
                 >
