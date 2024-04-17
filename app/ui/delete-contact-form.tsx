@@ -7,7 +7,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 
 type DeleteContactFormProps = { contact: Contact };
 
-export default function deleteContactForm({ contact }: DeleteContactFormProps) {
+export default function DeleteContactForm({ contact }: DeleteContactFormProps) {
   const deleteContactForm = deleteContact.bind(null, contact);
   const [state, dispatch] = useFormState(deleteContactForm, {
     message: null,
