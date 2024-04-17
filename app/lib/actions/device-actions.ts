@@ -120,7 +120,7 @@ export async function powerOn(device: Device) {
   const device_on =
     'http://' + device.ipAddress + ':' + device.port + '/manual_on';
 
-  return await fetch(device_on, {
+  return fetch(device_on, {
     method: 'POST',
   })
     .then((response) => response.text())
@@ -132,7 +132,7 @@ export async function powerOff(device: Device) {
   const device_off =
     'http://' + device.ipAddress + ':' + device.port + '/manual_off';
 
-  return await fetch(device_off, {
+  return fetch(device_off, {
     method: 'POST',
   })
     .then((response) => response.text())

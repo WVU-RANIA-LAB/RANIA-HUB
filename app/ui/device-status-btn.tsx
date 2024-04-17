@@ -9,23 +9,21 @@ type ChangeStatusButtonProps = { device: Device };
 export default function ChangeStatusButton({
   device,
 }: ChangeStatusButtonProps) {
-  const powerOnButton = powerOn.bind(device);
-  const powerOffButton = powerOff.bind(device);
   return (
     <div>
       <button
         className="btn mx-2 bg-white text-green-700
          hover:bg-wvu-primary-gold"
-        onClick={() => {
-          powerOnButton(device);
+        onClick={async () => {
+          await powerOn(device);
         }}
       >
         <PowerIcon className="full w-8"></PowerIcon>
       </button>
       <button
         className="btn mx-2 bg-white text-red-700 hover:bg-wvu-primary-gold"
-        onClick={() => {
-          powerOffButton(device);
+        onClick={async () => {
+          await powerOff(device);
         }}
       >
         <PowerIcon className="full w-8"></PowerIcon>
