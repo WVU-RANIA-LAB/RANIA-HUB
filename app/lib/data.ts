@@ -59,3 +59,20 @@ export async function fetchDoctorById(doctorId: string) {
     throw new Error('Failed to fetch doctor');
   }
 }
+export async function fetchAppointmentsByResident(residentId: string) {
+  try {
+    const appointments = await prisma.appointment.findMany({
+      where: { residentId },
+      include: { 
+        doctor: { 
+          select: { id: true },
+        },
+      },
+    });
+
+    return appointments;
+
+  } catch (e) {
+    throw new Error('Failed to fetch appointments');
+  }
+}

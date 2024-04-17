@@ -2,7 +2,7 @@ import navbarLinks from "@/app/ui/navbar"
 import Link from "next/link";
 import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import { Metadata } from 'next';
-import { fetchDoctorById, fetchMedicationsByUser, fetchUserByEmail, fetchContactsByUser } from '@/app/lib/data';
+import { fetchDoctorById, fetchMedicationsByUser, fetchUserByEmail, fetchContactsByUser, fetchAppointmentsByResident } from '@/app/lib/data';
 import { auth } from '@/auth';
 import { lusitana } from "../fonts";
 export const Medmetadata: Metadata = {
@@ -11,13 +11,25 @@ export const Medmetadata: Metadata = {
   export const Contmetadata: Metadata = {
     title: 'Contacts',
   };
-  
+  export const Appmetadata: Metadata = {
+    title: 'Appointments',
+  };
+  async function fetchDoctorName(doctorId: string) {
+    try {
+      const doctor = await fetchDoctorById(doctorId);
+      return doctor.name;
+    } catch (error) {
+      console.error('Error fetching doctor:', error);
+      return 'Unknown';
+    }
+  }
 export default async function Dashboard() {
     const session = await auth();
 
   const user = await fetchUserByEmail(session!.user!.email!);
   const medications = await fetchMedicationsByUser(user.id);
   const contacts = await fetchContactsByUser(user.id);
+  const appointments = await fetchAppointmentsByResident(user.id);
     return (
         <main className="flex-grow flex flex-col bg-white px-2 py-8 sm:px-10 sm:py-20">
         <div className="flex flex-col">
@@ -56,9 +68,24 @@ export default async function Dashboard() {
                                     </Link>
                                 </div>
                                 <div className="pt-5 pl-5">
-                                    <span className="underline text-blue-900 text-base mr-48 font-bold">Doctor:</span>
-                                    <span className="underline text-blue-900 text-base mr-48 font-bold">Time:</span>
-                                    <span className="underline text-blue-900 text-base font-bold">Location:</span>
+                                    <table className="table-auto">
+                                        <thead>
+                                            <tr>
+                                                <th className="text-left pr-20 pb-2 pl-10 underline text-blue-900 text-base mr-48 font-bold">Doctor</th>
+                                                <th className="text-left pb-2 pl-30 underline text-blue-900 text-base font-bold">Date</th>
+                                                <th className="text-left pb-2 pl-24 underline text-blue-900 text-base font-bold">Location</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {appointments.map((appointment, index) => (
+                                                <tr key={index}>
+                                                    <td className="text-left text-black pr-20 pb-2 pl-10">{fetchDoctorName(appointment.doctorId)}</td>
+                                                    <td className="text-left text-black pb-2 pl-30">{appointment.date.toLocaleDateString()}</td>
+                                                    <td className="text-left text-black pb-2 pl-24">{appointment.location.addressLine1}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +117,7 @@ export default async function Dashboard() {
                                         <tbody>
                                             {medications.map((medication, index) => (
                                                 <tr key={index}>
-                                                    <td className="text-left text-black pr-20 pb-2 pl-10">{medication.name}</td>
+                                                    <td className="text-left text-black pr-20 pb-2 pl-10">{fetchDoctorName(medication.doctorId)}</td>
                                                     <td className="text-left text-black pb-2 pl-40">{medication.instructions}</td>
                                                 </tr>
                                             ))}
