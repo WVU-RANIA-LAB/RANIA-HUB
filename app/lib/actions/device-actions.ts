@@ -109,7 +109,7 @@ export async function deleteDevice(device: Device) {
 }
 
 export async function fetchStatus(ipAddress: string, port: string) {
-  const device_url = 'http://' + ipAddress + ':' + port + '/status';
+  const device_url = `http://${ipAddress}:${port}/status`;
   return fetch(device_url, { method: 'GET' })
     .then((response) => response.json())
     .then((data) => data.device_on)
@@ -117,8 +117,7 @@ export async function fetchStatus(ipAddress: string, port: string) {
 }
 
 export async function powerOn(device: Device) {
-  const device_on =
-    'http://' + device.ipAddress + ':' + device.port + '/manual_on';
+  const device_on = `http://${device.ipAddress}:${device.port}/manual_on`;
 
   return fetch(device_on, {
     method: 'POST',
@@ -129,8 +128,7 @@ export async function powerOn(device: Device) {
 }
 
 export async function powerOff(device: Device) {
-  const device_off =
-    'http://' + device.ipAddress + ':' + device.port + '/manual_off';
+  const device_off = `http://${device.ipAddress}:${device.port}/manual_off`;
 
   return fetch(device_off, {
     method: 'POST',

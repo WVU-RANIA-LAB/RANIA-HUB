@@ -77,8 +77,8 @@ export default async function Page() {
             </tr>
           </thead>
           <tbody>
-            {devices.map((device, index) => (
-              <tr key={index}>
+            {devices.map((device) => (
+              <tr key={device.id}>
                 <td>{device.name}</td>
                 <td>
                   <CheckStatus device={device}></CheckStatus>
