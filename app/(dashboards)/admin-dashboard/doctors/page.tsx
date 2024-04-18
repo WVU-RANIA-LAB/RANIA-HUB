@@ -5,12 +5,12 @@ import { auth } from '@/auth';
 import { fetchUserByEmail } from '@/app/lib/data/data';
 import { fetchUsersPages } from '@/app/lib/data/admin-data';
 import Search from '@/app/ui/search';
-import AdminResidentsTable from '@/app/ui/admin-dashboard/admin-residents-table';
+import AdminDoctorsTable from '@/app/ui/admin-dashboard/admin-doctors-table';
 import Pagination from '@/app/ui/pagination';
 import { CreateUserButton } from '@/app/ui/admin-dashboard/admin-actions-btns';
 
 export const metadata: Metadata = {
-  title: 'Residents',
+  title: 'Doctors',
 };
 
 type PageProps = {
@@ -25,25 +25,25 @@ export default async function Page({ searchParams }: PageProps) {
   const currentPage = Number(searchParams?.page) || 1;
   const session = await auth();
   const admin = await fetchUserByEmail(session!.user!.email!);
-  const totalPages = await fetchUsersPages('RESIDENT', query);
+  const totalPages = await fetchUsersPages('DOCTOR', query);
 
   return (
     <main className="flex grow flex-col bg-white px-2 py-8 sm:px-10 sm:py-20">
       <div className="mb-4 flex justify-end">
-        <CreateUserButton roleType="RESIDENT" />
+        <CreateUserButton roleType="DOCTOR" />
       </div>
       <div className="rounded-md border border-black">
         <h1
           className={`${lusitana.className} mb-4 rounded-md bg-wvu-primary-blue p-2 text-3xl uppercase text-white antialiased`}
         >
-          Residents
+          Doctors
         </h1>
-        <Search placeholder="Search residents..." />
+        <Search placeholder="Search doctors..." />
         <Suspense
           key={query + currentPage}
           fallback={<span className="loading loading-spinner mx-auto my-16" />}
         >
-          <AdminResidentsTable query={query} currentPage={currentPage} />
+          <AdminDoctorsTable query={query} currentPage={currentPage} />
         </Suspense>
       </div>
       <div className="mt-8 self-center">
