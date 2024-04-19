@@ -5,7 +5,7 @@ import AddContactForm from '@/app/ui/add-contact-form';
 import EditContactForm from '@/app/ui/edit-contact-form';
 import DeleteContactForm from '@/app/ui/delete-contact-form';
 import { auth } from '@/auth';
-import { fetchContactsByUser, fetchUserByEmail } from '@/app/lib/data';
+import { fetchContactsByUser, fetchUserByEmail } from '@/app/lib/data/data';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/solid'
 
 export const metadata: Metadata = {
