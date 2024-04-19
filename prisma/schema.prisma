@@ -145,6 +145,8 @@ model Appointment {
 
 model Device {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
+  ipAddress   String @map("ip_address")
+  port        String
   name        String
   description String
   status      String
