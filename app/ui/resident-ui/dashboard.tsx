@@ -2,7 +2,7 @@ import navbarLinks from "@/app/ui/navbar"
 import Link from "next/link";
 import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import { Metadata } from 'next';
-import { fetchDoctorById, fetchMedicationsByUser, fetchUserByEmail, fetchContactsByUser, fetchAppointmentsByResident } from '@/app/lib/data';
+import { fetchDoctorById, fetchMedicationsByUser, fetchUserByEmail, fetchContactsByUser, fetchAppointmentsByResident } from '@/app/lib/data/data';
 import { auth } from '@/auth';
 import { lusitana } from "../fonts";
 export const Medmetadata: Metadata = {
