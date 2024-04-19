@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { fetchDoctorById, fetchMedicationsByUser, fetchUserByEmail } from '@/app/lib/data';
+import { fetchDoctorById, fetchMedicationsByUser, fetchUserByEmail } from '@/app/lib/data/data';
 import { auth } from '@/auth';
 import prisma from '@/app/lib/prisma';
 import { lusitana } from '../fonts';
