@@ -117,7 +117,7 @@ export default async function Dashboard() {
                                         <tbody>
                                             {medications.map((medication, index) => (
                                                 <tr key={index}>
-                                                    <td className="text-left text-black pr-20 pb-2 pl-10">{fetchDoctorName(medication.doctorId)}</td>
+                                                    <td className="text-left text-black pr-20 pb-2 pl-10">{medication.name}</td>
                                                     <td className="text-left text-black pb-2 pl-40">{medication.instructions}</td>
                                                 </tr>
                                             ))}
