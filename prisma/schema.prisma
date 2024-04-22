@@ -90,7 +90,7 @@ model Contact {
   phoneNumber  String  @map("phone_number")
   address      Address
   relationship String
-  isEmergency  Boolean @default(false) @map("is_emergency")
+  isEmergency  String @default("No") @map("is_emergency")
 
   belongsTo   User   @relation(fields: [belongsToId], references: [id])
   belongsToId String @map("belongs_to_id") @db.ObjectId

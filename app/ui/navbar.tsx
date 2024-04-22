@@ -9,7 +9,7 @@ const navbarLinks: Record<Role, Array<{ label: string; href: string }>> = {
   RESIDENT: [
     { label: 'Calendar', href: '/resident-dashboard/calendar' },
     { label: 'Devices', href: '/resident-dashboard/devices' },
-    { label: 'Medical History', href: '/resident-dashboard/medical-history' },
+    { label: 'Medications', href: '/resident-dashboard/medications' },
     { label: 'Contacts', href: '/resident-dashboard/contacts' },
   ],
   DOCTOR: [
