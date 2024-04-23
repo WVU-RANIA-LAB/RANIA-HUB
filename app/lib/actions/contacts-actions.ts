@@ -82,7 +82,7 @@ export async function addContact(
           zipCode: data.zipCode,
         },
         relationship: data.relationship,
-        isEmergency: Boolean(data.isEmergency),
+        isEmergency: Boolean(data.isEmergency.toString()),
         belongsToId: user.id,
       },
     });
@@ -129,7 +129,7 @@ export async function editContact(
           zipCode: data.zipCode,
         },
         relationship: data.relationship,
-        isEmergency: Boolean(data.isEmergency),
+        isEmergency: Boolean(data.isEmergency.toString()),
       },
     });
   } catch (e) {
