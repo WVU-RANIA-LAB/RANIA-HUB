@@ -64,3 +64,5 @@
 - Make the entire website responsive (looks good on all screen sizes)
 - Create a logo
 - When a user signs in for the first time, show them a form to fill out their personal information. Until this form is completed, they shouldn’t be able to access their dashboard.
+
+### <b>For more information, please refer to the documentation in the docs folder </b>
