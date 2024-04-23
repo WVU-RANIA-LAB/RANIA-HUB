@@ -5,10 +5,18 @@ import { Role, User } from '@prisma/client';
 import AdminActionsModal from '@/app/ui/admin-dashboard/admin-actions-modal';
 import { deleteUser } from '@/app/lib/actions/admin-actions';
 
+/**
+ * Props for the CreateUserButton component.
+ */
 type CreateUserButtonProps = {
   roleType: Role;
 };
 
+/**
+ * Renders a button to create a user.
+ * @param roleType - The role type of the user.
+ * @returns The JSX element representing the create user button.
+ */
 export function CreateUserButton({ roleType }: CreateUserButtonProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -27,10 +35,18 @@ export function CreateUserButton({ roleType }: CreateUserButtonProps) {
   );
 }
 
+/**
+ * Props for the EditUserButton component.
+ */
 type EditUserButtonProps = {
   user: User;
 };
 
+/**
+ * Renders a button for editing a user.
+ * @param user - The user to be edited.
+ * @returns The rendered EditUserButton component.
+ */
 export function EditUserButton({ user }: EditUserButtonProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -47,10 +63,18 @@ export function EditUserButton({ user }: EditUserButtonProps) {
   );
 }
 
+/**
+ * Props for the DeleteUserButton component.
+ */
 type DeleteUserButtonProps = {
   userId: string;
 };
 
+/**
+ * Renders a button component for deleting a user.
+ * @param {DeleteUserButtonProps} props - The component props.
+ * @returns {JSX.Element} The delete user button component.
+ */
 export function DeleteUserButton({ userId }: DeleteUserButtonProps) {
   const deleteUserWithId = deleteUser.bind(null, userId);
   const dialogRef = useRef<HTMLDialogElement>(null);

@@ -21,6 +21,12 @@ type UserFormState = {
   };
 };
 
+/**
+ * Creates a new user with the provided form data.
+ * @param _previousState - The previous state of the user form.
+ * @param formData - The form data containing the user details.
+ * @returns A promise that resolves to the updated user form state.
+ */
 export async function createUser(
   _previousState: UserFormState,
   formData: FormData,
@@ -59,6 +65,13 @@ export async function createUser(
   return { message: 'Successfully created user.' };
 }
 
+/**
+ * Updates a user's information in the database.
+ * @param userId - The ID of the user to update.
+ * @param _previousState - The previous state of the user form.
+ * @param formData - The form data containing the updated user information.
+ * @returns A promise that resolves to the updated user form state.
+ */
 export async function updateUser(
   userId: string,
   _previousState: UserFormState,
@@ -99,6 +112,12 @@ export async function updateUser(
   return { message: 'Successfully updated user.' };
 }
 
+/**
+ * Deletes a user from the database.
+ *
+ * @param userId - The ID of the user to delete.
+ * @returns A promise that resolves to an object with a `message` property indicating the result of the operation.
+ */
 export async function deleteUser(userId: string) {
   try {
     await prisma.user.delete({

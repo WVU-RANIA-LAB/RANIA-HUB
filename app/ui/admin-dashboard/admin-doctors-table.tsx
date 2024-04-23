@@ -5,11 +5,22 @@ import {
   DeleteUserButton,
 } from '@/app/ui/admin-dashboard/admin-actions-btns';
 
+/**
+ * Props for the AdminDoctorsTable component.
+ */
 type AdminDoctorsTableProps = {
   query: string;
   currentPage: number;
 };
 
+/**
+ * Renders a table of doctor users with their information and actions.
+ *
+ * @param {AdminAdminsTableProps} props - The component props.
+ * @param {string} props.query - The search query for filtering users.
+ * @param {number} props.currentPage - The current page number for pagination.
+ * @returns {JSX.Element} The rendered component.
+ */
 export default async function AdminDoctorsTable({
   query,
   currentPage,
