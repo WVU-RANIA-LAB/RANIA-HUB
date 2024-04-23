@@ -2,7 +2,7 @@
 
 ## Relevant Files
 
-- [app/lib/actions/data](../app/lib/actions/data/)
+- [app/lib/actions/data](../app/lib/actions/data)
 - [`app/ui/resident-ui/dashboard.tsx`](./app/ui/resident-ui/dashboard.tsx)
 
 ## Future Work Needed
@@ -27,7 +27,7 @@ This folder contains all of the code for the resident dashboard. Including displ
 
 ## Relevant Files
 
-- [`app/lib/actions/data`](../app/lib/actions/data/)
+- [`app/lib/actions/data`](../app/lib/actions/data)
 - [`app/ui/resident-ui/medications.tsx`](../app/ui/resident-ui/medications.tsx)
 
 ## Future Work Needed
