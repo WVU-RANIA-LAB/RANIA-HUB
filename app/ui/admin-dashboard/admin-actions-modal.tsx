@@ -6,12 +6,23 @@ import { Role, User } from '@prisma/client';
 import { createUser, updateUser } from '@/app/lib/actions/admin-actions';
 import { updateProfile } from '@/app/lib/actions/user-actions';
 
+/**
+ * Props for the AdminActionsModal component.
+ */
 type AdminActionsModalProps = {
   mode: 'Create' | 'Edit';
   user?: User;
   roleType?: Role;
 };
 
+/**
+ * Renders a modal for creating or editing a user in the admin dashboard.
+ *
+ * @component
+ * @param {AdminActionsModalProps} props - The component props.
+ * @param {React.Ref<HTMLDialogElement>} ref - The ref for the dialog element.
+ * @returns {JSX.Element} The rendered component.
+ */
 const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
   function AdminActionsModal(props, ref) {
     const { mode, user, roleType } = props;
@@ -114,6 +125,12 @@ const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
   },
 );
 
+/**
+ * Renders a submit button for the admin actions modal.
+ *
+ * @param mode - The mode of the admin actions modal ('Create' or 'Edit').
+ * @returns The submit button component.
+ */
 function Submit({ mode }: { mode: 'Create' | 'Edit' }) {
   const { pending } = useFormStatus();
   return (

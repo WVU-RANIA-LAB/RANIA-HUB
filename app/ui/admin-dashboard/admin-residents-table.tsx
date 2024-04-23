@@ -5,11 +5,22 @@ import {
   DeleteUserButton,
 } from '@/app/ui/admin-dashboard/admin-actions-btns';
 
+/**
+ * Props for the AdminResidentsTable component.
+ */
 type AdminResidentsTableProps = {
   query: string;
   currentPage: number;
 };
 
+/**
+ * Renders a table of resident users with their information and actions.
+ *
+ * @param {AdminAdminsTableProps} props - The component props.
+ * @param {string} props.query - The search query for filtering users.
+ * @param {number} props.currentPage - The current page number for pagination.
+ * @returns {JSX.Element} The rendered component.
+ */
 export default async function AdminResidentsTable({
   query,
   currentPage,
