@@ -12,12 +12,23 @@ const ContactFormSchema = z.object({
   lastName: z.string().trim().min(1, { message: 'Last Name required' }),
   relationship: z.string().trim().min(1, { message: 'Relationship required' }),
   email: z.string().trim().min(1, { message: 'Email required' }),
-  phoneNumber: z.string().trim().regex(/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/, {message: 'Invalid phone number',}),  
-  addressLine1: z.string().trim().min(1, { message: 'Address Line 1 required' }),
+  phoneNumber: z
+    .string()
+    .trim()
+    .regex(/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/, {
+      message: 'Invalid phone number',
+    }),
+  addressLine1: z
+    .string()
+    .trim()
+    .min(1, { message: 'Address Line 1 required' }),
   addressLine2: z.string().trim(),
   city: z.string().trim().min(1, { message: 'City required' }),
   state: z.enum(states),
-  zipCode: z.string().trim().regex(/^\d{5}(-\d{4})?$/, { message: 'Invalid zip code' }),
+  zipCode: z
+    .string()
+    .trim()
+    .regex(/^\d{5}(-\d{4})?$/, { message: 'Invalid zip code' }),
   isEmergency: z.string(),
 });
 
@@ -58,22 +69,22 @@ export async function addContact(
 
   try {
     await prisma.contact.create({
-        data: {
-            firstName: data.firstName,
-            lastName: data.lastName,
-            email: data.email,
-            phoneNumber: data.phoneNumber,
-            address: {
-                addressLine1: data.addressLine1,
-                addressLine2: data.addressLine2,
-                city: data.city,
-                state: data.state,
-                zipCode: data.zipCode,
-              },
-            relationship: data.relationship,
-            isEmergency: data.isEmergency,
-            belongsToId: user.id,
-          },
+      data: {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        address: {
+          addressLine1: data.addressLine1,
+          addressLine2: data.addressLine2,
+          city: data.city,
+          state: data.state,
+          zipCode: data.zipCode,
+        },
+        relationship: data.relationship,
+        isEmergency: Boolean(data.isEmergency),
+        belongsToId: user.id,
+      },
     });
   } catch (e) {
     return { message: 'Database Error: Failed to add contact.', errors: {} };
@@ -111,14 +122,14 @@ export async function editContact(
         email: data.email,
         phoneNumber: data.phoneNumber,
         address: {
-            addressLine1: data.addressLine1,
-            addressLine2: data.addressLine2,
-            city: data.city,
-            state: data.state,
-            zipCode: data.zipCode, 
-          },
+          addressLine1: data.addressLine1,
+          addressLine2: data.addressLine2,
+          city: data.city,
+          state: data.state,
+          zipCode: data.zipCode,
+        },
         relationship: data.relationship,
-        isEmergency: data.isEmergency,
+        isEmergency: Boolean(data.isEmergency),
       },
     });
   } catch (e) {
@@ -129,7 +140,9 @@ export async function editContact(
   return { message: 'Successfully updated device.', errors: {} };
 }
 
-export async function deleteContact(contact: Contact): Promise<ContactFormState> {
+export async function deleteContact(
+  contact: Contact,
+): Promise<ContactFormState> {
   const id = contact.id;
   try {
     await prisma.contact.delete({
