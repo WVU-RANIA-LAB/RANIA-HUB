@@ -1,6 +1,6 @@
 # Prerequisites:
 
-- If you’re on Windows, consider using WSL/WSL2. (If you’re a serious developer, use Linux or MacOS or any other Unix-based OS 🙂)
+- If you’re on Windows, consider using WSL/WSL2.
 - Make sure you have git installed and configured.
   - [https://git-scm.com/](https://git-scm.com/)
 - Make sure you have node installed. Any recent version should work.
