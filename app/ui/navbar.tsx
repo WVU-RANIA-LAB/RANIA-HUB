@@ -21,6 +21,8 @@ const navbarLinks: Record<Role, Array<{ label: string; href: string }>> = {
     { label: 'Doctors', href: '/admin-dashboard/doctors' },
     { label: 'Admins', href: '/admin-dashboard/admins' },
   ],
+  DEVELOPER: [
+  ],
 };
 
 type NavbarProps = {

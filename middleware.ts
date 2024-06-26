@@ -8,5 +8,6 @@ export const config = {
     '/resident-dashboard/:path*',
     '/doctor-dashboard/:path*',
     '/admin-dashboard/:path*',
+    '/developer-dashboard/:path*',
   ],
 };

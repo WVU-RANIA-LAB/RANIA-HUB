@@ -169,4 +169,5 @@ enum Role {
   RESIDENT
   DOCTOR
   ADMIN
+  DEVELOPER
 }
