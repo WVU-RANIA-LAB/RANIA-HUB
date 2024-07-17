@@ -58,6 +58,9 @@ model User {
   specialty     String?
   address       Address?
   role          Role      @default(RESIDENT)
+  group         String?
+
+  dashboardLayout DashboardLayout? @relation(fields: [dashboardLayoutId], references: [id])
 
   residents   User[]   @relation("DoctorsResidents", fields: [residentIds], references: [id])
   residentIds String[] @map("resident_ids") @db.ObjectId
@@ -79,7 +82,83 @@ model User {
   accounts Account[]
   sessions Session[]
 
+  developerGroup    DeveloperGroup[]
+  dashboardLayoutId String?          @db.ObjectId
+
   @@map("users")
+}
+
+model DashboardLayout {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  projectId String    @unique @map("project_id") @db.ObjectId
+  layout    Json      @map("layout")
+  Project   Project[]
+  User      User[]
+}
+
+model DeveloperGroup {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  semester     String
+  year         String
+  course       String
+  group_number String
+  developers   String[]
+  User         User?    @relation(fields: [userId], references: [id])
+  userId       String?  @db.ObjectId
+}
+
+model Project {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  group_owner String?
+
+  dashboardLayout   DashboardLayout? @relation(fields: [dashboardLayoutId], references: [id])
+  dashboardLayoutId String?          @db.ObjectId
+
+  lineChartData   LineChartData[]
+  barChartData    BarChartData[]
+  singleValueData SingleValueData?
+  tableData       TableData[]
+  textData        TextData[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model LineChartData {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId String  @unique @db.ObjectId
+  data      Json // JSON array to store line chart data points
+}
+
+model BarChartData {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId String  @unique @db.ObjectId
+  data      Json // JSON array to store bar chart data points
+}
+
+model SingleValueData {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId String  @unique @db.ObjectId
+  value     Float // Single value data
+}
+
+model TableData {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId String  @unique @db.ObjectId
+  data      Json // JSON array to store table data rows
+}
+
+model TextData {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId String  @unique @db.ObjectId
+  text      String // Text data
 }
 
 model Contact {
@@ -90,7 +169,7 @@ model Contact {
   phoneNumber  String  @map("phone_number")
   address      Address
   relationship String
-  isEmergency  String @default("No") @map("is_emergency")
+  isEmergency  String  @default("No") @map("is_emergency")
 
   belongsTo   User   @relation(fields: [belongsToId], references: [id])
   belongsToId String @map("belongs_to_id") @db.ObjectId
@@ -151,10 +230,23 @@ model Device {
   description String
   status      String
 
-  belongsTo   User   @relation(fields: [belongsToId], references: [id])
-  belongsToId String @map("belongs_to_id") @db.ObjectId
+  belongsTo   User        @relation(fields: [belongsToId], references: [id])
+  belongsToId String      @map("belongs_to_id") @db.ObjectId
+  DeviceACL   DeviceACL[]
 
   @@map("devices")
+}
+
+model DeviceACL {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  residentId String   @db.ObjectId
+  deviceId   String   @db.ObjectId
+  device     Device   @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  permission String // e.g., 'read', 'write', 'admin'
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([residentId, deviceId]) // Ensure a user-device pair is unique
 }
 
 type Address {

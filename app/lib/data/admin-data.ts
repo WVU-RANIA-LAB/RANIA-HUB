@@ -80,3 +80,44 @@ export async function fetchUsersPages(roleType: Role, query: string) {
     throw new Error('Failed to fetch total number of users');
   }
 }
+/**
+ * Fetches developer groups from the database.
+ * @returns A promise that resolves to an array of developer groups.
+ * @throws An error if there is a database error or if fetching groups fails.
+ */
+export async function fetchDeveloperGroups() {
+  noStore();
+
+  try {
+    const groups = await prisma.developerGroup.findMany({
+      orderBy: [{ semester: 'asc' }, { year: 'asc' }, { group_number: 'asc' }],
+    });
+    return groups;
+  } catch (e: any) {
+    console.error('Database Error:', e.message);
+    console.error('Stack Trace:', e.stack);
+    console.error('Error Details:', e);
+    throw new Error('Failed to fetch developer groups');
+  }
+}
+
+/**
+ * Fetches project information from the database.
+ * @returns A promise that resolves to an array of projects.
+ * @throws An error if there is a database error or if fetching projects fails.
+ */
+export async function fetchProjects() {
+  noStore();
+
+  try {
+    const projects = await prisma.project.findMany({
+      orderBy: [{ name: 'asc' }]
+    });
+    return projects;
+  } catch (e: any) {
+    console.error('Database Error:', e.message);
+    console.error('Stack Trace:', e.stack);
+    console.error('Error Details:', e);
+    throw new Error('Failed to fetch projects');
+  }
+}

@@ -1,10 +1,9 @@
 'use client';
-import { forwardRef, useRef } from 'react';
+import { forwardRef, useRef, useEffect, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { Role, User } from '@prisma/client';
+import { Role, User, DeveloperGroup } from '@prisma/client';
 import { createUser, updateUser } from '@/app/lib/actions/admin-actions';
-import { updateProfile } from '@/app/lib/actions/user-actions';
 
 /**
  * Props for the AdminActionsModal component.
@@ -12,6 +11,7 @@ import { updateProfile } from '@/app/lib/actions/user-actions';
 type AdminActionsModalProps = {
   mode: 'Create' | 'Edit';
   user?: User;
+  developerGroups: DeveloperGroup[];
   roleType?: Role;
 };
 
@@ -25,11 +25,55 @@ type AdminActionsModalProps = {
  */
 const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
   function AdminActionsModal(props, ref) {
-    const { mode, user, roleType } = props;
+    const { mode, user, roleType: initialRoleType, developerGroups } = props;
     const formRef = useRef<HTMLFormElement>(null);
-    const userAction =
-      mode === 'Create' ? createUser : updateUser.bind(null, user!.id);
+    const userAction = mode === 'Create' ? createUser : updateUser.bind(null, user!.id);
     const [state, dispatch] = useFormState(userAction, {});
+
+    const [roleType, setRoleType] = useState<Role | undefined>(initialRoleType);
+
+    useEffect(() => {
+      if (user && user.role) {
+        setRoleType(user.role);
+      }
+    }, [user]);
+
+    const handleRoleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+      setRoleType(event.target.value as Role);
+    };
+
+    var transformedRoleType = "";
+    if (roleType !== undefined) {
+      transformedRoleType = roleType.charAt(0).toUpperCase() + roleType.slice(1).toLowerCase();
+    }
+
+    const renderRoleSpecificFormFields = () => {
+      switch (roleType) {
+        case Role.DEVELOPER:
+          return (
+            <div>
+              <label className="form-control">
+                <div className="label">
+                  <span className="label-text">Add To Group:</span>
+                </div>
+                <select
+                  name="group"
+                  className="select select-bordered"
+                  required
+                  defaultValue={user?.group || ''}
+                >
+                  <option value="" disabled>Select a group</option>
+                  {developerGroups.map(group => (
+                    <option key={group.id} value={group.id}>{group.year} {group.semester} {group.course} Group {group.group_number}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+          );
+        default:
+          return null;
+      }
+    };
 
     return (
       <dialog ref={ref} className="modal">
@@ -45,7 +89,7 @@ const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
             </button>
           </form>
           <h2 className="mb-4 text-lg font-bold">
-            {mode === 'Create' ? 'Create' : 'Edit'} User
+            {mode === 'Create' ? 'Create' : 'Edit'} New {transformedRoleType}
           </h2>
           <form
             ref={formRef}
@@ -103,14 +147,17 @@ const AdminActionsModal = forwardRef<HTMLDialogElement, AdminActionsModalProps>(
                   name="role"
                   className="select select-bordered"
                   defaultValue={user?.role || roleType}
+                  onChange={handleRoleChange}
                   required
                 >
                   <option value={Role.RESIDENT}>Resident</option>
                   <option value={Role.DOCTOR}>Doctor</option>
                   <option value={Role.ADMIN}>Admin</option>
+                  <option value={Role.DEVELOPER}>Developer</option>
                 </select>
               </label>
             </div>
+            {renderRoleSpecificFormFields()}
             <div>
               <Submit mode={mode} />
               {state.message && <span>{state.message}</span>}
@@ -144,4 +191,5 @@ function Submit({ mode }: { mode: 'Create' | 'Edit' }) {
   );
 }
 
+AdminActionsModal.displayName = 'AdminActionsModal';
 export default AdminActionsModal;
