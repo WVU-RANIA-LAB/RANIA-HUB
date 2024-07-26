@@ -221,5 +221,48 @@ async function addDeviceInformation(deviceInfo) {
   }
 }
 
+async function removeDeviceInformation(deviceId) {
+  try {
+    // Check if the device exists in the ACL
+    const existingDevice = await prisma.deviceACL.findUnique({
+      where: {
+        deviceId: deviceId,
+      },
+    });
+
+    if (!existingDevice) {
+      console.log(`Device with ID ${deviceId} does not exist in the ACL.`);
+      return; // Exit the function if the device does not exist
+    }
+
+    // Delete associated textData entries
+    await prisma.textData.deleteMany({
+      where: {
+        deviceId: deviceId,
+      },
+    });
+
+    // Delete associated singleValueData entries
+    await prisma.singleValueData.deleteMany({
+      where: {
+        deviceId: deviceId,
+      },
+    });
+
+    // Delete the device entry from the ACL
+    const deletedDevice = await prisma.deviceACL.delete({
+      where: {
+        deviceId: deviceId,
+      },
+    });
+    console.log('Device information removed:', deletedDevice);
+  } catch (error) {
+    console.error('Error removing device information:', error);
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+
 
 console.log('WebSocket server started on port 8080');
