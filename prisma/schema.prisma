@@ -118,12 +118,13 @@ model Project {
 
   lineChartData   LineChartData[]
   barChartData    BarChartData[]
-  singleValueData SingleValueData?
+  singleValueData SingleValueData? @relation(fields: [singleValueDataId], references: [id])
   tableData       TableData[]
   textData        TextData[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  singleValueDataId String?  @db.ObjectId
 }
 
 model LineChartData {
@@ -141,10 +142,14 @@ model BarChartData {
 }
 
 model SingleValueData {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  project   Project @relation(fields: [projectId], references: [id])
-  projectId String  @unique @db.ObjectId
-  value     Float // Single value data
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  deviceId  String    @db.ObjectId
+  i         String
+  data      String
+  DeviceACL DeviceACL @relation(fields: [deviceId], references: [id])
+  Project   Project[]
+
+  @@map("SingleValueData")
 }
 
 model TableData {
@@ -155,10 +160,15 @@ model TableData {
 }
 
 model TextData {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  project   Project @relation(fields: [projectId], references: [id])
-  projectId String  @unique @db.ObjectId
-  text      String // Text data
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  deviceId  String    @db.ObjectId
+  i         String
+  data      String
+  DeviceACL DeviceACL @relation(fields: [deviceId], references: [id])
+  Project   Project?  @relation(fields: [projectId], references: [id])
+  projectId String?   @db.ObjectId
+
+  @@map("TextData")
 }
 
 model Contact {
@@ -233,20 +243,19 @@ model Device {
   belongsTo   User        @relation(fields: [belongsToId], references: [id])
   belongsToId String      @map("belongs_to_id") @db.ObjectId
   DeviceACL   DeviceACL[]
-
-  @@map("devices")
 }
 
 model DeviceACL {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  residentId String   @db.ObjectId
-  deviceId   String   @db.ObjectId
-  device     Device   @relation(fields: [deviceId], references: [id], onDelete: Cascade)
-  permission String // e.g., 'read', 'write', 'admin'
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id                    String            @id @default(auto()) @map("_id") @db.ObjectId
+  deviceId              String            @unique @db.ObjectId // Ensure this matches the type in the related Device model
+  deviceName            String
+  deviceDescription     String
+  deviceDashboardLayout Json
+  Device                Device            @relation(fields: [deviceId], references: [id])
+  SingleValueData       SingleValueData[]
+  TextData              TextData[]
 
-  @@unique([residentId, deviceId]) // Ensure a user-device pair is unique
+  @@map("DeviceACL")
 }
 
 type Address {
