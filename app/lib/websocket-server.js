@@ -36,7 +36,11 @@ mqttClient.on('message', async (topic, message) => {
     } else {
       console.log('Invalid handshake packet');
     }
-  } else if (topic === 'connectivity/test') {
+  } else if(topic === 'connection/disconnect'){
+    disconnectDevice(JSON.parse(message).deviceId)
+  }
+  
+  else if (topic === 'connectivity/test') {
     console.log(`Received message on ${topic}: ${message.toString()}`);
     handleIncomingMessage(topic, message.toString());
   } else if (topic === 'data/update') {
@@ -221,7 +225,7 @@ async function addDeviceInformation(deviceInfo) {
   }
 }
 
-async function removeDeviceInformation(deviceId) {
+async function disconnectDevice(deviceId) {
   try {
     // Check if the device exists in the ACL
     const existingDevice = await prisma.deviceACL.findUnique({
