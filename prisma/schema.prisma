@@ -88,6 +88,17 @@ model User {
   @@map("users")
 }
 
+model RegisteredDevice {
+  id             String  @id @default(auto()) @map("_id") @db.ObjectId
+  deviceId       String  @unique @db.ObjectId
+  name           String
+  secretKey      String  @map("secret_key")
+  registeredTo   String  @db.ObjectId
+  registeredToId String? @db.ObjectId
+
+  @@map("registered_devices")
+}
+
 model DashboardLayout {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
   projectId String    @unique @map("project_id") @db.ObjectId

@@ -19,6 +19,15 @@ wss.on('connection', (ws) => {
     } else if (data.action === 'unsubscribe' && data.topic) {
       console.log(`Unsubscribing from topic: ${data.topic}`);
       mqttClient.unsubscribe(data.topic); // Fixed the typo here
+    } else if(data.action === 'publish' && data.topic) {
+      mqttClient.publish(data.topic, data.message.toString(), (err) => {
+        if (err) {
+          console.error(`Failed to publish response to ${data.topic}:`, err);
+        } else {
+          console.log(`Response sent to ${data.topic}:`, "responseMessage");
+        }
+      });
+
     }
   });
 
@@ -40,10 +49,21 @@ mqttClient.on('message', async (topic, message) => {
     disconnectDevice(JSON.parse(message).deviceId)
   }
   
-  else if (topic === 'connectivity/test') {
+  else if (topic === 'test/handshake' || topic ==='test/data') {
     console.log(`Received message on ${topic}: ${message.toString()}`);
-    handleIncomingMessage(topic, message.toString());
-  } else if (topic === 'data/update') {
+    handleConnectivityTest(topic, message.toString());
+
+    mqttClient.publish(topic+'/response', topic+'/response', (err) => {
+      if (err) {
+        console.error(`Failed to publish response to ${topic}:`, err);
+      } else {
+        console.log(`Response sent to ${topic}/response:`, "responseMessage");
+      }
+    });
+    
+  }
+  
+  else if (topic === 'data/update') {
     console.log(`Received message on ${topic}: ${message.toString()}`)
     const deviceVerified = await verifyDevice(JSON.parse(message).deviceId)
     if(deviceVerified){
@@ -53,9 +73,10 @@ mqttClient.on('message', async (topic, message) => {
       }
     }
   }
+  
 });
 
-const handleIncomingMessage = (topic, message) => {
+const handleConnectivityTest = (topic, message) => {
   console.log(`MQTT message received on ${topic}: ${message}`);
   wss.clients.forEach((client) => {
     if (client.readyState === WebSocket.OPEN) {
