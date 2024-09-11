@@ -3,6 +3,8 @@ import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import prisma from '@/app/lib/prisma';
 import { Role } from '@prisma/client';
+import { v4 } from 'uuid'; // Assuming you're using UUID for deviceId
+import crypto from 'crypto'; // Node.js crypto module for secretKey
 
 // Define the schema for user form data validation
 const UserFormSchema = z.object({
@@ -18,17 +20,9 @@ const ProjectFormSchema = z.object({
   group_owner: z.string().trim().min(1, { message: 'Group assignment is required' }),
 });
 
-// Define specific schemas for each role
-const ResidentSchema = UserFormSchema.extend({
-  // Additional fields for Resident
-});
-
-const AdminSchema = UserFormSchema.extend({
-  // Additional fields for Admin
-});
-
-const DoctorSchema = UserFormSchema.extend({
-  // Additional fields for Doctor
+const RegisteredDeviceFormSchema = z.object({
+  projectId: z.string().trim().min(1, { message: 'Project ID is required' }),
+  projectName: z.string().trim().min(1, { message: 'Project Name is required' }),
 });
 
 const DeveloperSchema = z.object({
@@ -72,6 +66,14 @@ type ProjectFormState = {
     name?: string[];
     description?: string[];
     group_owner?: string[];
+  };
+};
+
+type DeviceFormState = {
+  message?: string;
+  errors?: {
+    projectId?: string[],
+    projectName?: string[]
   };
 };
 
@@ -482,6 +484,125 @@ export async function deleteProject(projectId: string): Promise<{ message: strin
 }
 
 /**
+ * Creates a new registered device with the provided form data.
+ * @param _previousState - The previous state of the device form.
+ * @param formData - The form data containing the device details.
+ * @returns A promise that resolves to the updated device form state.
+ */
+export async function createRegisteredDevice(
+  _previousState: DeviceFormState,
+  formData: FormData,
+): Promise<DeviceFormState> {
+  const formDataEntries = Object.fromEntries(formData.entries());
+  console.log('Form Data Entries:', formDataEntries);
+  
+  const secretKey = crypto.randomBytes(32).toString('hex'); // Generate a random secret key
+
+  // Validate the form fields
+  const validatedFields = RegisteredDeviceFormSchema.safeParse(formDataEntries);
+  console.log('Validation Result:', validatedFields);
+
+  if (!validatedFields.success) {
+    return {
+      message: 'Invalid/Missing fields. Failed to register device.',
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  const { data } = validatedFields;
+
+  try {
+    // Create the new registered device in the database
+    await prisma.registeredDevice.create({
+      data: {
+        name: data.projectName, // Use the projectName here
+        projectId: data.projectId, // Correctly store projectId
+        secretKey: secretKey,
+        registeredTo: null,
+        registeredToId: null,
+      },
+    });
+  } catch (e) {
+    console.error('Database Error:', e);
+    return { message: 'Database Error: Failed to register device.' };
+  }
+
+  revalidatePath(`/admin-dashboard/devices`);
+
+  return { message: 'Successfully registered device.' };
+}
+
+/**
+ * Deletes a device from the database.
+ * @param deviceId - The ID of the device to delete.
+ * @returns A promise that resolves to an object with a `message` property indicating the result of the operation.
+ */
+export async function deleteDevice(deviceId: string): Promise<{ message: string }> {
+  try {
+    // Delete the device
+    await prisma.registeredDevice.delete({
+      where: { id: deviceId },
+    });
+
+    revalidatePath(`/admin-dashboard/devices`);
+    return { message: 'Deleted device.' };
+  } catch (error) {
+    console.error('Database Error:', error);
+    return { message: 'Database Error: Failed to delete device.' };
+  }
+}
+
+/**
+ * Creates a new registered hub programmatically, generating a secret key and adding a new entry to the database.
+ * @param hubName - The name of the project to associate with the hub.
+ * @returns A promise that resolves to a message indicating success or failure.
+ */
+export async function createRegisteredHub(): Promise<{ message: string }> {
+  const secretKey = crypto.randomBytes(32).toString('hex'); // Generate a random secret key
+
+  try {
+    // Create the new registered hub in the database
+    await prisma.registeredHub.create({
+      data: {
+        secretKey: secretKey,
+        registeredTo: null,
+        registeredToId: null,
+      },
+    });
+  } catch (e) {
+    console.error('Database Error:', e);
+    return { message: 'Database Error: Failed to register hub.' };
+  }
+
+  revalidatePath(`/admin-dashboard/hubs`);
+
+  return { message: 'Successfully registered hub.' };
+}
+
+/**
+ * Deletes a hub from the database.
+ * @param hubId - The ID of the hub to delete.
+ * @returns A promise that resolves to an object with a `message` property indicating the result of the operation.
+ */
+export async function deleteHub(hubId: string): Promise<{ message: string }> {
+  try {
+    // Delete the device
+    await prisma.registeredHub.delete({
+      where: { id: hubId },
+    });
+
+    revalidatePath(`/admin-dashboard/devices`);
+    return { message: 'Deleted hub.' };
+  } catch (error) {
+    console.error('Database Error:', error);
+    return { message: 'Database Error: Failed to delete hub.' };
+  }
+}
+
+
+
+
+/**
  * Helper function to revalidate paths.
  */
 function revalidatePaths() {
@@ -490,4 +611,6 @@ function revalidatePaths() {
   revalidatePath(`/admin-dashboard/admins`);
   revalidatePath(`/admin-dashboard/developers`);
   revalidatePath(`/admin-dashboard/projects`);
+  revalidatePath(`/admin-dashboard/devices`);
+  revalidatePath(`/admin-dashboard/hubs`);
 }

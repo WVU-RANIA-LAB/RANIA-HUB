@@ -3,14 +3,14 @@ import { Suspense } from 'react';
 import { lusitana } from '@/app/ui/fonts';
 import { auth } from '@/auth';
 import { fetchUserByEmail } from '@/app/lib/data/data';
-import { fetchUsersPages, fetchDeveloperGroups } from '@/app/lib/data/admin-data';
+import { fetchUsersPages, fetchProjects } from '@/app/lib/data/admin-data';
 import Search from '@/app/ui/search';
 import AdminDevicesTable from '@/app/ui/admin-dashboard/admin-devices-table';
 import Pagination from '@/app/ui/pagination';
-import {CreateProjectButton } from '@/app/ui/admin-dashboard/admin-actions-btns';
+import {CreateRegisteredDeviceButton } from '@/app/ui/admin-dashboard/admin-actions-btns';
 
 export const metadata: Metadata = {
-  title: 'Projects',
+  title: 'Devices',
 };
 
 type PageProps = {
@@ -26,12 +26,13 @@ export default async function Page({ searchParams }: PageProps) {
   const session = await auth();
   const admin = await fetchUserByEmail(session!.user!.email!);
   const totalPages = await fetchUsersPages('DEVELOPER', query);
-  const developerGroups = await fetchDeveloperGroups();
+  //const developerGroups = await fetchDeveloperGroups();
+  const projects = await fetchProjects();
 
   return (
     <main className="flex grow flex-col bg-white px-2 py-8 sm:px-10 sm:py-20">
       <div className="mb-4 flex justify-end">
-        <CreateProjectButton developerGroups={developerGroups}/>
+        <CreateRegisteredDeviceButton projects={projects}/>
       </div>
       <div className="rounded-md border border-black">
         <h1

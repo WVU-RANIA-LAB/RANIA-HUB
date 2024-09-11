@@ -1,7 +1,7 @@
 import { lusitana } from '@/app/ui/fonts';
-import { fetchProjects, fetchDeveloperGroups } from '@/app/lib/data/admin-data';
-import { EditProjectButton, DeleteProjectButton } from './admin-actions-btns';
-import { Project, DeveloperGroup } from '@prisma/client';
+import { fetchHubs } from '@/app/lib/data/admin-data';
+import { DeleteHubButton } from './admin-actions-btns';
+import { RegisteredHub } from '@prisma/client';
 
 /**
  * Props for the AdminProjectsTable component.
@@ -23,50 +23,36 @@ export default async function AdminHubsTable({
   query,
   currentPage,
 }: AdminDevicesTableProps) {
-  const projects: Project[] = await fetchProjects();
-  const devGroups: DeveloperGroup[] = await fetchDeveloperGroups();
+  const hubs: RegisteredHub[] = await fetchHubs();
 
-  // Filter projects based on query
-  const filteredProjects = projects.filter((project) =>
-    project.name.toLowerCase().includes(query.toLowerCase())
+  // Filter hubs based on query
+  const filteredHubs = hubs.filter((hub) =>
+    hub.id.toLowerCase().includes(query.toLowerCase())
   );
 
   // Pagination logic
   const startIndex = (currentPage - 1) * 20;
-  const paginatedProjects = filteredProjects.slice(startIndex, startIndex + 20);
+  const paginatedHubs = filteredHubs.slice(startIndex, startIndex + 20);
 
-  if (!paginatedProjects.length) {
+  if (!paginatedHubs.length) {
     return (
-      <p className="my-16 text-center text-gray-600">No projects found.</p>
+      <p className="my-16 text-center text-gray-600">No hubs found.</p>
     );
   }
-
-  // Map over projects to include group information
-  const projectsWithGroupInfo = paginatedProjects.map((project) => {
-    const group = devGroups.find((group) => group.id === project.group_owner);
-    return {
-      ...project,
-      groupInfo: group
-        ? `${group.year} ${group.semester} ${group.course} Group ${group.group_number}`
-        : 'No Group',
-    };
-  });
 
   return (
     <div className="overflow-x-auto">
       <div className="flex flex-col gap-y-2 md:hidden">
-        {projectsWithGroupInfo.map((project) => (
-          <div key={project.id} className="card card-compact bg-gray-50">
+        {paginatedHubs.map((hub) => (
+          <div key={hub.id} className="card card-compact bg-gray-50">
             <div className="card-body">
               <div className="flex justify-between">
-                <h2 className={`text-lg ${lusitana.className}`}>{project.name}</h2>
-                <div className="flex gap-2">
-                  <EditProjectButton project={project} developerGroups={devGroups} />
-                  <DeleteProjectButton projectId={project.id} />
+                <h2 className={`text-lg ${lusitana.className}`}>{hub.id}</h2>
+                <div>
+                  <DeleteHubButton hubId={hub.id} />
                 </div>
               </div>
-              <p className="text-sm text-gray-700">{project.description}</p>
-              <p className="text-sm text-gray-700">Group Owner: {project.groupInfo}</p>
+              <p className="text-sm text-gray-700">Hub Owner: {hub.registeredToId}</p>
             </div>
           </div>
         ))}
@@ -74,21 +60,18 @@ export default async function AdminHubsTable({
       <table className="table hidden md:table">
         <thead>
           <tr>
-            <th scope="col">Project Name</th>
-            <th scope="col">Project Description</th>
-            <th scope="col">Group Owner</th>
+            <th scope="col">Hub ID</th>
+            <th scope="col">Hub Owner</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {projectsWithGroupInfo.map((project) => (
-            <tr key={project.id}>
-              <td>{project.name}</td>
-              <td>{project.description}</td>
-              <td>{project.groupInfo}</td>
+          {paginatedHubs.map((hub) => (
+            <tr key={hub.id}>
+              <td>{hub.id}</td>
+              <td>{hub.registeredToId}</td>
               <td className="flex gap-2">
-                <EditProjectButton project={project} developerGroups={devGroups} />
-                <DeleteProjectButton projectId={project.id} />
+                <DeleteHubButton hubId={hub.id} />
               </td>
             </tr>
           ))}

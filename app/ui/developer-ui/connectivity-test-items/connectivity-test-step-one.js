@@ -124,7 +124,7 @@ def publish_message(topic, update_packet):
   
 # Example usage
 secret_key = "your_secret_key"  # Update with your device's secret key
-device_id = "${deviceId}"
+device_id = "id"
 
 #///Handshake Example
 #This block demonstrates how to implement a connection handshake request, for when a resident end-user wants to connect the device to the care home hub

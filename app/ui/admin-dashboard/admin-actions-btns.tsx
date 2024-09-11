@@ -6,7 +6,8 @@ import AdminActionsModal from '@/app/ui/admin-dashboard/admin-actions-modal';
 import AdminProjectActionsModal from './admin-project-action-modal';
 import CreateDeveloperGroupModal from './admin-create-developer-group';
 import CreateProjectModal from './admin-create-project';
-import { deleteUser, deleteProject } from '@/app/lib/actions/admin-actions';
+import CreateRegisteredDeviceModal from './admin-create-device';
+import { deleteUser, deleteProject, deleteDevice, createRegisteredHub, deleteHub } from '@/app/lib/actions/admin-actions';
 
 /**
  * Props for the CreateUserButton component.
@@ -58,6 +59,150 @@ export function CreateDeveloperGroupButton() {
     </>
   );
 }
+
+/**
+ * Props for the CreateUserButton component.
+ */
+type CreateRegisteredDeviceButtonProps = {
+  projects: { id: string; name: string }[]; // Add projects as a prop
+};
+
+/**
+ * Renders a button to create a registered device.
+ * @returns The JSX element representing the create registered device button.
+ */
+export function CreateRegisteredDeviceButton({projects}: CreateRegisteredDeviceButtonProps) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  return (
+    <>
+      <div className="flex justify-end">
+        <button
+          className="btn rounded-full border-black bg-transparent hover:bg-wvu-primary-gold hover:text-white active:bg-wvu-primary-blue active:text-white"
+          onClick={() => dialogRef.current?.showModal()}
+        >
+          Create Device
+        </button>
+      </div>
+      {/* Only pass developerGroups to the modal if needed */}
+      <CreateRegisteredDeviceModal ref={dialogRef} projects={projects}/>
+    </>
+  );
+}
+
+
+/**
+ * Props for the DeleteDeviceButton component.
+ */
+type DeleteDeviceButtonProps = {
+  deviceId: string;
+};
+
+
+/**
+ * Renders a button component for deleting a device.
+ * @param {DeleteDeviceButtonProps} props - The component props.
+ * @returns {JSX.Element} The delete project button component.
+ */
+export function DeleteDeviceButton({ deviceId }: DeleteDeviceButtonProps) {
+  const deleteDeviceWithId = deleteDevice.bind(null, deviceId);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  return (
+    <>
+      <button
+        className="btn btn-square btn-sm hover:bg-red-600 hover:text-wvu-off-white"
+        onClick={() => dialogRef.current?.showModal()}
+      >
+        <TrashIcon className="h-5" />
+      </button>
+      <dialog ref={dialogRef} className="modal">
+        <div className="modal-box">
+          <h2 className="text-lg font-bold">
+            Are you sure you want to delete this device?
+          </h2>
+          <div className="modal-action">
+            <button className="btn" onClick={() => dialogRef.current?.close()}>
+              Cancel
+            </button>
+            <form action={deleteDeviceWithId}>
+              <button className="btn btn-error" type="submit">
+                Delete
+              </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+    </>
+  );
+}
+
+
+/**
+ * Renders a button to create a user.
+ * @returns The JSX element representing the create hub button.
+ */
+export function CreateHubButton() {
+  return (
+    <>
+      <div className="flex justify-end">
+        <button
+          className="btn rounded-full border-black bg-transparent hover:bg-wvu-primary-gold hover:text-white active:bg-wvu-primary-blue active:text-white"
+          onClick={() => createRegisteredHub()}
+        >
+          Create Hub
+        </button>
+      </div>
+    </>
+  );
+}
+
+
+/**
+ * Props for the DeleteHubButton component.
+ */
+type DeleteHubButtonProps = {
+  hubId: string;
+};
+
+/**
+ * Renders a button component for deleting a hub.
+ * @param {DeleteHubButtonProps} props - The component props.
+ * @returns {JSX.Element} The delete hub button component.
+ */
+export function DeleteHubButton({ hubId }: DeleteHubButtonProps) {
+  const deleteHubWithId = deleteHub.bind(null, hubId);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  return (
+    <>
+      <button
+        className="btn btn-square btn-sm hover:bg-red-600 hover:text-wvu-off-white"
+        onClick={() => dialogRef.current?.showModal()}
+      >
+        <TrashIcon className="h-5" />
+      </button>
+      <dialog ref={dialogRef} className="modal">
+        <div className="modal-box">
+          <h2 className="text-lg font-bold">
+            Are you sure you want to delete this hub?
+          </h2>
+          <div className="modal-action">
+            <button className="btn" onClick={() => dialogRef.current?.close()}>
+              Cancel
+            </button>
+            <form action={deleteHubWithId}>
+              <button className="btn btn-error" type="submit">
+                Delete
+              </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+    </>
+  );
+}
+
 
 /**
  * Props for the EditUserButton component.

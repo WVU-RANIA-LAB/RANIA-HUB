@@ -121,3 +121,40 @@ export async function fetchProjects() {
     throw new Error('Failed to fetch projects');
   }
 }
+
+/**
+ * Fetches filtered registered devices based on deviceId, name, registeredTo, and current page.
+ * @returns A promise that resolves to an array of filtered registered devices.
+ * @throws An error if there is a database error or if fetching devices fails.
+ */
+export async function fetchDevices() {
+  noStore();
+
+  try {
+    const projects = await prisma.registeredDevice.findMany({
+      orderBy: [{ name: 'asc' }]
+    });
+    return projects;
+  } catch (e: any) {
+    console.error('Database Error:', e.message);
+    console.error('Stack Trace:', e.stack);
+    console.error('Error Details:', e);
+    throw new Error('Failed to fetch projects');
+  }
+}
+
+export async function fetchHubs() {
+  noStore();
+
+  try {
+    const projects = await prisma.registeredHub.findMany({
+      orderBy: [{ id: 'asc' }]
+    });
+    return projects;
+  } catch (e: any) {
+    console.error('Database Error:', e.message);
+    console.error('Stack Trace:', e.stack);
+    console.error('Error Details:', e);
+    throw new Error('Failed to fetch projects');
+  }
+}

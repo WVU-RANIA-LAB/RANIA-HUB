@@ -90,13 +90,22 @@ model User {
 
 model RegisteredDevice {
   id             String  @id @default(auto()) @map("_id") @db.ObjectId
-  deviceId       String  @unique @db.ObjectId
   name           String
+  projectId      String
   secretKey      String  @map("secret_key")
-  registeredTo   String  @db.ObjectId
+  registeredTo   String?
   registeredToId String? @db.ObjectId
 
   @@map("registered_devices")
+}
+
+model RegisteredHub {
+  id             String  @id @default(auto()) @map("_id") @db.ObjectId
+  secretKey      String  @map("secret_key")
+  registeredTo   String?
+  registeredToId String? @db.ObjectId
+
+  @@map("registered_hubs")
 }
 
 model DashboardLayout {
