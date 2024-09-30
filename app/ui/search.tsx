@@ -22,7 +22,7 @@ export default function Search({ placeholder }: SearchProps) {
   }, 300);
 
   return (
-    <label className="input input-bordered mx-2 mb-4 flex items-center gap-2 rounded-full">
+    <label className="input input-bordered flex items-center gap-2 rounded-full">
       <MagnifyingGlassIcon className="w-4 text-gray-800" />
       <input
         type="text"
