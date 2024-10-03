@@ -15,14 +15,14 @@ export default async function ProjectTesting() {
 
 
   return (
-    <main className="flex-grow flex flex-col bg-white px-2 py-8 sm:px-10 sm:py-20">
+    <main className="flex-grow flex flex-col bg-wvu-off-white px-15 py-10 sm:px-20 sm:py-18">
       <div className="flex flex-col md:flex-row flex-wrap">
         {/* First Container */}
         <div className="w-full p-2">
           <div className="flex flex-col overflow-hidden">
-            <div className="flex-grow bg-white border-2 border-black">
-              <div className="flex items-center justify-between w-full h-12 bg-wvu-primary-blue pl-5 pr-5">
-                <h6 className={`${lusitana.className} rounded-md bg-wvu-primary-blue p-2 text-lg uppercase text-white antialiased`}>
+            <div className="flex-grow">
+              <div className="flex items-center justify-between w-full h-12 pl-5 pr-5">
+                <h6 className={`text-4xl text-wvu-primary-blue font-bold`}>
                   Test Project Connectivity
                 </h6>
               </div>
