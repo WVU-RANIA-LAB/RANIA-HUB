@@ -39,12 +39,12 @@ type NavbarProps = {
 
 export default function Navbar({ role }: NavbarProps) {
   return (
-    <nav className="navbar bg-gray-200">
+    <nav className="navbar bg-wvu-primary-blue">
       <div className="navbar-start">
         <h1
-          className={`${lusitana.className} text-4xl font-bold text-wvu-primary-blue antialiased`}
+          className={`${lusitana.className} text-2xl font-bold text-wvu-off-white ml-5`}
         >
-          RANIA
+          RANIAhub
         </h1>
       </div>
       <div className="navbar-center gap-x-8">
@@ -52,7 +52,7 @@ export default function Navbar({ role }: NavbarProps) {
           <Link
             key={label}
             href={href}
-            className={`text-2xl text-wvu-primary-blue hover:text-wvu-blue active:underline ${lusitana.className}`}
+            className={`text-l text-wvu-off-white hover:text-wvu-blue active:underline `}
           >
             {label}
           </Link>
@@ -66,7 +66,7 @@ export default function Navbar({ role }: NavbarProps) {
             className="avatar btn btn-circle btn-ghost"
           >
             <div className="w-8 rounded-full">
-              <UserIcon className="text-black" />
+              <UserIcon className="text-wvu-off-white hover:text-wvu-blue" />
             </div>
           </div>
           <ul

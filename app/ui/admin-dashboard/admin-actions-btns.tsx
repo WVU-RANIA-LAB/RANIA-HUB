@@ -223,7 +223,7 @@ export function EditUserButton({ user, developerGroups }: EditUserButtonProps) {
   return (
     <>
       <button
-        className="btn btn-square btn-sm hover:bg-wvu-primary-blue hover:text-white"
+        className="btn btn-square bg-transparent border-wvu-blue text-wvu-blue btn-sm hover:bg-wvu-primary-blue hover:text-white hover:bg-wvu-primary-gold"
         onClick={() => dialogRef.current?.showModal()}
       >
         <PencilIcon className="h-5" />
@@ -252,7 +252,7 @@ export function DeleteUserButton({ userId }: DeleteUserButtonProps) {
   return (
     <>
       <button
-        className="btn btn-square btn-sm hover:bg-red-600 hover:text-wvu-off-white"
+        className="btn btn-square bg-transparent btn-sm border-red-600 text-red-600 hover:bg-red-600 hover:text-wvu-off-white"
         onClick={() => dialogRef.current?.showModal()}
       >
         <TrashIcon className="h-5" />

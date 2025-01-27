@@ -29,7 +29,7 @@ export default async function AdminResidentsTable({
 
   if (!users.length) {
     return (
-      <p className="my-16 text-center text-gray-600">No residents found.</p>
+      <p className="my-16 text-center text-wvu-warm-gray-medium">No residents found</p>
     );
   }
 
@@ -37,17 +37,17 @@ export default async function AdminResidentsTable({
     <div className="overflow-x-auto">
       <div className="flex flex-col gap-y-2 md:hidden">
         {users.map((user) => (
-          <div key={user.id} className="card card-compact bg-gray-50">
+          <div key={user.id} className="card card-compact">
             <div className="card-body">
               <div className="flex justify-between">
-                <h2 className={`text-lg ${lusitana.className}`}>{user.name}</h2>
+                <h2 className={`text-lg`}>{user.name}</h2>
                 <div className="flex gap-2">
                   <EditUserButton user={user} />
                   <DeleteUserButton userId={user.id} />
                 </div>
               </div>
-              <p className="text-sm text-gray-700">{user.email}</p>
-              <p className="text-sm text-gray-700">{user.phoneNumber}</p>
+              <p className="text-sm text-wvu-warm-gray-dark">{user.email}</p>
+              <p className="text-sm text-wvu-warm-gray-dark">{user.phoneNumber}</p>
             </div>
           </div>
         ))}
@@ -55,21 +55,21 @@ export default async function AdminResidentsTable({
       <table className="table hidden md:table">
         <thead>
           <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Phone Number</th>
-            <th scope="col">Role</th>
-            <th scope="col">Actions</th>
+            <th className="text-lg text-wvu-warm-gray-medium border-b border-warm-gray-dark" scope="col">Name</th>
+            <th className="text-lg text-wvu-warm-gray-medium border-b border-warm-gray-dark" scope="col">Email</th>
+            <th className="text-lg text-wvu-warm-gray-medium border-b border-warm-gray-dark" scope="col">Phone Number</th>
+            <th className="text-lg text-wvu-warm-gray-medium border-b border-warm-gray-dark" scope="col">Role</th>
+            <th className="text-lg text-wvu-warm-gray-medium border-b border-warm-gray-dark" scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
           {users.map((user) => (
-            <tr key={user.id}>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.phoneNumber}</td>
-              <td>{user.role}</td>
-              <td className="flex gap-2">
+            <tr key={user.id} >
+              <td className="border-b border-warm-gray-dark">{user.name}</td>
+              <td className="border-b border-warm-gray-dark">{user.email}</td>
+              <td className="border-b border-warm-gray-dark">{user.phoneNumber}</td>
+              <td className="border-b border-warm-gray-dark">{user.role}</td>
+              <td className="flex gap-2 border-b border-warm-gray-dark">
                 <EditUserButton user={user} />
                 <DeleteUserButton userId={user.id} />
               </td>

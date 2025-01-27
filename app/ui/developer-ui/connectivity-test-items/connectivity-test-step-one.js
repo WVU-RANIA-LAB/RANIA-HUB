@@ -43,18 +43,82 @@ function ConnectivityTestStepOne({projectId, dashboardLayout, deviceInfo}) {
   };
 
   const generateJavaScriptFile = () => {
-    return `// JavaScript MQTT test connectivity code
-      const mqtt = require('mqtt');
-      const client = mqtt.connect('mqtt://broker.hivemq.com');
-
-      client.on('connect', () => {
-        console.log('Connected');
-        client.subscribe('test/topic');
-      });
-
-      client.on('message', (topic, message) => {
-        console.log(topic, message.toString());
-      });`;
+    return `
+     // JavaScript MQTT test connectivity code
+  // ENSURE YOU HAVE THESE NODE LIBRARIES INSTALLED
+  // npm install mqtt
+  const mqtt = require('mqtt');
+  const crypto = require('crypto');
+  
+  // If you are not running the Web App locally, ask your admin for this information
+  const broker = "localhost";
+  const port = 1883;
+  const topicTestData = "data/update";
+  const topicTestHandshake = "connection/request";
+  
+  const client = mqtt.connect(\`mqtt://\${broker}:\${port}\`);
+  
+  // Generate a nonce
+  function generateNonce(length = 16) {
+    return crypto.randomBytes(length).toString('hex').slice(0, length);
+  }
+  
+  // Generate handshake packet
+  function generateHandshakePacket(deviceId, deviceInfo) {
+    const timestamp = new Date().toISOString();
+    const nonce = generateNonce();
+    return {
+      deviceId: deviceId,
+      timestamp: timestamp,
+      nonce: nonce,
+      deviceInformation: deviceInfo
+    };
+  }
+  
+  // Generate update packet
+  function generateUpdatePacket(deviceId, updateInfo) {
+    const timestamp = new Date().toISOString();
+    const nonce = generateNonce();
+    const data = \`\${deviceId}\${timestamp}\${nonce}\${JSON.stringify(updateInfo)}\`;
+    console.log('data:', data);
+    return JSON.stringify({
+      deviceId: deviceId,
+      timestamp: timestamp,
+      nonce: nonce,
+      data: updateInfo
+    });
+  }
+  
+  // Publish message
+  function publishMessage(topic, packet) {
+    client.publish(topic, packet);
+  }
+  
+  // Example usage
+  const deviceId = "update with a deviceId before using";
+  
+  // /// Handshake Example
+  // This block demonstrates how to implement a connection handshake request, for when a resident end-user wants to connect the device to the care home hub
+  
+  // const deviceInfo = \${deviceInfo};
+  
+  // const handshakePacket = generateHandshakePacket(deviceId, deviceInfo);
+  // publishMessage(topicTestHandshake, JSON.stringify(handshakePacket));
+  // /// End Handshake Example
+  
+  // /// Data Send Example
+  // Populate the data block below with whatever data you want to update in your hub GUI layout
+  // Your gridLayoutID options are:
+  // \${JSON.stringify(dashboardLayout.map(item => item.i))};
+  
+  // const data = {
+  //   gridLayoutId: "Updated data value",
+  // };
+  
+  // const updatePacket = generateUpdatePacket(deviceId, data);
+  // publishMessage(topicTestData, updatePacket);
+  // /// End Data Send Example
+    `;
   };
 
   const generatePythonFile = () => {
@@ -137,26 +201,153 @@ device_id = "update with a deviceId before using"
   
 
   const generateJavaFile = () => {
-    return `// Java MQTT test connectivity code
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+    return `  // Java MQTT test connectivity code
+  // Ensure you have these Java libraries installed:
+  // org.eclipse.paho.client.mqttv3 (You can add this using Maven or manually)
 
-public class MqttTest {
-  public static void main(String[] args) throws MqttException {
-    MqttClient client = new MqttClient("tcp://broker.hivemq.com:1883", MqttClient.generateClientId());
-    client.connect();
+  import org.eclipse.paho.client.mqttv3.MqttClient;
+  import org.eclipse.paho.client.mqttv3.MqttException;
+  import org.eclipse.paho.client.mqttv3.MqttMessage;
+  import java.nio.charset.StandardCharsets;
+  import java.security.SecureRandom;
+  import java.text.SimpleDateFormat;
+  import java.util.Date;
+  import java.util.Random;
+  
+  public class MqttTestConnectivity {
+  
+      private static final String BROKER = "tcp://localhost:1883";
+      private static final String TOPIC_TEST_DATA = "data/update";
+      private static final String TOPIC_TEST_HANDSHAKE = "connection/request";
+  
+      public static void main(String[] args) throws MqttException {
+          MqttClient client = new MqttClient(BROKER, MqttClient.generateClientId());
+          client.connect();
+  
+          // Example usage
+          String deviceId = "update with a deviceId before using";
+          
+          // Handshake Example
+          // String deviceInfo = ${deviceInfo};
+          // String handshakePacket = generateHandshakePacket(deviceId, deviceInfo);
+          // publishMessage(client, TOPIC_TEST_HANDSHAKE, handshakePacket);
+          
+          // Data Send Example
+          // String data = "{\\"gridLayoutId\\": \\"Updated data value\\"}";
+          // String updatePacket = generateUpdatePacket(deviceId, data);
+          // publishMessage(client, TOPIC_TEST_DATA, updatePacket);
+      }
+  
+      private static String generateNonce(int length) {
+          Random random = new SecureRandom();
+          StringBuilder nonce = new StringBuilder(length);
+          String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+          for (int i = 0; i < length; i++) {
+              nonce.append(characters.charAt(random.nextInt(characters.length())));
+          }
+          return nonce.toString();
+      }
+  
+      private static String generateTimestamp() {
+          SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+          return sdf.format(new Date());
+      }
+  
+      private static String generateHandshakePacket(String deviceId, String deviceInfo) {
+          String timestamp = generateTimestamp();
+          String nonce = generateNonce(16);
+          return String.format(
+              "{\\"deviceId\\": \\"%s\\", \\"timestamp\\": \\"%s\\", \\"nonce\\": \\"%s\\", \\"deviceInformation\\": \\"%s\\"}",
+              deviceId, timestamp, nonce, deviceInfo
+          );
+      }
+  
+      private static String generateUpdatePacket(String deviceId, String updateInfo) {
+          String timestamp = generateTimestamp();
+          String nonce = generateNonce(16);
+          String data = deviceId + timestamp + nonce + updateInfo;
+          System.out.println("data: " + data);
+          return String.format(
+              "{\\"deviceId\\": \\"%s\\", \\"timestamp\\": \\"%s\\", \\"nonce\\": \\"%s\\", \\"data\\": %s}",
+              deviceId, timestamp, nonce, updateInfo
+          );
+      }
+  
+      private static void publishMessage(MqttClient client, String topic, String messageContent) throws MqttException {
+          MqttMessage message = new MqttMessage(messageContent.getBytes(StandardCharsets.UTF_8));
+          message.setQos(2);
+          client.publish(topic, message);
+      }
+  }`;
+  };
 
-    client.subscribe("test/topic", (topic, msg) -> {
-        byte[] payload = msg.getPayload();
-        System.out.println(topic + ": " + new String(payload));
-    });
+  const generateCFile = () => {
+    return `
+// C MQTT test connectivity code
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
-    client.disconnect();
-  }
-}`;
+// Simulated MQTT publish function
+void publish_message(const char *topic, const char *message) {
+    printf("Publishing to topic %s: %s\\n", topic, message);
+}
+
+char *generate_nonce(int length) {
+    char *nonce = (char *)malloc(length + 1);
+    const char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    if (nonce) {
+        for (int i = 0; i < length; i++) {
+            nonce[i] = charset[rand() % (sizeof(charset) - 1)];
+        }
+        nonce[length] = '\\0';
+    }
+    return nonce;
+}
+
+void generate_handshake_packet(const char *device_id, const char *device_info, char *output) {
+    time_t now;
+    time(&now);
+    char timestamp[20];
+    strftime(timestamp, sizeof(timestamp), "%Y-%m-%dT%H:%M:%SZ", gmtime(&now));
+    char *nonce = generate_nonce(16);
+
+    sprintf(output, "{\\"deviceId\\": \\"%s\\", \\"timestamp\\": \\"%s\\", \\"nonce\\": \\"%s\\", \\"deviceInformation\\": \\"%s\\"}", 
+            device_id, timestamp, nonce, device_info);
+    free(nonce);
+}
+
+void generate_update_packet(const char *device_id, const char *update_info, char *output) {
+    time_t now;
+    time(&now);
+    char timestamp[20];
+    strftime(timestamp, sizeof(timestamp), "%Y-%m-%dT%H:%M:%SZ", gmtime(&now));
+    char *nonce = generate_nonce(16);
+
+    sprintf(output, "{\\"deviceId\\": \\"%s\\", \\"timestamp\\": \\"%s\\", \\"nonce\\": \\"%s\\", \\"data\\": %s}", 
+            device_id, timestamp, nonce, update_info);
+    free(nonce);
+}
+
+int main() {
+    const char *device_id = "update with a deviceId before using";
+    const char *device_info = "${deviceInfo}";
+
+    // Example: Handshake Packet
+    char handshake_packet[256];
+    generate_handshake_packet(device_id, device_info, handshake_packet);
+    publish_message("connection/request", handshake_packet);
+
+    // Example: Data Update Packet
+    char update_info[128] = "{\\"gridLayoutId\\": \\"Updated data value\\"}";
+    char update_packet[256];
+    generate_update_packet(device_id, update_info, update_packet);
+    publish_message("data/update", update_packet);
+
+    return 0;
+}
+    `;
   };
 
   return (
@@ -167,6 +358,7 @@ public class MqttTest {
         <option value="JavaScript">JavaScript</option>
         <option value="Python">Python</option>
         <option value="Java">Java</option>
+        <option value="C">C</option>
       </select>
       <button onClick={handleDownload} disabled={!selectedLanguage}>
         Download MQTT Test File

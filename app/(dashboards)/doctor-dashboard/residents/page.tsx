@@ -29,8 +29,8 @@ export default async function Page({ searchParams }: PageProps) {
   const totalPages = await fetchResidentsPages(doctor.residentIds, query);
 
   return (
-    <main className="flex grow flex-col bg-white px-2 py-8 sm:px-10 sm:py-20">
-      <h1 className={`${lusitana.className} mb-4 text-3xl antialiased`}>
+    <main className="flex grow flex-col bg-wvu-off-white px-2 py-8 sm:px-10 sm:py-20">
+      <h1 className={`text-4xl text-wvu-primary-blue font-bold pb-5`}>
         Residents
       </h1>
       <Search placeholder="Search residents..." />

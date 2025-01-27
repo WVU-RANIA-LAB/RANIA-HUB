@@ -14,7 +14,7 @@ export default async function Page() {
   const user = await fetchUserByEmail(session!.user!.email!);
 
   return (
-    <main className="grow bg-white py-16">
+    <main className="grow bg-wvu-off-white py-16">
       <ProfileForm user={user} />
     </main>
   );

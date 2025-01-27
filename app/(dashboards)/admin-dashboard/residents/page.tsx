@@ -28,27 +28,28 @@ export default async function Page({ searchParams }: PageProps) {
   const totalPages = await fetchUsersPages('RESIDENT', query);
 
   return (
-    <main className="flex grow flex-col bg-white px-2 py-8 sm:px-10 sm:py-20">
-      <div className="mb-4 flex justify-end">
-        <CreateUserButton roleType="RESIDENT" />
-      </div>
-      <div className="rounded-md border border-black">
-        <h1
-          className={`${lusitana.className} mb-4 rounded-md bg-wvu-primary-blue p-2 text-3xl uppercase text-white antialiased`}
-        >
+    <main className="flex grow flex-col bg-wvu-off-white px-10 py-10 sm:px-15 sm:py-18">
+      <div className="mb-6 flex justify-between items-center">
+        <h1 className="text-5xl text-wvu-primary-blue font-bold">
           Residents
         </h1>
-        <Search placeholder="Search residents..." />
-        <Suspense
-          key={query + currentPage}
-          fallback={<span className="loading loading-spinner mx-auto my-16" />}
-        >
-          <AdminResidentsTable query={query} currentPage={currentPage} />
-        </Suspense>
+        <div>
+          <div className="mb-2">
+            <CreateUserButton roleType="RESIDENT" />
+          </div>
+          <Search placeholder="Search residents..." />
+        </div>
       </div>
+      <Suspense
+        key={query + currentPage}
+        fallback={<span className="loading loading-spinner mx-auto my-16" />}
+      >
+        <AdminResidentsTable query={query} currentPage={currentPage} />
+      </Suspense>
       <div className="mt-8 self-center">
         <Pagination totalPages={totalPages} />
       </div>
     </main>
   );
 }
+

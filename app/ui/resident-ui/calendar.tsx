@@ -1,11 +1,14 @@
 import React from 'react';
+import { auth } from '@/auth';
 
-export default function Calendar() {
+export default async function Calendar() {
+    const session = await auth();
+    const srcURL = "https://calendar.google.com/calendar/embed?src="+session!.user!.email!
     return (
         <div>
-            <div className="grow py-16 bg-wvu-primary-blue">
+            <div className="bg-wvu-off-white">
                 <div className="container mx-auto">
-                    <iframe src="https://calendar.google.com/calendar/embed?src=mlb0094@mix.wvu.edu" className="w-full h-screen"></iframe>
+                    <iframe src={srcURL} className="w-full h-screen"></iframe>
                 </div>
             </div>
         </div>

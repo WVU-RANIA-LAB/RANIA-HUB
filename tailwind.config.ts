@@ -15,6 +15,7 @@ const config: Config = {
         'wvu-warm-gray-light': '#beb7b3',
         'wvu-warm-gray-dark': '#554741',
         'wvu-warm-gray-medium': '#988e8b',
+        'wvu-gray-extra-dark': '#2C2A29',
         'wvu-cream': '#f2e6c2',
         'wvu-tan': '#b9ac77',
         'wvu-blue-dark': '#1c2b39',

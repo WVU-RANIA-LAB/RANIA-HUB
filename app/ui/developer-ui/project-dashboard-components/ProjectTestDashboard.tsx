@@ -142,7 +142,7 @@ function ProjectTestDashboard({ projectId, projectName, projectDescription }: Pr
     if (ws) {
      // ws.send(JSON.stringify({ action: 'unsubscribe', topic: 'connectivity/test' }));
       //console.log('Sent unsubscription request to WebSocket server');
-      //setListening(false); // Reset listening state on test end
+      setListening(false); // Reset listening state on test end
     } else {
       console.log('WebSocket connection not established');
     }
@@ -193,50 +193,60 @@ function ProjectTestDashboard({ projectId, projectName, projectDescription }: Pr
 
   return (
     <div className="dashboard-container" style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-      <div className="flex space-x-2 mb-2" >
-        <BeginConnectivityTestButton beginConnectivityTest={startConnectivityTest} />
-        <EndConnectivityTestButton endConnectivityTest={endConnectivityTest} />
+  {/* Left Side: Dashboard Layout */}
+  <div className=" flex flex-col md:flex-row w-full md:w-1/2 p-2 border" style={{ width: `${dashboardWidth}px`, height: `${dashboardHeight}px`, maxWidth: '100%', maxHeight: '100%', border: '2px solid gray' }}>
+    <GridLayout
+      layout={layout}
+      cols={10}
+      rowHeight={rowHeight}
+      width={dashboardWidth}
+      isDraggable={false} // Disable dragging
+      isResizable={false} // Disable resizing
+    >
+      {layout.map((item) => {
+        console.log("[DASHBOARD DATA LAYOUT]: ", dashboardData);
 
-        <div>
-        {listening && (
-          <div>
-            <div className="alert">
-              <strong>Listening for MQTT messages...</strong>
-            </div>
-            <ConnectivityTestInstructions updateDashboardLayout={updateDashboardLayout} projectId={projectId} dashboardLayout={layout} projectDescription={projectDescription} projectName={projectName}/>
+        return (
+          <div key={item.i}>
+            {item.i.startsWith('lineChart') && <LineChartComponent layoutId={item.i} data={dashboardData[item.i]} />}
+            {item.i.startsWith('barChart') && <BarChartComponent layoutId={item.i} data={dashboardData[item.i]} />}
+            {item.i.startsWith('singleValue') && <SingleValueComponent layoutId={item.i} value={dashboardData[item.i]} />}
+            {item.i.startsWith('text') && <TextComponent layoutId={item.i} value={dashboardData[item.i]} />}
+            {item.i.startsWith('table') && <TableComponent layoutId={item.i} data={dashboardData[item.i]} />}
           </div>
-        )}
+        );
+      })}
+    </GridLayout>
+  </div>
 
-        </div>
-      </div>
-      
-      <div style={{ width: `${dashboardWidth}px`, height: `${dashboardHeight}px`, maxWidth: '100%', maxHeight: '100%', border: '2px solid gray' }}>
-        <GridLayout
-          layout={layout}
-          cols={10}
-          rowHeight={rowHeight}
-          width={dashboardWidth}
-          isDraggable={false} // Disable dragging
-          isResizable={false} // Disable resizing
-        >
-          {layout.map((item) => {
-
-            console.log("[DASHBOARD DATA LAYOUT]: ", dashboardData)
-
-            return (
-              <div key={item.i}>
-                {item.i.startsWith('lineChart') && <LineChartComponent layoutId={item.i} data={dashboardData[item.i]}/>}
-                {item.i.startsWith('barChart') && <BarChartComponent layoutId={item.i} data={dashboardData[item.i]}/>}
-                {item.i.startsWith('singleValue') && <SingleValueComponent layoutId={item.i} value={dashboardData[item.i]}/>}
-                {item.i.startsWith('text') && <TextComponent layoutId={item.i} value={dashboardData[item.i]}/>}
-                {item.i.startsWith('table') && <TableComponent layoutId={item.i} data={dashboardData[item.i]}/>}
-              </div>
-            );
-          })}
-
-        </GridLayout>
-      </div>
+  {/* Right Side: Connectivity Test Buttons and Instructions */}
+  <div style={{ display: 'flex', flexDirection: 'column'}} className="flex-grow px-10">
+    {/* Buttons at the Top */}
+    <div className="flex justify-end">
+      <BeginConnectivityTestButton beginConnectivityTest={startConnectivityTest} />
+      <EndConnectivityTestButton endConnectivityTest={endConnectivityTest} />
     </div>
+
+    {/* Instructions Below the Buttons */}
+    <div>
+      {listening && (
+        <div>
+          <div className="alert">
+            <strong>Listening for MQTT messages...</strong>
+          </div>
+          <ConnectivityTestInstructions
+            updateDashboardLayout={updateDashboardLayout}
+            projectId={projectId}
+            dashboardLayout={layout}
+            projectDescription={projectDescription}
+            projectName={projectName}
+          />
+        </div>
+      )}
+    </div>
+  </div>
+</div>
+
   );
 }
 
