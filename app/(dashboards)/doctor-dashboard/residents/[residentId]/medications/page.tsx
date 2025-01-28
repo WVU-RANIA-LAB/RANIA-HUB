@@ -27,7 +27,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   ]);
 
   return (
-    <main className="flex grow flex-col bg-white px-2 py-8 sm:px-10 sm:py-20">
+    <main className="flex grow flex-col bg-gray-50 px-2 py-8 sm:px-10 sm:py-20">
       <div className="mb-4 flex justify-between">
         <h1 className={`${lusitana.className} text-3xl antialiased`}>
           {resident.name}&apos;s Medications

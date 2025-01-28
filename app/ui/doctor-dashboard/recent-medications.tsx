@@ -12,7 +12,7 @@ export async function RecentMedications({
   const formatter = new Intl.DateTimeFormat('en-US');
 
   return (
-    <div className="card card-compact h-full shadow-lg">
+    <div className="card card-compact h-full shadow-lg bg-white">
       <div className="card-body">
         <div className="card-title justify-between">
           <h2>Recent Medications</h2>

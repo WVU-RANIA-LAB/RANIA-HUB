@@ -54,7 +54,8 @@
         -'app\ui\admin-dashboard\admin-developers-table.tsx'
             -Each row in the developers table has a button to edit informaiton for a certain developer
     1.2.3 Remove existing developer group
-        -UNSUPPORTED
+        -'app\ui\admin-dashboard\admin-developer-groups-table.tsx'
+            follow delete DeleteDeveloperGroupButton
     1.2.4 Add a developer to a developer group in the system
         -'app\ui\admin-dashboard\admin-actions-modal.tsx'
             This form handles multiple actions the admin may take, including adding a developer to a developer group
@@ -92,7 +93,6 @@
     2.1.5 Save Project Dashboard
         -'app\ui\developer-ui\developer-action-buttons.tsx'
             Houses function for saving the dashboard to the database
-
     2.2.0 & Developer Project Testing Requirements
     2.2.1 Project Connectivity Assurance
         'app\ui\developer-ui\project-dashboard-components\ProjectTestDashboard.tsx'
@@ -126,8 +126,17 @@
     see 'app\ui\doctor-dashboard'
     4.1 & Medication Management & & \\\hline
     4.1.1 Add Medication for resident
+        -app\ui\doctor-dashboard\medical-history-btns.tsx
+            This page allows the doctor to add a new medication to the resident's regiment
     4.1.2 Remove Medication for resident
+        -app\ui\doctor-dashboard\medical-history-btns.tsx
+            This page allows the doctor to remove a medication from the resident's regiment
     4.1.3 Edit medication for resident
+        -app\ui\doctor-dashboard\medical-history-btns.tsx
+            This page allows the doctor to alter a medication from the resident's regiment
     4.1.4 View Notifications from Resident's Home Hub
+        Unsupported
     4.1.5 Connect with Resident
+        Unsupported
     4.1.6 Disconnect from Resident
+        Unsupported

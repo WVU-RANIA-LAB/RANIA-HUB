@@ -8,7 +8,7 @@ export default async function ResidentInformation({
   const resident = await fetchUserById(residentId);
 
   return (
-    <div className="card card-compact h-full shadow-lg">
+    <div className="card card-compact h-full shadow-lg bg-white">
       <div className="card-body">
         <h2 className="card-title">Resident Information</h2>
         <div className="text-lg">

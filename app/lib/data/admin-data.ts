@@ -123,6 +123,28 @@ export async function fetchProjects() {
 }
 
 /**
+ * Fetches project information from the database.
+ * @returns A promise that resolves to an array of projects.
+ * @throws An error if there is a database error or if fetching projects fails.
+ */
+export async function fetchProjectByGroup(group_owner: string) {
+  try {
+    const projects = await prisma.project.findMany({
+      where: { group_owner },
+      select: {
+        name: true,
+      },
+    });
+    return projects;
+  } catch (error) {
+    console.error('Error fetching projects for group:', error);
+    return [];
+  }
+}
+
+
+
+/**
  * Fetches filtered registered devices based on deviceId, name, registeredTo, and current page.
  * @returns A promise that resolves to an array of filtered registered devices.
  * @throws An error if there is a database error or if fetching devices fails.

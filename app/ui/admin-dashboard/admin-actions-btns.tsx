@@ -7,7 +7,7 @@ import AdminProjectActionsModal from './admin-project-action-modal';
 import CreateDeveloperGroupModal from './admin-create-developer-group';
 import CreateProjectModal from './admin-create-project';
 import CreateRegisteredDeviceModal from './admin-create-device';
-import { deleteUser, deleteProject, deleteDevice, createRegisteredHub, deleteHub } from '@/app/lib/actions/admin-actions';
+import { deleteUser, deleteProject, deleteDevice, createRegisteredHub, deleteHub, deleteDevGroup } from '@/app/lib/actions/admin-actions';
 
 /**
  * Props for the CreateUserButton component.
@@ -59,6 +59,53 @@ export function CreateDeveloperGroupButton() {
     </>
   );
 }
+
+/**
+ * Props for the DeleteDevGroupButton component.
+ */
+type DeleteDevGroupButtonProps = {
+  devGroupId: string;
+};
+
+/**
+ * Renders a button component for deleting a developer group.
+ * @param {DeleteDevGroupButtonProps} props - The component props.
+ * @returns {JSX.Element} The delete dev group button component.
+ */
+
+export function DeleteDeveloperGroupButton({ devGroupId }: DeleteDevGroupButtonProps) {
+  const deleteDevGroupWithId = deleteDevGroup.bind(null, devGroupId);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  return (
+    <>
+      <button
+        className="btn btn-square bg-transparent btn-sm border-red-600 text-red-600 hover:bg-red-600 hover:text-wvu-off-white"
+        onClick={() => dialogRef.current?.showModal()}
+      >
+        <TrashIcon className="h-5" />
+      </button>
+      <dialog ref={dialogRef} className="modal">
+        <div className="modal-box">
+          <h2 className="text-lg font-bold">
+            Are you sure you want to delete this developer group?
+          </h2>
+          <div className="modal-action">
+            <button className="btn" onClick={() => dialogRef.current?.close()}>
+              Cancel
+            </button>
+            <form action={deleteDevGroupWithId}>
+              <button className="btn btn-error" type="submit">
+                Delete
+              </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+    </>
+  );
+}
+
 
 /**
  * Props for the CreateUserButton component.

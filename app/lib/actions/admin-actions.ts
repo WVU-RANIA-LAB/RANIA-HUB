@@ -332,6 +332,35 @@ export async function createDeveloperGroup(
   return { message: 'Successfully created developer group.' };
 }
 
+/**
+ * Deletes a user from the database.
+ * @param userId - The ID of the user to delete.
+ * @returns A promise that resolves to an object with a `message` property indicating the result of the operation.
+ */
+export async function deleteDevGroup(devGroupId: string): Promise<{ message: string }> {
+  try {
+    // Retrieve the user to get their developer group
+    const devGroup = await prisma.developerGroup.findUnique({
+      where: { id: devGroupId },
+    });
+
+    if (!devGroup) {
+      return { message: 'Dev Group not found.' };
+    }
+
+    // Delete the user
+    await prisma.developerGroup.delete({
+      where: { id: devGroupId },
+    });
+
+    revalidatePaths();
+    return { message: 'Deleted Developer Group.' };
+  } catch (error) {
+    console.error('Database Error:', error);
+    return { message: 'Database Error: Failed to delete developer group.' };
+  }
+}
+
 async function addDeveloperToDeveloperGroup(groupId: string, userId: string) {
   // Retrieve the developerGroup document
   let developerGroup = await prisma.developerGroup.findUnique({
