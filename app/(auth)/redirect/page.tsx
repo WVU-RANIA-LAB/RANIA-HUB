@@ -14,7 +14,7 @@ export default async function Page() {
     case 'DOCTOR':
       redirect('/doctor-dashboard/residents');
     case 'ADMIN':
-      redirect('/admin-dashboard/residents');
+      redirect('/admin-dashboard/users');
     case 'DEVELOPER':
       redirect('/developer-dashboard');
   }

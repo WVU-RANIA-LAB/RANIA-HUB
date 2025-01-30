@@ -69,7 +69,7 @@ export default async function AdminDevelopersTable({
             <th scope="col">Name</th>
             <th scope="col">Email</th>
             <th scope="col">Phone Number</th>
-            <th scope="col">Role</th>
+            {/* <th scope="col">Role</th> */}
             <th scope="col">Group</th>
             <th scope="col">Actions</th>
           </tr>
@@ -80,7 +80,7 @@ export default async function AdminDevelopersTable({
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>{user.phoneNumber}</td>
-              <td>{user.role}</td>
+              {/* <td>{user.role}</td> */}
               <td>{user.groupInfo}</td>
               <td className="flex gap-2">
                 <EditUserButton user={user} developerGroups={devGroups}/>

@@ -17,13 +17,15 @@ const navbarLinks: Record<Role, Array<{ label: string; href: string }>> = {
     { label: 'Calendar', href: '/doctor-dashboard/calendar' },
   ],
   ADMIN: [
-    { label: 'Residents', href: '/admin-dashboard/residents' },
-    { label: 'Doctors', href: '/admin-dashboard/doctors' },
-    { label: 'Admins', href: '/admin-dashboard/admins' },
+    { label: 'Users', href: '/admin-dashboard/users' },
+    // { label: 'Residents', href: '/admin-dashboard/residents' },
+    // { label: 'Doctors', href: '/admin-dashboard/doctors' },
+    // { label: 'Admins', href: '/admin-dashboard/admins' },
     { label: 'Developers', href: '/admin-dashboard/developers'},
-    { label: 'Projects', href: '/admin-dashboard/projects'},
-    { label: 'Devices', href: '/admin-dashboard/devices'},
-    { label: 'Hubs', href: '/admin-dashboard/hubs'}
+    // { label: 'Projects', href: '/admin-dashboard/projects'},
+    { label: 'Products', href: '/admin-dashboard/products'},
+    // { label: 'Devices', href: '/admin-dashboard/devices'},
+    // { label: 'Hubs', href: '/admin-dashboard/hubs'}
 
 
   ],
