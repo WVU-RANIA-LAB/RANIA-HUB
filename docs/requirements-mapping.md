@@ -116,11 +116,11 @@
     3.3.1 View Calendar
         -'app\ui\resident-ui\calendar.tsx'
     3.3.2 Create Event
-        Unsupported
+        -reroutes to google calendar website
     3.3.3 Edit Event
-        Unsupported
+        -reroutes to google calendar website
     3.3.4 Delete Event
-        Unsupported
+        -reroutes to google calendar website
 
 4.0 & Doctor Functional Requirements & & \\\hline
     see 'app\ui\doctor-dashboard'
