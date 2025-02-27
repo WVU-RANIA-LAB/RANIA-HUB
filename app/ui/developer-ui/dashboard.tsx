@@ -18,7 +18,7 @@ export default async function Dashboard() {
     <main className="flex-grow flex flex-col bg-wvu-off-white px-15 py-10 sm:px-20 sm:py-18">
   <div className="flex flex-col md:flex-row ">
     {/* Left Column: First and Second Containers */}
-    <div className="w-full md:w-1/2 p-2">
+    <div className="w-full md:w-1/3 p-2">
       {/* First Container */}
       <div className="mb-8">
         <div className="flex-grow ">
@@ -79,14 +79,16 @@ export default async function Dashboard() {
     </div>
 
     {/* Right Column: Third Container */}
-    <div className="w-full md:w-1/2 p-2">
+    <div className="w-full md:w-2/3 p-2">
       <div className="flex-grow">
         <div className="flex items-center justify-between">
           <h6 className="text-4xl text-wvu-primary-blue font-bold">Project Dashboard</h6>
         </div>
         <div className="p-5">
           <p>
-            Build the dashboard here for your RANIA device. Clicking "Save" will save the current formatted dashboard to your project, and generate a handshake packet that your device should send to the hub to connect to it.
+            Build the dashboard here for your RANIA device.
+            Clicking "Save" will save the current formatted dashboard to your project.
+            Download your dashboard layout for your handshake packethandshake packet.
           </p>
         </div>
         <div style={{ padding: 5, display: 'flex', justifyContent: 'center' }}>

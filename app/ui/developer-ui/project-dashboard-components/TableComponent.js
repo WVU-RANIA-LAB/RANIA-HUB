@@ -1,20 +1,13 @@
 import React from 'react';
 
-const TableComponent = ({ data, layoutId }) => (
-  <div className="overflow-x-auto">
-    <table className="table-auto w-full border-collapse border border-gray-200" layoutId={layoutId}>
-      <thead>
-        <tr>
-          {Object.keys(data[0]).map((key) => (
-            <th key={key} className="border border-gray-200 px-4 py-2">{key}</th>
-          ))}
-        </tr>
-      </thead>
+const TableComponent = ({ layoutId, rows, cols }) => (
+  <div className="overflow-x-auto w-full h-full">
+    <table className="table-auto w-full h-full border-collapse border border-gray-200" id={layoutId}>
       <tbody>
-        {data.map((row, index) => (
-          <tr key={index}>
-            {Object.values(row).map((value, i) => (
-              <td key={i} className="border border-gray-200 px-4 py-2">{value}</td>
+        {Array.from({ length: rows }).map((_, rowIndex) => (
+          <tr key={rowIndex}>
+            {Array.from({ length: cols }).map((_, colIndex) => (
+              <td key={colIndex} className="border border-gray-200 p-2"></td>
             ))}
           </tr>
         ))}
@@ -22,5 +15,6 @@ const TableComponent = ({ data, layoutId }) => (
     </table>
   </div>
 );
+
 
 export default TableComponent;

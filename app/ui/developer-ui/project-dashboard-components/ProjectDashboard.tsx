@@ -26,12 +26,7 @@ import {
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-// Sample data for the table component
-const sampleData = [
-  { name: 'John', age: 28, city: 'New York' },
-  { name: 'Jane', age: 32, city: 'San Francisco' },
-  { name: 'Doe', age: 22, city: 'Los Angeles' },
-];
+
 
 type ProjectDashboardProps = {
   projectId: string;
@@ -40,8 +35,12 @@ type ProjectDashboardProps = {
 };
 
 function ProjectDashboard({ projectId, projectName, projectDescription }: ProjectDashboardProps) {
+  // Sample data for the table component
+const [tableRows, setRows] = useState(1);
+const [tableCols, setCols] = useState(1);
+  
   const [layout, setLayout] = useState([
-    { i: 'lineChart0', x: 0, y: 0, w: 2, h: 2 },
+    { i: 'lineChart0', x: 0, y: 0, w: 2, h: 2, rows: 0, columns: 0 },
   ]);
   const [hoveredItemId, setHoveredItemId] = useState<string | null>(null); // State to track hovered item ID
 
@@ -85,7 +84,17 @@ function ProjectDashboard({ projectId, projectName, projectDescription }: Projec
           <AddBarChartButton layout={layout} setLayout={setLayout} />
           <AddSingleValueButton layout={layout} setLayout={setLayout} />
           <AddTextButton layout={layout} setLayout={setLayout} />
-          <AddTableButton layout={layout} setLayout={setLayout} />
+          <AddTableButton layout={layout} setLayout={setLayout} rows={tableRows} columns={tableCols} />
+          <div>
+            <form>
+              <label htmlFor="rows">Rows:</label>
+              <input type="number" id="tableRows" name="rows" min="1" max="10" step="1" defaultValue={1} onChange={(e) => setRows(Number(e.target.value))}/>
+              <label htmlFor="cols">Cols:</label>
+              <input type="number" id="tableCols" name="cols" min="1" max="10" step="1" defaultValue={1} onChange={(e) => setCols(Number(e.target.value))}/>
+            </form>
+          </div>
+          
+
         </div>
         
       </div>
@@ -103,7 +112,7 @@ function ProjectDashboard({ projectId, projectName, projectDescription }: Projec
               {item.i.startsWith('barChart') && <BarChartComponent />}
               {item.i.startsWith('singleValue') && <SingleValueComponent value="42" />}
               {item.i.startsWith('text') && <TextComponent value="Lorem ipsum dolor sit amet" />}
-              {item.i.startsWith('table') && <TableComponent data={sampleData} />}
+              {item.i.startsWith('table') && <TableComponent rows={item.i.match(/-r(\d+)-c(\d+)/)[1]} cols={item.i.match(/-r(\d+)-c(\d+)/)[2]}/>}
               {hoveredItemId === item.i && (
                 <DeleteButton itemId={item.i} layout={layout} setLayout={setLayout} />
               )}

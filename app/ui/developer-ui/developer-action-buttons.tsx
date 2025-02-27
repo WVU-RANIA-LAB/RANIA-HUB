@@ -156,13 +156,16 @@ export const AddTextButton = ({ layout, setLayout }: AddTextButtonProps) => {
 type AddTableButtonProps = {
   layout: any[];
   setLayout: (layout: any[]) => void;
+  rows: number;
+  columns: number;
 };
 
-export const AddTableButton = ({ layout, setLayout }: AddTableButtonProps) => {
+export const AddTableButton = ({ layout, setLayout , rows, columns}: AddTableButtonProps) => {
+
   const addTable = () => {
     const nextPosition = layout.length;
     const newLayoutItem = {
-      i: `table${nextPosition}`,
+      i: `table${nextPosition}-r${rows}-c${columns}`,
       x: (nextPosition % 10) * 2, // Example calculation
       y: Math.floor(nextPosition / 10) * 2, // Example calculation
       w: 4, // Table might need more width
