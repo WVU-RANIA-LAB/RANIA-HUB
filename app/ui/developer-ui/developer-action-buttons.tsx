@@ -6,16 +6,19 @@ import { updateDashboardLayout, fetchDashboardLayout } from '@/app/lib/actions/d
 type AddLineChartButtonProps = {
   layout: any[];
   setLayout: (layout: any[]) => void;
+  ctitle: String;
+  xtitle: string;
+  ytitle: string;
 };
 
-export const AddLineChartButton = ({ layout, setLayout }: AddLineChartButtonProps) => {
+export const AddLineChartButton = ({ layout, setLayout, ctitle, xtitle, ytitle}: AddLineChartButtonProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const addLineChart = () => {
     // Determine the next available position
     const nextPosition = layout.length;
     const newLayoutItem = {
-      i: `lineChart${nextPosition}`,
+      i: `lineChart${nextPosition}-c${ctitle}-x${xtitle}-y${ytitle}`,
       x: (nextPosition % 10) * 2, // Example calculation
       y: Math.floor(nextPosition / 10) * 2, // Example calculation
       w: 2,

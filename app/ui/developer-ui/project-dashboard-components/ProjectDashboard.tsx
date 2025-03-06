@@ -38,6 +38,12 @@ function ProjectDashboard({ projectId, projectName, projectDescription }: Projec
   // Sample data for the table component
 const [tableRows, setRows] = useState(1);
 const [tableCols, setCols] = useState(1);
+
+const [lineChartXAxisTitle, setLineChartXAxisTitle] = useState("X Axis Title")
+const [lineChartYAxisTitle, setLineChartYAxisTitle] = useState("Y Axis Title")
+const [lineChartTitle, setLineChartTitle] = useState("Chart Title")
+
+
   
   const [layout, setLayout] = useState([
     { i: 'lineChart0', x: 0, y: 0, w: 2, h: 2, rows: 0, columns: 0 },
@@ -80,7 +86,17 @@ const [tableCols, setCols] = useState(1);
           <DownloadDashboardButton layout={layout} deviceName={projectName} description={projectDescription} />
         </div>
         <div className="flex space-x-2 mb-2">
-          <AddLineChartButton layout={layout} setLayout={setLayout} />
+          <AddLineChartButton layout={layout} setLayout={setLayout} xtitle={lineChartXAxisTitle} ytitle={lineChartYAxisTitle} ctitle={lineChartTitle}/>
+          <div>
+            <form>
+              <label htmlFor="lctitle">Chart Title:</label>
+              <input type="text" id="lctitle" name="lctitle" defaultValue={"Chart Title"} onChange={(e) => setLineChartTitle(e.target.value)}/>
+              <label htmlFor="lcxtitle">Chart X Axis Title:</label>
+              <input type="text" id="lcxtitle" name="lcxtitle" defaultValue={"X Axis Title"} onChange={(e) => setLineChartXAxisTitle(e.target.value)}/>
+              <label htmlFor="lcytitle">Chart Y Axis Title:</label>
+              <input type="text" id="lcytitle" name="lcytitle" defaultValue={"Y Axis Title"} onChange={(e) => setLineChartYAxisTitle(e.target.value)}/>
+            </form>
+          </div>  
           <AddBarChartButton layout={layout} setLayout={setLayout} />
           <AddSingleValueButton layout={layout} setLayout={setLayout} />
           <AddTextButton layout={layout} setLayout={setLayout} />
@@ -92,8 +108,7 @@ const [tableCols, setCols] = useState(1);
               <label htmlFor="cols">Cols:</label>
               <input type="number" id="tableCols" name="cols" min="1" max="10" step="1" defaultValue={1} onChange={(e) => setCols(Number(e.target.value))}/>
             </form>
-          </div>
-          
+          </div>          
 
         </div>
         
@@ -108,7 +123,9 @@ const [tableCols, setCols] = useState(1);
         >
           {layout.map((item) => (
             <div key={item.i} onMouseEnter={() => handleMouseEnter(item.i)} onMouseLeave={handleMouseLeave}>
-              {item.i.startsWith('lineChart') && <LineChartComponent />}
+              {item.i.startsWith('lineChart') && <LineChartComponent  ctitle={item.i.match(/lineChart\d+-c(?<ctitle>.+?)-x(?<xtitle>.+?)-y(?<ytitle>.+)/)?.groups?.ctitle ?? "test"}
+                                                                      xtitle={item.i.match(/lineChart\d+-c(?<ctitle>.+?)-x(?<xtitle>.+?)-y(?<ytitle>.+)/)?.groups?.xtitle ?? "test"}
+                                                                      ytitle={item.i.match(/lineChart\d+-c(?<ctitle>.+?)-x(?<xtitle>.+?)-y(?<ytitle>.+)/)?.groups?.ytitle ?? "test"}/>}
               {item.i.startsWith('barChart') && <BarChartComponent />}
               {item.i.startsWith('singleValue') && <SingleValueComponent value="42" />}
               {item.i.startsWith('text') && <TextComponent value="Lorem ipsum dolor sit amet" />}

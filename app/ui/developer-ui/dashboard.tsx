@@ -15,7 +15,7 @@ export default async function Dashboard() {
 
 
   return (
-    <main className="flex-grow flex flex-col bg-wvu-off-white px-15 py-10 sm:px-20 sm:py-18">
+    <main className="flex-grow flex flex-col bg-wvu-off-white sm:px-20 sm:py-18">
   <div className="flex flex-col md:flex-row ">
     {/* Left Column: First and Second Containers */}
     <div className="w-full md:w-1/3 p-2">
