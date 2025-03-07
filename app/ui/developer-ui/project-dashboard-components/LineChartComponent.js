@@ -5,9 +5,7 @@ const LineChartComponent = ({ data = [{ name: "Default", value: 0 }], layoutId, 
 
   <ResponsiveContainer width="100%" height="90%" layoutId={layoutId}>
     {/* {ctitle} {xtitle} {ytitle} */}
-    <div style={{paddingLeft: "20px", marginBottom: '10px', fontWeight: 'bold' }}>
-      <h3>{ctitle}</h3>  {/* Display Chart Title */}
-    </div>
+
   <LineChart data={data ?? {"test": "one"}}>
     <CartesianGrid strokeDasharray="4 4" />
     <XAxis>
@@ -20,6 +18,9 @@ const LineChartComponent = ({ data = [{ name: "Default", value: 0 }], layoutId, 
     <Legend/>
     <Line type="monotone" dataKey="value" stroke="#8884d8" />
   </LineChart>
+  <div style={{paddingLeft: "20px", marginBottom: '10px', fontWeight: 'bold' }}>
+      <h3>{ctitle}</h3>  {/* Display Chart Title */}
+    </div>
   </ResponsiveContainer>
 );
 
