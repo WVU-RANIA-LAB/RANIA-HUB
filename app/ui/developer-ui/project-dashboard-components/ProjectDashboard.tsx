@@ -43,6 +43,10 @@ const [lineChartXAxisTitle, setLineChartXAxisTitle] = useState("X Axis Title")
 const [lineChartYAxisTitle, setLineChartYAxisTitle] = useState("Y Axis Title")
 const [lineChartTitle, setLineChartTitle] = useState("Chart Title")
 
+const [barChartXAxisTitle, setBarChartXAxisTitle] = useState("X Axis Title")
+const [barChartYAxisTitle, setBarChartYAxisTitle] = useState("Y Axis Title")
+const [barChartTitle, setBarChartTitle] = useState("Chart Title")
+
 
   
   const [layout, setLayout] = useState([
@@ -97,7 +101,15 @@ const [lineChartTitle, setLineChartTitle] = useState("Chart Title")
               <input type="text" id="lcytitle" name="lcytitle" defaultValue={"Y Axis Title"} onChange={(e) => setLineChartYAxisTitle(e.target.value)}/>
             </form>
           </div>  
-          <AddBarChartButton layout={layout} setLayout={setLayout} />
+          <AddBarChartButton layout={layout} setLayout={setLayout} xtitle={barChartXAxisTitle} ytitle={barChartYAxisTitle} ctitle={barChartTitle}/>
+          <form>
+              <label htmlFor="bctitle">Chart Title:</label>
+              <input type="text" id="bctitle" name="bctitle" defaultValue={"Chart Title"} onChange={(e) => setBarChartTitle(e.target.value)}/>
+              <label htmlFor="bcxtitle">Chart X Axis Title:</label>
+              <input type="text" id="bcxtitle" name="bcxtitle" defaultValue={"X Axis Title"} onChange={(e) => setBarChartXAxisTitle(e.target.value)}/>
+              <label htmlFor="bcytitle">Chart Y Axis Title:</label>
+              <input type="text" id="bcytitle" name="bcytitle" defaultValue={"Y Axis Title"} onChange={(e) => setBarChartYAxisTitle(e.target.value)}/>
+            </form>
           <AddSingleValueButton layout={layout} setLayout={setLayout} />
           <AddTextButton layout={layout} setLayout={setLayout} />
           <AddTableButton layout={layout} setLayout={setLayout} rows={tableRows} columns={tableCols} />
@@ -126,7 +138,9 @@ const [lineChartTitle, setLineChartTitle] = useState("Chart Title")
               {item.i.startsWith('lineChart') && <LineChartComponent  ctitle={item.i.match(/lineChart\d+-c(?<ctitle>.+?)-x(?<xtitle>.+?)-y(?<ytitle>.+)/)?.groups?.ctitle ?? "test"}
                                                                       xtitle={item.i.match(/lineChart\d+-c(?<ctitle>.+?)-x(?<xtitle>.+?)-y(?<ytitle>.+)/)?.groups?.xtitle ?? "test"}
                                                                       ytitle={item.i.match(/lineChart\d+-c(?<ctitle>.+?)-x(?<xtitle>.+?)-y(?<ytitle>.+)/)?.groups?.ytitle ?? "test"}/>}
-              {item.i.startsWith('barChart') && <BarChartComponent />}
+              {item.i.startsWith('barChart') && <BarChartComponent  ctitle={item.i.match(/barChart\d+-c(?<ctitle>.+?)-x(?<xtitle>.+?)-y(?<ytitle>.+)/)?.groups?.ctitle ?? "test"}
+                                                                    xtitle={item.i.match(/barChart\d+-c(?<ctitle>.+?)-x(?<xtitle>.+?)-y(?<ytitle>.+)/)?.groups?.xtitle ?? "test"}
+                                                                    ytitle={item.i.match(/barChart\d+-c(?<ctitle>.+?)-x(?<xtitle>.+?)-y(?<ytitle>.+)/)?.groups?.ytitle ?? "test"}/>}
               {item.i.startsWith('singleValue') && <SingleValueComponent value="42" />}
               {item.i.startsWith('text') && <TextComponent value="Lorem ipsum dolor sit amet" />}
               {item.i.startsWith('table') && <TableComponent rows={item.i.match(/-r(\d+)-c(\d+)/)[1]} cols={item.i.match(/-r(\d+)-c(\d+)/)[2]}/>}

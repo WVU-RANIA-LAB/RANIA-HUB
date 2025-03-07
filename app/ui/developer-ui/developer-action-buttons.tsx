@@ -48,16 +48,19 @@ export const AddLineChartButton = ({ layout, setLayout, ctitle, xtitle, ytitle}:
 type AddBarChartButtonProps = {
   layout: any[];
   setLayout: (layout: any[]) => void;
+  ctitle: String;
+  xtitle: string;
+  ytitle: string;
 };
 
-export const AddBarChartButton = ({ layout, setLayout }: AddBarChartButtonProps) => {
+export const AddBarChartButton = ({ layout, setLayout, ctitle, xtitle, ytitle }: AddBarChartButtonProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const addBarChart = () => {
     // Determine the next available position
     const nextPosition = layout.length;
     const newLayoutItem = {
-      i: `barChart${nextPosition}`,
+      i: `barChart${nextPosition}-c${ctitle}-x${xtitle}-y${ytitle}`,
       x: (nextPosition % 10) * 2, // Example calculation
       y: Math.floor(nextPosition / 10) * 2, // Example calculation
       w: 2,
