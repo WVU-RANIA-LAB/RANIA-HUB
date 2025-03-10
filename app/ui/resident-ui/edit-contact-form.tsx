@@ -1,7 +1,7 @@
 'use client';
 
 import { PencilIcon } from '@heroicons/react/24/solid';
-import { editContact } from '../lib/actions/contacts-actions';
+import { editContact } from '@/app/lib/actions/resident-actions';
 import { Contact } from '@prisma/client';
 import { useFormState, useFormStatus } from 'react-dom';
 import { states } from '@/app/lib/constants/us-states';

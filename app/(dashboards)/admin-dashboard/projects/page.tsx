@@ -1,13 +1,13 @@
 import { Metadata } from 'next';
 import { Suspense } from 'react';
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '@/app/ui/ui-utils/fonts';
 import { auth } from '@/auth';
 import { fetchUserByEmail } from '@/app/lib/data/data';
 import { fetchUsersPages, fetchDeveloperGroups } from '@/app/lib/data/admin-data';
-import Search from '@/app/ui/search';
-import AdminProjectsTable from '@/app/ui/admin-dashboard/admin-projects-table';
-import Pagination from '@/app/ui/pagination';
-import {CreateProjectButton } from '@/app/ui/admin-dashboard/admin-actions-btns';
+import Search from '@/app/ui/ui-utils/search';
+import AdminProjectsTable from '@/app/ui/admin-ui/admin-projects-table';
+import Pagination from '@/app/ui/ui-utils/pagination';
+import {CreateProjectButton } from '@/app/ui/admin-ui/admin-actions-btns';
 
 export const metadata: Metadata = {
   title: 'Projects',

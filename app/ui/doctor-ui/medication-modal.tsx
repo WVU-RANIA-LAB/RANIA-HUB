@@ -4,7 +4,7 @@ import { forwardRef, useRef } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 import { fetchFilteredMedications } from '@/app/lib/data/doctor-data';
-import MedicationForm from '@/app/ui/doctor-dashboard/medication-form';
+import MedicationForm from '@/app/ui/doctor-ui/medication-form';
 
 type MedicationModalProps =
   | { mode: 'Create'; doctorId: string; residentId: string }

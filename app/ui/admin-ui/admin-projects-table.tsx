@@ -1,4 +1,4 @@
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '@/app/ui/ui-utils/fonts';
 import { fetchProjects, fetchDeveloperGroups } from '@/app/lib/data/admin-data';
 import { EditProjectButton, DeleteProjectButton } from './admin-actions-btns';
 import { Project, DeveloperGroup } from '@prisma/client';

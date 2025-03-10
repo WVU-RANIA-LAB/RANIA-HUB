@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '@/app/ui/ui-utils/fonts';
 
 export default function Page() {
   return (

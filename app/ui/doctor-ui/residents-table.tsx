@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 
 import { fetchFilteredResidents } from '@/app/lib/data/doctor-data';
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '@/app/ui/ui-utils/fonts';
 
 type ResidentsTableProps = {
   residentIds: string[];

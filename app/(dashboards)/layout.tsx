@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { auth } from '@/auth';
-import Navbar from '@/app/ui/navbar';
+import Navbar from '@/app/ui/ui-utils/navbar';
 
 type DashboardLayoutProps = { children: ReactNode };
 

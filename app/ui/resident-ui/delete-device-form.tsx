@@ -1,7 +1,7 @@
 'use client';
 
 import { TrashIcon } from '@heroicons/react/24/solid';
-import { deleteDevice } from '../lib/actions/device-actions';
+import { deleteDevice } from '@/app/lib/actions/device-actions';
 import { Device } from '@prisma/client';
 
 type DeleteDeviceFormProps = { device: Device };

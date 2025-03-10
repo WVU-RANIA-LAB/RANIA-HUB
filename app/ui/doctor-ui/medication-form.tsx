@@ -8,7 +8,7 @@ import {
   updateMedication,
 } from '@/app/lib/actions/medication-actions';
 import { fetchFilteredMedications } from '@/app/lib/data/doctor-data';
-import FieldErrors from '@/app/ui/field-errors';
+import FieldErrors from '@/app/ui/ui-utils/field-errors';
 
 type MedicationFormProps = {
   doctorId: string;

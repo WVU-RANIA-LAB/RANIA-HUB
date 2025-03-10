@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
-import { lusitana } from '@/app/ui/fonts';
-import AddDeviceForm from '@/app/ui/add-device-form';
+import { lusitana } from '@/app/ui/ui-utils/fonts';
+import AddDeviceForm from '@/app/ui/resident-ui/add-device-form';
 import EditDeviceForm from '@/app/ui/edit-device-form';
 import DeleteDeviceForm from '@/app/ui/delete-device-form';
 import { auth } from '@/auth';

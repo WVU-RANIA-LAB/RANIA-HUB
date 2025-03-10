@@ -1,7 +1,7 @@
 'use client';
 
 import { PencilIcon } from '@heroicons/react/24/solid';
-import { editDevice } from '../lib/actions/device-actions';
+import { editDevice } from '@/app/lib/actions/device-actions';
 import { Device } from '@prisma/client';
 import { useFormState, useFormStatus } from 'react-dom';
 import { useRef } from 'react';

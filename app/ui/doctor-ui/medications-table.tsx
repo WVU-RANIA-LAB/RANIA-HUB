@@ -2,8 +2,8 @@ import { fetchFilteredMedications } from '@/app/lib/data/doctor-data';
 import {
   EditMedicationButton,
   DeleteMedicationButton,
-} from '@/app/ui/doctor-dashboard/medication-btns';
-import { lusitana } from '@/app/ui/fonts';
+} from '@/app/ui/doctor-ui/medication-btns';
+import { lusitana } from '@/app/ui/ui-utils/fonts';
 
 type MedicationsTableProps = {
   doctorId: string;

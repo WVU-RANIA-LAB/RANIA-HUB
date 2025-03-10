@@ -1,6 +1,6 @@
-import { RecentMedicalHistory } from '@/app/ui/doctor-dashboard/recent-medical-history';
-import { RecentMedications } from '@/app/ui/doctor-dashboard/recent-medications';
-import ResidentInformation from '@/app/ui/doctor-dashboard/resident-info';
+import { RecentMedicalHistory } from '@/app/ui/doctor-ui/recent-medical-history';
+import { RecentMedications } from '@/app/ui/doctor-ui/recent-medications';
+import ResidentInformation from '@/app/ui/doctor-ui/resident-info';
 
 type PageProps = { params: { residentId: string } };
 

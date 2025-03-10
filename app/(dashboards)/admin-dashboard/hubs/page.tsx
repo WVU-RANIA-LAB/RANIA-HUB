@@ -1,13 +1,13 @@
 import { Metadata } from 'next';
 import { Suspense } from 'react';
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '@/app/ui/ui-utils/fonts';
 import { auth } from '@/auth';
 import { fetchUserByEmail } from '@/app/lib/data/data';
 import { fetchUsersPages, fetchDeveloperGroups } from '@/app/lib/data/admin-data';
-import Search from '@/app/ui/search';
-import AdminHubsTable from '@/app/ui/admin-dashboard/admin-hubs-table';
-import Pagination from '@/app/ui/pagination';
-import {CreateHubButton } from '@/app/ui/admin-dashboard/admin-actions-btns';
+import Search from '@/app/ui/ui-utils/search';
+import AdminHubsTable from '@/app/ui/admin-ui/admin-hubs-table';
+import Pagination from '@/app/ui/ui-utils/pagination';
+import {CreateHubButton } from '@/app/ui/admin-ui/admin-actions-btns';
 
 export const metadata: Metadata = {
   title: 'Hubs',

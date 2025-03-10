@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import type { Metadata } from 'next';
 
 import './globals.css';
-import { inter } from '@/app/ui/fonts';
+import { inter } from '@/app/ui/ui-utils/fonts';
 import Providers from '@/app/providers';
 
 export const metadata: Metadata = {

@@ -1,7 +1,7 @@
 'use client';
 
 import { TrashIcon } from '@heroicons/react/24/solid';
-import { deleteContact } from '../lib/actions/contacts-actions';
+import { deleteContact } from '@/app/lib/actions/resident-actions';
 import { Contact } from '@prisma/client';
 import { useFormState, useFormStatus } from 'react-dom';
 

@@ -1,13 +1,13 @@
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '@/app/ui/ui-utils/fonts';
 import { auth } from '@/auth';
 import { fetchUserByEmail } from '@/app/lib/data/data';
 import { fetchResidentsPages } from '@/app/lib/data/doctor-data';
-import Search from '@/app/ui/search';
-import ResidentsTable from '@/app/ui/doctor-dashboard/residents-table';
-import Pagination from '@/app/ui/pagination';
+import Search from '@/app/ui/ui-utils/search';
+import ResidentsTable from '@/app/ui/doctor-ui/residents-table';
+import Pagination from '@/app/ui/ui-utils/pagination';
 
 export const metadata: Metadata = {
   title: 'Residents',

@@ -1,13 +1,13 @@
 import { Suspense } from 'react';
 
 import { auth } from '@/auth';
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '@/app/ui/ui-utils/fonts';
 import { fetchUserByEmail, fetchUserById } from '@/app/lib/data/data';
 import { fetchMedicalHistoryPages } from '@/app/lib/data/doctor-data';
-import { CreateMedicalHistoryButton } from '@/app/ui/doctor-dashboard/medical-history-btns';
-import Search from '@/app/ui/search';
-import MedicalHistoryTable from '@/app/ui/doctor-dashboard/medical-history-table';
-import Pagination from '@/app/ui/pagination';
+import { CreateMedicalHistoryButton } from '@/app/ui/doctor-ui/medical-history-btns';
+import Search from '@/app/ui/ui-utils/search';
+import MedicalHistoryTable from '@/app/ui/doctor-ui/medical-history-table';
+import Pagination from '@/app/ui/ui-utils/pagination';
 
 type PageProps = {
   params: { residentId: string };

@@ -9,7 +9,7 @@ import {
   createMedicalHistoryEntry,
   updateMedicalHistoryEntry,
 } from '@/app/lib/actions/medical-history-actions';
-import FieldErrors from '@/app/ui/field-errors';
+import FieldErrors from '@/app/ui/ui-utils/field-errors';
 
 type MedicalHistoryModalProps =
   | { mode: 'Create'; doctorId: string; residentId: string }

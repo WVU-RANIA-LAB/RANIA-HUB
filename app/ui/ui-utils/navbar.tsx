@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { UserIcon } from '@heroicons/react/24/solid';
 import { Role } from '@prisma/client';
 
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '@/app/ui/ui-utils/fonts';
 import SignOutButton from './sign-out-btn';
 
 const navbarLinks: Record<Role, Array<{ label: string; href: string }>> = {

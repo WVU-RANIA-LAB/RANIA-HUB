@@ -1,9 +1,9 @@
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '@/app/ui/ui-utils/fonts';
 import { fetchFilteredUsers, fetchDeveloperGroups, fetchProjectByGroup  } from '@/app/lib/data/admin-data';
 import {
   //EditUserButton,
   DeleteDeveloperGroupButton,
-} from '@/app/ui/admin-dashboard/admin-actions-btns';
+} from '@/app/ui/admin-ui/admin-actions-btns';
 
 /**
  * Props for the AdminResidentsTable component.

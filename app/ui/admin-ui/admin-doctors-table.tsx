@@ -1,36 +1,34 @@
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '@/app/ui/ui-utils/fonts';
 import { fetchFilteredUsers } from '@/app/lib/data/admin-data';
 import {
   EditUserButton,
   DeleteUserButton,
-} from '@/app/ui/admin-dashboard/admin-actions-btns';
+} from '@/app/ui/admin-ui/admin-actions-btns';
 
 /**
- * Props for the AdminResidentsTable component.
+ * Props for the AdminDoctorsTable component.
  */
-type AdminResidentsTableProps = {
+type AdminDoctorsTableProps = {
   query: string;
   currentPage: number;
 };
 
 /**
- * Renders a table of resident users with their information and actions.
+ * Renders a table of doctor users with their information and actions.
  *
  * @param {AdminAdminsTableProps} props - The component props.
  * @param {string} props.query - The search query for filtering users.
  * @param {number} props.currentPage - The current page number for pagination.
  * @returns {JSX.Element} The rendered component.
  */
-export default async function AdminResidentsTable({
+export default async function AdminDoctorsTable({
   query,
   currentPage,
-}: AdminResidentsTableProps) {
-  const users = await fetchFilteredUsers('RESIDENT', query, currentPage);
+}: AdminDoctorsTableProps) {
+  const users = await fetchFilteredUsers('DOCTOR', query, currentPage);
 
   if (!users.length) {
-    return (
-      <p className="my-16 text-center text-wvu-warm-gray-medium">No residents found</p>
-    );
+    return <p className="my-16 text-center text-gray-600">No doctors found.</p>;
   }
 
   return (
@@ -64,11 +62,11 @@ export default async function AdminResidentsTable({
         </thead>
         <tbody>
           {users.map((user) => (
-            <tr key={user.id} >
+            <tr key={user.id}>
               <td className="border-b border-warm-gray-dark">{user.name}</td>
               <td className="border-b border-warm-gray-dark">{user.email}</td>
               <td className="border-b border-warm-gray-dark">{user.phoneNumber}</td>
-              <td className="border-b border-warm-gray-dark">{user.role}</td>
+              <td>{user.role}</td>
               <td className="flex gap-2 border-b border-warm-gray-dark">
                 <EditUserButton user={user} />
                 <DeleteUserButton userId={user.id} />

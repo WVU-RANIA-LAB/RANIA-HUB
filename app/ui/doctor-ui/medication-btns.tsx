@@ -5,7 +5,7 @@ import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 import { fetchFilteredMedications } from '@/app/lib/data/doctor-data';
 import { deleteMedication } from '@/app/lib/actions/medication-actions';
-import MedicationModal from '@/app/ui/doctor-dashboard/medication-modal';
+import MedicationModal from '@/app/ui/doctor-ui/medication-modal';
 
 type CreateMedicationButtonProps = { doctorId: string; residentId: string };
 

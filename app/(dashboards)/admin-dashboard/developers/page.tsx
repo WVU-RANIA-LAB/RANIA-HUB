@@ -1,16 +1,16 @@
 import { Metadata } from 'next';
 import { Suspense } from 'react';
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '@/app/ui/ui-utils/fonts';
 import { auth } from '@/auth';
 import { fetchUserByEmail } from '@/app/lib/data/data';
 import { fetchUsersPages, fetchDeveloperGroups, fetchProjectByGroup } from '@/app/lib/data/admin-data';
-import Search from '@/app/ui/search';
-import AdminDevelopersTable from '@/app/ui/admin-dashboard/admin-developers-table';
-import AdminDeveloperGroupsTable from '@/app/ui/admin-dashboard/admin-developer-groups-table';
-import AdminProjectsTable from '@/app/ui/admin-dashboard/admin-projects-table';
+import Search from '@/app/ui/ui-utils/search';
+import AdminDevelopersTable from '@/app/ui/admin-ui/admin-developers-table';
+import AdminDeveloperGroupsTable from '@/app/ui/admin-ui/admin-developer-groups-table';
+import AdminProjectsTable from '@/app/ui/admin-ui/admin-projects-table';
 
-import Pagination from '@/app/ui/pagination';
-import { CreateUserButton, CreateDeveloperGroupButton, CreateHubButton, CreateProjectButton } from '@/app/ui/admin-dashboard/admin-actions-btns';
+import Pagination from '@/app/ui/ui-utils/pagination';
+import { CreateUserButton, CreateDeveloperGroupButton, CreateHubButton, CreateProjectButton } from '@/app/ui/admin-ui/admin-actions-btns';
 
 export const metadata: Metadata = {
   title: 'Developers',

@@ -1,6 +1,6 @@
 import { fetchUserByEmail } from '@/app/lib/data/data';
 import { auth } from '@/auth';
-import { lusitana } from '../fonts';
+import { lusitana } from '../ui-utils/fonts';
 import { fetchDeveloperGroupMembers, fetchProjectByGroup } from '@/app/lib/data/developer-data';
 import ProjectDashboard from './project-dashboard-components/ProjectDashboard';
 

@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 
-import { lusitana } from '@/app/ui/fonts';
-import SignInWithGoogleButton from '@/app/ui/google-sign-in-btn';
-import SignInForm from '@/app/ui/signin-form';
+import { lusitana } from '@/app/ui/ui-utils/fonts';
+import SignInWithGoogleButton from '@/app/ui/ui-utils/google-sign-in-btn';
+import SignInForm from '@/app/ui/ui-utils/signin-form';
 
 export const metadata: Metadata = {
   title: 'Sign In',

@@ -1,13 +1,13 @@
 import { Suspense } from 'react';
 
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '@/app/ui/ui-utils/fonts';
 import { auth } from '@/auth';
 import { fetchUserById, fetchUserByEmail } from '@/app/lib/data/data';
 import { fetchMedicationsPages } from '@/app/lib/data/doctor-data';
-import Search from '@/app/ui/search';
-import MedicationsTable from '@/app/ui/doctor-dashboard/medications-table';
-import Pagination from '@/app/ui/pagination';
-import { CreateMedicationButton } from '@/app/ui/doctor-dashboard/medication-btns';
+import Search from '@/app/ui/ui-utils/search';
+import MedicationsTable from '@/app/ui/doctor-ui/medications-table';
+import Pagination from '@/app/ui/ui-utils/pagination';
+import { CreateMedicationButton } from '@/app/ui/doctor-ui/medication-btns';
 
 type PageProps = {
   params: { residentId: string };

@@ -1,4 +1,4 @@
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '@/app/ui/ui-utils/fonts';
 import { fetchHubs } from '@/app/lib/data/admin-data';
 import { DeleteHubButton } from './admin-actions-btns';
 import { RegisteredHub } from '@prisma/client';

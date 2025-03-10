@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { MedicalHistoryEntry } from '@prisma/client';
 
-import MedicalHistoryModal from '@/app/ui/doctor-dashboard/medical-history-modal';
+import MedicalHistoryModal from '@/app/ui/doctor-ui/medical-history-modal';
 import { deleteMedicalHistoryEntry } from '@/app/lib/actions/medical-history-actions';
 
 type CreateMedicalHistoryButtonProps = { doctorId: string; residentId: string };

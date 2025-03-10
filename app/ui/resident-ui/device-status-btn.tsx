@@ -1,7 +1,7 @@
 'use client';
 
 import { PowerIcon } from '@heroicons/react/16/solid';
-import { powerOff, powerOn } from '../lib/actions/device-actions';
+import { powerOff, powerOn } from '@/app/lib/actions/device-actions';
 import { Device } from '@prisma/client';
 
 type ChangeStatusButtonProps = { device: Device };

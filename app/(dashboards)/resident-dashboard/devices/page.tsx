@@ -1,11 +1,11 @@
-import { lusitana } from '@/app/ui/fonts';
-import AddDeviceForm from '@/app/ui/add-device-form';
-import EditDeviceForm from '@/app/ui/edit-device-form';
-import DeleteDeviceForm from '@/app/ui/delete-device-form';
+import { lusitana } from '@/app/ui/ui-utils/fonts';
+import AddDeviceForm from '@/app/ui/resident-ui/add-device-form';
+import EditDeviceForm from '@/app/ui/resident-ui/edit-device-form';
+import DeleteDeviceForm from '@/app/ui/resident-ui/delete-device-form';
 import { auth } from '@/auth';
 import { fetchUserByEmail } from '@/app/lib/data/data';
-import ChangeStatusButton from '@/app/ui/device-status-btn';
-import CheckStatus from '@/app/ui/device-status';
+import ChangeStatusButton from '@/app/ui/resident-ui/device-status-btn';
+import CheckStatus from '@/app/ui/resident-ui/device-status';
 import DevicesDashboard from '@/app/ui/resident-ui/resident-dashboard/devices/devicesDashboard';
 
 

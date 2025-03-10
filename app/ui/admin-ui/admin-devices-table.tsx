@@ -1,4 +1,4 @@
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '@/app/ui/ui-utils/fonts';
 import { fetchDevices } from '@/app/lib/data/admin-data';
 import { DeleteDeviceButton } from './admin-actions-btns';
 import { RegisteredDevice } from '@prisma/client';

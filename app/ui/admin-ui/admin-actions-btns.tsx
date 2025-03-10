@@ -2,7 +2,7 @@
 import { useRef } from 'react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { Role, User, DeveloperGroup, Project } from '@prisma/client';
-import AdminActionsModal from '@/app/ui/admin-dashboard/admin-actions-modal';
+import AdminActionsModal from '@/app/ui/admin-ui/admin-actions-modal';
 import AdminProjectActionsModal from './admin-project-action-modal';
 import CreateDeveloperGroupModal from './admin-create-developer-group';
 import CreateProjectModal from './admin-create-project';
