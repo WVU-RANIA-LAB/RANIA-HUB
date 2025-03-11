@@ -192,9 +192,9 @@ function ProjectTestDashboard({ projectId, projectName, projectDescription }: Pr
   
 
   return (
-    <div className="dashboard-container" style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+    <div className="flex grow flex-row px-10 py-10 sm:px-15 sm:py-18 lg:flex-row gap-10">
   {/* Left Side: Dashboard Layout */}
-  <div className=" flex flex-col md:flex-row w-full md:w-1/2 p-2 border" style={{ width: `${dashboardWidth}px`, height: `${dashboardHeight}px`, maxWidth: '100%', maxHeight: '100%', border: '2px solid gray' }}>
+  <div  style={{ width: `${dashboardWidth}px`, height: `${dashboardHeight}px`, maxWidth: '100%', maxHeight: '100%', border: '2px solid gray' }}>
     <GridLayout
       layout={layout}
       cols={10}
@@ -203,7 +203,7 @@ function ProjectTestDashboard({ projectId, projectName, projectDescription }: Pr
       isDraggable={false} // Disable dragging
       isResizable={false} // Disable resizing
     >
-      {layout.map((item) => {
+      {/* {layout.map((item) => {
         console.log("[DASHBOARD DATA LAYOUT]: ", dashboardData);
 
         return (
@@ -215,7 +215,21 @@ function ProjectTestDashboard({ projectId, projectName, projectDescription }: Pr
             {item.i.startsWith('table') && <TableComponent layoutId={item.i} data={dashboardData[item.i]} />}
           </div>
         );
-      })}
+      })} */}
+
+      {layout.map((item) => (
+          <div key={item.i}>
+            {item.i.startsWith('lineChart') && <LineChartComponent  ctitle={item.i.match(/lineChart\d+-c(?<ctitle>.+?)-x(?<xtitle>.+?)-y(?<ytitle>.+)/)?.groups?.ctitle ?? "test"}
+                                                                    xtitle={item.i.match(/lineChart\d+-c(?<ctitle>.+?)-x(?<xtitle>.+?)-y(?<ytitle>.+)/)?.groups?.xtitle ?? "test"}
+                                                                    ytitle={item.i.match(/lineChart\d+-c(?<ctitle>.+?)-x(?<xtitle>.+?)-y(?<ytitle>.+)/)?.groups?.ytitle ?? "test"}/>}
+            {item.i.startsWith('barChart') && <BarChartComponent  ctitle={item.i.match(/barChart\d+-c(?<ctitle>.+?)-x(?<xtitle>.+?)-y(?<ytitle>.+)/)?.groups?.ctitle ?? "test"}
+                                                                  xtitle={item.i.match(/barChart\d+-c(?<ctitle>.+?)-x(?<xtitle>.+?)-y(?<ytitle>.+)/)?.groups?.xtitle ?? "test"}
+                                                                  ytitle={item.i.match(/barChart\d+-c(?<ctitle>.+?)-x(?<xtitle>.+?)-y(?<ytitle>.+)/)?.groups?.ytitle ?? "test"}/>}
+            {item.i.startsWith('singleValue') && <SingleValueComponent value="42" />}
+            {item.i.startsWith('text') && <TextComponent value="Lorem ipsum dolor sit amet" />}
+            {item.i.startsWith('table') && <TableComponent rows={item.i.match(/-r(\d+)-c(\d+)/)[1]} cols={item.i.match(/-r(\d+)-c(\d+)/)[2]}/>}
+          </div>
+          ))}
     </GridLayout>
   </div>
 

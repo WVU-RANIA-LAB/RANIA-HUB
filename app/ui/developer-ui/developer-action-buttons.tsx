@@ -34,7 +34,7 @@ export const AddLineChartButton = ({ layout, setLayout, ctitle, xtitle, ytitle}:
   };
 
   return (
-      <div className="flex justify-end">
+      <div>
         <button
           className="btn rounded-full border-black bg-transparent hover:bg-wvu-primary-gold hover:text-white active:bg-wvu-primary-blue active:text-white"
           onClick={() => addLineChart()}
@@ -77,7 +77,7 @@ export const AddBarChartButton = ({ layout, setLayout, ctitle, xtitle, ytitle }:
 
   return (
     <>
-      <div className="flex justify-end">
+      <div>
         <button
           className="btn rounded-full border-black bg-transparent hover:bg-wvu-primary-gold hover:text-white active:bg-wvu-primary-blue active:text-white"
           onClick={() => addBarChart()}
@@ -113,7 +113,7 @@ export const AddSingleValueButton = ({ layout, setLayout }: AddSingleValueButton
   };
 
   return (
-    <div className="flex justify-end">
+    <div>
       <button
         className="btn rounded-full border-black bg-transparent hover:bg-wvu-primary-gold hover:text-white active:bg-wvu-primary-blue active:text-white"
         onClick={() => addSingleValue()}
@@ -148,7 +148,7 @@ export const AddTextButton = ({ layout, setLayout }: AddTextButtonProps) => {
   };
 
   return (
-    <div className="flex justify-end">
+    <div>
       <button
         className="btn rounded-full border-black bg-transparent hover:bg-wvu-primary-gold hover:text-white active:bg-wvu-primary-blue active:text-white"
         onClick={() => addTextValue()}
@@ -186,7 +186,7 @@ export const AddTableButton = ({ layout, setLayout , rows, columns}: AddTableBut
   };
 
   return (
-    <div className="flex justify-end">
+    <div>
       <button
         className="btn rounded-full border-black bg-transparent hover:bg-wvu-primary-gold hover:text-white active:bg-wvu-primary-blue active:text-white"
         onClick={() => addTable()}

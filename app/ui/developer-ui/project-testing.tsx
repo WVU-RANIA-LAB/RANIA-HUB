@@ -15,20 +15,15 @@ export default async function ProjectTesting() {
 
 
   return (
-    <main className="flex-grow flex flex-col bg-wvu-off-white px-15 py-10 sm:px-20 sm:py-18">
-      <div className="flex flex-col md:flex-row flex-wrap">
+    <main className="flex grow flex-row bg-wvu-off-white px-10 py-10 sm:px-15 sm:py-18 lg:flex-row gap-10">
         {/* First Container */}
-        <div className="w-full p-2">
-          <div className="flex flex-col overflow-hidden">
-            <div className="flex-grow">
+            <div className="w-full lg:w-1/1 bg-white shadow-md rounded-lg p-6">
               <div className="flex items-center justify-between w-full h-12 pl-5 pr-5">
-                <h6 className={`text-4xl text-wvu-primary-blue font-bold`}>
+                <h1 className="text-2xl font-semibold text-wvu-primary-blue">
                   Test Project Connectivity
-                </h6>
+                </h1>
               </div>
-              <div>
-                
-              </div>
+
               <div className="pt-5 pl-5">
                 {projectInfo && projectInfo.length > 0 ? (
                   <ProjectTestDashboard
@@ -41,9 +36,6 @@ export default async function ProjectTesting() {
                 )}
               </div>
             </div>
-          </div>
-        </div>
-      </div>
     </main>
   );
 }

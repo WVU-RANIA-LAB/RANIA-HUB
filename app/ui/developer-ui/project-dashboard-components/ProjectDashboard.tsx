@@ -26,8 +26,6 @@ import {
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-
-
 type ProjectDashboardProps = {
   projectId: string;
   projectName: string;
@@ -83,44 +81,97 @@ const [barChartTitle, setBarChartTitle] = useState("Chart Title")
   const rowHeight = dashboardHeight / rows;
 
   return (
-    <div>
+    <div className='w-full'>
       <div >
         <div className="flex space-x-2 mb-2" style={{alignItems: 'center'}}>
           <SaveDashboardButton projectId={projectId} layout={layout} setLayout={setLayout} />
           <DownloadDashboardButton layout={layout} deviceName={projectName} description={projectDescription} />
         </div>
         <div className="flex space-x-2 mb-2">
-          <AddLineChartButton layout={layout} setLayout={setLayout} xtitle={lineChartXAxisTitle} ytitle={lineChartYAxisTitle} ctitle={lineChartTitle}/>
-          <div>
-            <form>
-              <label htmlFor="lctitle">Chart Title:</label>
-              <input type="text" id="lctitle" name="lctitle" defaultValue={"Chart Title"} onChange={(e) => setLineChartTitle(e.target.value)}/>
-              <label htmlFor="lcxtitle">Chart X Axis Title:</label>
-              <input type="text" id="lcxtitle" name="lcxtitle" defaultValue={"X Axis Title"} onChange={(e) => setLineChartXAxisTitle(e.target.value)}/>
-              <label htmlFor="lcytitle">Chart Y Axis Title:</label>
-              <input type="text" id="lcytitle" name="lcytitle" defaultValue={"Y Axis Title"} onChange={(e) => setLineChartYAxisTitle(e.target.value)}/>
-            </form>
-          </div>  
-          <AddBarChartButton layout={layout} setLayout={setLayout} xtitle={barChartXAxisTitle} ytitle={barChartYAxisTitle} ctitle={barChartTitle}/>
-          <form>
-              <label htmlFor="bctitle">Chart Title:</label>
-              <input type="text" id="bctitle" name="bctitle" defaultValue={"Chart Title"} onChange={(e) => setBarChartTitle(e.target.value)}/>
-              <label htmlFor="bcxtitle">Chart X Axis Title:</label>
-              <input type="text" id="bcxtitle" name="bcxtitle" defaultValue={"X Axis Title"} onChange={(e) => setBarChartXAxisTitle(e.target.value)}/>
-              <label htmlFor="bcytitle">Chart Y Axis Title:</label>
-              <input type="text" id="bcytitle" name="bcytitle" defaultValue={"Y Axis Title"} onChange={(e) => setBarChartYAxisTitle(e.target.value)}/>
-            </form>
-          <AddSingleValueButton layout={layout} setLayout={setLayout} />
-          <AddTextButton layout={layout} setLayout={setLayout} />
-          <AddTableButton layout={layout} setLayout={setLayout} rows={tableRows} columns={tableCols} />
-          <div>
-            <form>
-              <label htmlFor="rows">Rows:</label>
-              <input type="number" id="tableRows" name="rows" min="1" max="10" step="1" defaultValue={1} onChange={(e) => setRows(Number(e.target.value))}/>
-              <label htmlFor="cols">Cols:</label>
-              <input type="number" id="tableCols" name="cols" min="1" max="10" step="1" defaultValue={1} onChange={(e) => setCols(Number(e.target.value))}/>
-            </form>
-          </div>          
+          <table>
+            <tr>
+              <td>
+                <AddLineChartButton layout={layout} setLayout={setLayout} xtitle={lineChartXAxisTitle} ytitle={lineChartYAxisTitle} ctitle={lineChartTitle}/>
+              </td>
+              <td>
+                <AddBarChartButton layout={layout} setLayout={setLayout} xtitle={barChartXAxisTitle} ytitle={barChartYAxisTitle} ctitle={barChartTitle}/>
+              </td>
+              <td>
+                <AddTableButton layout={layout} setLayout={setLayout} rows={tableRows} columns={tableCols} />
+              </td>
+              <td>
+                <AddTextButton layout={layout} setLayout={setLayout} />
+              </td>
+              <td>
+                <AddSingleValueButton layout={layout} setLayout={setLayout} />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <form >
+                  <div className="flex">
+                    <label className="text-s" htmlFor="lctitle" >Chart Title:</label>
+                    <input type="text" id="lctitle" name="lctitle" className="border p-1" defaultValue="Chart Title" onChange={(e) => setLineChartTitle(e.target.value)} />
+                  </div>
+
+                  <div className="flex">
+                    <label htmlFor="lcxtitle">Chart X Axis Title:</label>
+                    <input type="text" id="lcxtitle" name="lcxtitle" className="border p-1" defaultValue="X Axis Title" onChange={(e) => setLineChartXAxisTitle(e.target.value)} />
+                  </div>
+
+                  <div className="flex">
+                    <label htmlFor="lcytitle">Chart Y Axis Title:</label>
+                    <input type="text" id="lcytitle" name="lcytitle" className="border p-1" defaultValue="Y Axis Title" onChange={(e) => setLineChartYAxisTitle(e.target.value)} />
+                  </div>
+                </form>
+
+              </td>
+              <td>
+                <form>
+                  <div className="flex">
+                  <label htmlFor="bctitle">Chart Title:</label>
+                  <input type="text" id="bctitle" name="bctitle" className="border p-1" defaultValue={"Chart Title"} onChange={(e) => setBarChartTitle(e.target.value)}/>
+                  </div>
+
+                  <div className="flex">
+                  <label htmlFor="bcxtitle">Chart X Axis Title:</label>
+                  <input type="text" id="bcxtitle" name="bcxtitle" className="border p-1" defaultValue={"X Axis Title"} onChange={(e) => setBarChartXAxisTitle(e.target.value)}/>
+                  </div>
+
+                  <div className="flex">
+                  <label htmlFor="bcytitle">Chart Y Axis Title:</label>
+                  <input type="text" id="bcytitle" name="bcytitle" className="border p-1" defaultValue={"Y Axis Title"} onChange={(e) => setBarChartYAxisTitle(e.target.value)}/>
+                  </div>
+
+                  
+                  
+                  
+                </form>
+              </td>
+              <td>
+                <form>
+                  <div className="flex">
+                  <label htmlFor="rows">Rows:</label>
+                  <input type="number" id="tableRows" name="rows" min="1" max="10" step="1" className="border p-1" defaultValue={1} onChange={(e) => setRows(Number(e.target.value))}/>
+                  </div >
+                  
+                  
+                  <div className="flex">
+                  <label htmlFor="cols">Cols:</label>
+                  <input type="number" id="tableCols" name="cols" min="1" max="10" step="1" className="border p-1" defaultValue={1} onChange={(e) => setCols(Number(e.target.value))}/>
+                  </div >
+                  
+                </form>
+              </td>
+              <td>
+                
+              </td>
+              <td>
+                
+              </td>
+            </tr>
+          </table>
+         
 
         </div>
         
