@@ -131,7 +131,7 @@ import random
 import json
 import string
 
-# If you are not running the Web App locally, ask your admin for this information
+# If you are not running a home hub locally, ask your admin for this information
 broker = "localhost"
 port = 1883
 topicTestData = "data/update"
@@ -175,23 +175,49 @@ def publish_message(topic, update_packet):
 # Example usage
 device_id = "update with a deviceId before using" 
 
-#///Handshake Example
-#This block demonstrates how to implement a connection handshake request, for when a resident end-user wants to connect the device to the care home hub
 
+#The block below demonstrates how to implement a connection handshake request, for when a resident end-user wants to connect the device to the care home hub
+#Before handshaking with a home hub, the resident must be logged in, be on the devices page, and have clicked the connect device button. 
+#///Handshake Example
 #device_info = ${deviceInfo}
 
 # handshake_packet = generate_handshake_packet(device_id, device_info)
 # publish_message(topicTestHandshake, json.dumps(handshake_packet, separators=(',', ':')))
 #///End Handshake Example
 
-#///Data Send Example
-# Populate the data block below with whatever data you want to update in your hub GUI layout
+# Populate the data block below with the data you want to update in your hub GUI layout
+#To update a textValue or singleValue item
+#update "textValue0" with a valid layoutID
+# data = {
+#  "textValue0": "test",
+# }
+
+#To update a cell in a table
+#update "table2-r6-c1" with a valid layoutID
+# data = {
+#  "table2-r6-c1": {"cellId": "r0c0", "data": "new data"},
+# }
+
+#To add a data point to a line chart
+#update "lineChart3-cChart Title-xX Axis Title-yY Axis Title" with a valid layoutID
+# data = {
+#  "lineChart3-cChart Title-xX Axis Title-yY Axis Title": {"name": "name of line", "value": "new value"}
+# }
+
+#To set the value of a bar in a barchart
+#update "barChart2-cChart Title-xX Axis Title-yY Axis Title" with a valid layoutID
+#data = {
+# "barChart2-cChart Title-xX Axis Title-yY Axis Title": {"name": "name of bar", "value": "new value"}
+#}
+
 # Your gridLayoutID options are:
 # ${JSON.stringify(dashboardLayout.map(item => item.i))}
 #data = {
 #  "gridLayoutId": "Updated data value",
 #}
-  
+#///Data Send Example
+
+#data = NULL
 #update_packet = generate_update_packet(device_id, data)
   
 #publish_message(topicTestData, update_packet)
@@ -213,7 +239,9 @@ device_id = "update with a deviceId before using"
   import java.text.SimpleDateFormat;
   import java.util.Date;
   import java.util.Random;
-  
+  import java.util.HashMap;
+  import java.util.Map;
+
   public class MqttTestConnectivity {
   
       private static final String BROKER = "tcp://localhost:1883";
@@ -233,7 +261,30 @@ device_id = "update with a deviceId before using"
           // publishMessage(client, TOPIC_TEST_HANDSHAKE, handshakePacket);
           
           // Data Send Example
-          // String data = "{\\"gridLayoutId\\": \\"Updated data value\\"}";
+            // To update a textValue or singleValue item
+            Map<String, String> textValueUpdate = new HashMap<>();
+            textValueUpdate.put("textValue0", "test");
+
+            // To update a cell in a table
+            Map<String, Map<String, String>> tableUpdate = new HashMap<>();
+            Map<String, String> cellData = new HashMap<>();
+            cellData.put("cellId", "r0c0");
+            cellData.put("data", "new data");
+            tableUpdate.put("table2-r6-c1", cellData);
+
+            // To add a data point to a line chart
+            Map<String, Map<String, String>> lineChartUpdate = new HashMap<>();
+            Map<String, String> lineData = new HashMap<>();
+            lineData.put("name", "name of line");
+            lineData.put("value", "new value");
+            lineChartUpdate.put("lineChart3-cChart Title-xX Axis Title-yY Axis Title", lineData);
+
+            // To set the value of a bar in a bar chart
+            Map<String, Map<String, String>> barChartUpdate = new HashMap<>();
+            Map<String, String> barData = new HashMap<>();
+            barData.put("name", "name of bar");
+            barData.put("value", "new value");
+            barChartUpdate.put("barChart2-cChart Title-xX Axis Title-yY Axis Title", barData);
           // String updatePacket = generateUpdatePacket(deviceId, data);
           // publishMessage(client, TOPIC_TEST_DATA, updatePacket);
       }
